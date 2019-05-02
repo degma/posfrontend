@@ -1,28 +1,44 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
+import NavigationBar from "./components/navigationbar/NavigationBar";
+import ArticulosPage from "./pages/ArticulosPage"
+import ListaPreciosPage from "./pages/ListaPreciosPage"
 
 class App extends Component {
+  state = {
+    token: null,
+    usuarioId: null
+  };
+  login = (token, userId, tokenExpiration) => {
+    this.setState({token:token, userId: userId});
+  };
+  logout = () => {
+    this.setState({ token: null, userId: null });
+  };
+
+  
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <BrowserRouter>
+        <React.Fragment>
+          <NavigationBar />
+          <main className="main-content bg-light">
+            <div className="container-fluid">
+              <div className="row">
+                
+                  <Switch>
+                    <Redirect from="/" to="/home" exact />
+                    <Route path="/listaprecios" component={ListaPreciosPage} />
+                    <Route path="/articulos" component={ArticulosPage} />
+                  
+                  </Switch>
+                
+              </div>
+            </div>
+          </main>
+        </React.Fragment>
+      </BrowserRouter>
     );
   }
 }
-
 export default App;
