@@ -2,6 +2,7 @@ import React from "react";
 import Select from "react-select";
 import "./formAddArticulo.css";
 import Paper from "@material-ui/core/Paper";
+import Divider from '@material-ui/core/Divider'
 
 class FormAddArticulo extends React.Component {
   constructor(props){
@@ -15,6 +16,9 @@ class FormAddArticulo extends React.Component {
       listaprecioId:'',
       precio:''
     }
+    this.fabricanteRef = React.createRef();
+    this.categoriaRef = React.createRef();
+    this.generoRef = React.createRef();    
     this.baseState = this.state
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -36,17 +40,22 @@ class FormAddArticulo extends React.Component {
     this.setState({[event.target.id]: value})
   }
   handleSubmit = () => {
-    let generos = this.state.generoId.map(a => a.id)
-    let fabricante = this.state.fabricanteId.id
-    let categoria = this.state.categoriaId.id
+    this.fabricanteRef.current.value = "";
+    this.categoriaRef.current.value = "";
+    this.generoRef.current.value = "";
+    let generos = this.state.generoId.map(a => a.id) || null
+    let fabricante = this.state.fabricanteId.id || null 
+    let categoria = this.state.categoriaId.id || null
     this.setState({
-      generoId: generos,
+      generoId: generos ,
       fabricanteId: fabricante,
       categoriaId: categoria,
       listaprecioId: this.props.listaprecioactual.id
     }, () => {
-      console.log("Estado actualizado")
-      return this.props.handleSubmit(this.state)        
+      this.props.handleSubmit(this.state)        
+      this.resetFormulario()
+      return console.log("evento enviado")
+
     })
   }
 
@@ -62,7 +71,9 @@ class FormAddArticulo extends React.Component {
   return (
     <React.Fragment>
       <div className="d-flex justify-content-center mt-4 mb-5">
-        <Paper className="ml-5 pr-5 pl-5 pt-3 w-100">
+        <Paper>
+          <h5>{this.props.titulo}</h5>
+          <Divider variant="fullWidth"/>
           <form id="formuario-agregar-articulo">
             <div className="form-group col-md-12">
               <label htmlFor="inputEmail4">Nombre</label>
@@ -93,6 +104,7 @@ class FormAddArticulo extends React.Component {
                 isSearchable={true}
                 isClearable={true}
                 className="basic-single"
+                ref={this.fabricanteRef}
                 onChange={this.handleDropDowns}
                 options={this.props.fabricantes}
                 getOptionLabel={opt => opt.nombre}
@@ -104,6 +116,7 @@ class FormAddArticulo extends React.Component {
               <Select
                 isMulti
                 name="generoId"
+                ref={this.generoRef}
                 onChange={this.handleDropDowns}
                 isSearchable={true}
                 isClearable={true}
@@ -118,6 +131,7 @@ class FormAddArticulo extends React.Component {
               <Select
                 options={this.props.categorias}
                 onChange={this.handleDropDowns}
+                ref={this.categoriaRef}
                 name="categoriaId"
                 isSearchable={true}
                 isClearable={true}

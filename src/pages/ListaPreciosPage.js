@@ -46,10 +46,11 @@ class ListaPreciosPage extends Component {
   
   render() {
     return (
-      <div className="col-md-12 mt-3">
-        <div className="text-center">{this.state.listaPrecioActual.nombre}</div>
-        <BuscadorPrecio />
+      <div className="col-md-12 mb-5">
+        <BuscadorPrecio listaprecio = {this.state.listaPrecioActual}/>
+        <div className="text-center"></div>
         <ListaPrecios articulos={this.state.articulos} />
+        {console.log(this.state.articulos)}
       </div>
     );
   }

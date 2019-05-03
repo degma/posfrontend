@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import FormAddArticulo from "../components/articulos/formAddArticulo";
-import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import eventService from '../api/eventService'
+import FormInventario from "../components/articulos/formInventario";
 
 class ArticulosPage extends Component {
   constructor(props) {
@@ -21,11 +22,8 @@ class ArticulosPage extends Component {
 
   componentDidMount() {
     toast.configure();
-    const header = {
-      "Content-Type": "application/json"
-    };
-    axios
-      .get("http://127.0.0.1:3001/api/v1/listaprecio/current", header)
+
+    eventService.listaprecio.getCurrent()
       .then(listaprecioactual => {
         console.log(listaprecioactual.data.nombre);
         this.setState({
@@ -40,8 +38,7 @@ class ArticulosPage extends Component {
       });
     console.log(this.state.listaprecioActual);
     // traer categorias
-    axios
-      .get("http://127.0.0.1:3001/api/v1/categoria", header)
+    eventService.categoria.getCategorias()
       .then(categorias => {
         console.log(categorias.data);
         this.setState({
@@ -52,8 +49,7 @@ class ArticulosPage extends Component {
         console.log(`Error cargando categorias [$]`, error.name);
       });
     //traer generos
-    axios
-      .get("http://127.0.0.1:3001/api/v1/genero", header)
+    eventService.genero.getGeneros()
       .then(generos => {
         console.log(generos.data);
         this.setState({
@@ -61,11 +57,10 @@ class ArticulosPage extends Component {
         });
       })
       .catch(error => {
-        console.log(`Error cargando categorias [$]`, error.name);
+        console.log(`Error cargando generos [$]`, error.name);
       });
     //traer fabricantes
-    axios
-      .get("http://127.0.0.1:3001/api/v1/fabricante", header)
+    eventService.fabricante.getFabricantes()
       .then(fabricantes => {
         console.log(fabricantes.data);
         this.setState({
@@ -73,47 +68,45 @@ class ArticulosPage extends Component {
         });
       })
       .catch(error => {
-        console.log(`Error cargando categorias [$]`, error.name);
+        console.log(`Error cargando fabricantes [$]`, error.name);
       });
   }
 
   handleSubmit = args => {
-    const header = {
-      "Content-Type": "application/json",
-      "x-access-token":
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1NjQ5MDQ0MSwiZXhwIjoxNTU3MDk1MjQxfQ.4DOqblMDIkINTlPs7iOuJ5VLX5mHGxCkhuoZE3w1SVU"
-    };
-    axios
-      .post("http://127.0.0.1:3001/api/v1/articulo", args, header)
+    eventService.articulo.crearArticulo(args)
       .then(() => {
         toast.success("Articulo agregado correctamente!")
-        this.resetFormulario()})
+        this.resetFormulario()
+      })
       .catch(error => {
         console.log(error)
-        toast.error(error.name)
+        toast.warn(error)
       })
   };
 
   resetFormulario = () => {
     this.child.resetFormulario() // do stuff
   }
-  
-  
+
+
 
   render() {
     return (
       <React.Fragment>
         <div className="col-md-7 pr-0 pl-0 ">
           <FormAddArticulo
+            titulo="INGRESO NUEVO ARTÍCULO"
             categorias={this.state.categorias}
             fabricantes={this.state.fabricantes}
             generos={this.state.generos}
             listaprecioactual={this.state.listaprecioActual}
             handleSubmit={this.handleSubmit}
-            onRef={ref => (this.child = ref)} 
+            onRef={ref => (this.child = ref)}
           />
         </div>
-        <div className="col-md-5">{/* <CardArticulo /> */}</div>
+        <div className="col-md-5">
+          <FormInventario />
+        </div>
       </React.Fragment>
     );
   }
