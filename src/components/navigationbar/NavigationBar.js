@@ -38,7 +38,7 @@ class NavigationBar extends Component {
                                 <Link className="nav-link" to="/articulos"><i className="fas fa-tshirt"></i></Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/plantel"><i className="fas fa-cog"></i></Link>
+                                <Link className="nav-link" to="/configuracion"><i className="fas fa-cog"></i></Link>
                             </li>
                         </ul>
                     </div>

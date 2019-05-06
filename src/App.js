@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
 import NavigationBar from "./components/navigationbar/NavigationBar";
 import ArticulosPage from "./pages/ArticulosPage"
 import ListaPreciosPage from "./pages/ListaPreciosPage"
+import ConfiguracionPage from './pages/ConfiguracionPage'
 
 class App extends Component {
   state = {
@@ -30,6 +31,7 @@ class App extends Component {
                     <Redirect from="/" to="/home" exact />
                     <Route path="/listaprecios" component={ListaPreciosPage} />
                     <Route path="/articulos" component={ArticulosPage} />
+                    <Route path="/configuracion" component={ConfiguracionPage} />
                   
                   </Switch>
                 

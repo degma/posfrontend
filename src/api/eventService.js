@@ -55,6 +55,9 @@ export default {
     fabricante: {
         getFabricantes(){
             return apiClient.get('/fabricante')
+        },
+        crearFabricante(payload){
+            return apiClient.post('/fabricante', payload)
         }
     }
 }
