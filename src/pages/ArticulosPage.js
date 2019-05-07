@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import FormAddArticulo from "../components/articulos/formAddArticulo";
+import FormAddArticulo from "../components/articulos/FormAddArticulo";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import eventService from '../api/eventService'
