@@ -35,6 +35,12 @@ export default {
     articulo: {
         crearArticulo(payload){
             return apiClient.post('/articulo',payload)
+        },
+        getArticulo(){
+            return apiClient.get('/articulo/')
+        },
+        desactivarArticulo(id){
+            return apiClient.delete('/articulo/'+ id)
         }
     },
     listaprecio: {

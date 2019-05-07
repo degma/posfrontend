@@ -5,6 +5,15 @@ import Select from "react-select";
 import InputLabel from "@material-ui/core/InputLabel";
 import InputAdornment from "@material-ui/core/InputAdornment";
 
+const customStyles = {
+  input: styles => {
+    return {
+      ...styles,
+      height: '2.8em'
+    };
+  }
+}
+
 class FormAddArticulo extends Component {
   constructor(props) {
     super(props);
@@ -13,153 +22,200 @@ class FormAddArticulo extends Component {
       descripcion: "",
       fabricanteId: "",
       categoriaId: "",
-      generoId: "",
+      generoId: [],
       listaprecioId: "",
       precio: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.hanldeReset = this.hanldeReset.bind(this);
+  }
+
+  componentDidMount() {
+    this.setState({
+      nombre: this.props.nombreUpdate || '',
+      descripcion: this.props.descripcionUpdate || '',
+      fabricanteId: this.props.fabricanteIdUpdate || '',
+      categoriaId: this.props.categoriaIdUpdate || '',
+      generoId: this.props.generoIdUpdate || '',
+      listaprecioId: this.props.listaprecioIdUpdate || '',
+      precio: this.props.precioUpdate || ''
+    })
   }
 
   handleSubmit = () => {
-    console.localStorage(this.state)
-    return this.props.handleSubmit(this.state);
+    // console.log(this.state)
+    return (this.setState({
+      listaprecioId: this.props.listaprecioactual.id,
+      categoriaId: this.state.categoriaId.id,
+      fabricanteId: this.state.fabricanteId.id,
+      generoId: this.state.generoId.map(i => i.id)
+    }, () => {
+      this.props.handleSubmit(this.state)
+    }));
   };
+
 
   handleChange = event => {
     console.log(this.state);
-    
     this.setState({
       [event.target.id]: event.target.value
     });
   };
 
+  hanldeReset = () => {
+    this.setState = {
+      nombre: "",
+      descripcion: "",
+      fabricanteId: "",
+      categoriaId: "",
+      generoId: [],
+      listaprecioId: "",
+      precio: ""
+    };
+
+  }
+
   handleDropDowns = (selectedOptions, event) => {
-    if (selectedOptions !== null) {
-      return this.setState({ [event.name]: selectedOptions.map(i => i.id) });
-    } else {
-      return this.setState({ [event.name]: "" });
-    }
-  };
+    this.setState({ [event.name]: selectedOptions })
+  }
 
   render() {
     return (
       <React.Fragment>
-        <TextField
-          id="nombre"
-          label="Nombre"
-          value={this.state.nombre}
-          onChange={this.handleChange}
-          style={{ margin: 8 }}
-          margin="normal"
-          fullWidth
-          variant="outlined"
-          InputLabelProps={{
-            shrink: true
-          }}
-        />
-        <TextField
-          id="descripcion"
-          label="Descripción"
-          value={this.state.descripcion}
-          onChange={this.handleChange}
-          style={{ margin: 8 }}
-          margin="normal"
-          fullWidth
-          variant="outlined"
-          InputLabelProps={{
-            shrink: true
-          }}
-        />
-        <div className="row">
-          <div className="col-md-8">
-            <TextField
-              id="listaprecioId"
-              label="Lista de Precios"
-              value={this.state.listaprecioId}
-              onChange={this.handleChange}
-              style={{ margin: 8 }}
-              margin="normal"
-              variant="outlined"
-              fullWidth
-              InputLabelProps={{
-                shrink: true
-              }}
+        <form id="formulario-alta">
+          <TextField
+            id="nombre"
+            label="Nombre"
+            value={this.state.nombre}
+            onChange={this.handleChange}
+            style={{
+              margin: 8,
+              paddingRight: 8
+            }}
+            margin="normal"
+            fullWidth
+            variant="outlined"
+            InputLabelProps={{
+              shrink: true
+            }}
+          />
+          <TextField
+            id="descripcion"
+            label="Descripción"
+            value={this.state.descripcion}
+            onChange={this.handleChange}
+            style={{
+              margin: 8,
+              paddingRight: 8
+            }}
+            margin="normal"
+            fullWidth
+            variant="outlined"
+            InputLabelProps={{
+              shrink: true
+            }}
+          />
+          <div className="row">
+            <div className="col-md-8">
+              <TextField
+                id="listaprecioId"
+                label="Lista de Precios"
+                value={this.state.listaprecioId}
+                onChange={this.handleChange}
+                style={{
+                  margin: 8,
+                  paddingRight: 8
+                }}
+                margin="normal"
+                variant="outlined"
+                fullWidth
+                InputLabelProps={{
+                  shrink: true
+                }}
+              />
+            </div>
+            <div className="col-md-4">
+              <TextField
+                id="precio"
+                label="Precio"
+                fullWidth
+                value={this.state.precio}
+                onChange={this.handleChange}
+                style={{
+                  margin: 8,
+                  paddingRight: 8
+                }}
+                margin="normal"
+                variant="outlined"
+                InputLabelProps={{
+                  shrink: true
+                }}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">$</InputAdornment>
+                  )
+                }}
+              />
+            </div>
+          </div>
+          <div className="ml-2 mb-3">
+            <InputLabel htmlFor="component-simple">Fabricante</InputLabel>
+            <Select
+              name="fabricanteId"
+              styles={customStyles}
+              isSearchable={true}
+              isClearable={true}
+              className="basic-single"
+              ref={this.fabricanteRef}
+              onChange={this.handleDropDowns}
+              options={this.props.fabricantes}
+              getOptionLabel={opt => opt.nombre}
+              getOptionValue={opt => opt.id}
             />
           </div>
-          <div className="col-md-4">
-            <TextField
-              id="precio"
-              label="Precio"
-              fullWidth
-              value={this.state.precio}
-              onChange={this.handleChange}
-              style={{ margin: 8 }}
-              margin="normal"
-              variant="outlined"
-              InputLabelProps={{
-                shrink: true
-              }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">$</InputAdornment>
-                )
-              }}
+          <div className="ml-2 mb-3">
+            <InputLabel htmlFor="component-simple">Categoría</InputLabel>
+            <Select
+              options={this.props.categorias}
+              onChange={this.handleDropDowns}
+              styles={customStyles}
+              ref={this.categoriaRef}
+              name="categoriaId"
+              isSearchable={true}
+              isClearable={true}
+              className="basic-single"
+              getOptionLabel={opt => opt.nombre}
+              getOptionValue={opt => opt.id}
             />
           </div>
-        </div>
-        <div className="ml-2 mb-3">
-          <InputLabel htmlFor="component-simple">Fabricante</InputLabel>
-          <Select
-            name="fabricanteId"
-            isSearchable={true}
-            isClearable={true}
-            className="basic-single"
-            ref={this.fabricanteRef}
-            onChange={this.handleDropDowns}
-            options={this.props.fabricantes}
-            getOptionLabel={opt => opt.nombre}
-            getOptionValue={opt => opt.id}
-          />
-        </div>
-        <div className="ml-2 mb-3">
-          <InputLabel htmlFor="component-simple">Categoría</InputLabel>
-          <Select
-            options={this.props.categorias}
-            onChange={this.handleDropDowns}
-            ref={this.categoriaRef}
-            name="categoriaId"
-            isSearchable={true}
-            isClearable={true}
-            className="basic-single"
-            getOptionLabel={opt => opt.nombre}
-            getOptionValue={opt => opt.id}
-          />
-        </div>
-        <div className="ml-2 mb-3">
-          <InputLabel htmlFor="component-simple">Genero/s</InputLabel>
-          <Select
-            isMulti
-            name="generoId"
-            onChange={this.handleDropDowns}
-            isSearchable={true}
-            isClearable={true}
-            className="basic-single"
-            options={this.props.generos}
-            getOptionLabel={opt => opt.nombre}
-            getOptionValue={opt => opt.id}
-          />
-        </div>
-        <div className="text-right">
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={this.handleSubmit}
-          >
-            GUARDAR
+          <div className="ml-2 mb-3">
+            <InputLabel htmlFor="component-simple">Genero/s</InputLabel>
+            <Select
+              isMulti
+              name="generoId"
+              onChange={this.handleDropDowns}
+              styles={customStyles}
+              isSearchable={true}
+              isClearable={true}
+              className="basic-single"
+              options={this.props.generos}
+              getOptionLabel={opt => opt.nombre}
+              getOptionValue={opt => opt.id}
+            />
+          </div>
+          <div className="text-right">
+            <Button
+              variant="contained"
+              color="primary"
+              className="mt-3"
+              onClick={this.handleSubmit}
+            >
+              GUARDAR
           </Button>
-        </div>
+          </div>
+        </form>
       </React.Fragment>
     );
   }

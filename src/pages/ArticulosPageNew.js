@@ -3,7 +3,8 @@ import FormAddArticulo from "../components/articulos/FormAddArticulo";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import eventService from '../api/eventService'
-import FormInventario from "../components/articulos/formInventario";
+import Paper from '@material-ui/core/Paper'
+import Divider from '@material-ui/core/Divider'
 
 class ArticulosPage extends Component {
   constructor(props) {
@@ -88,12 +89,13 @@ class ArticulosPage extends Component {
     this.child.resetFormulario() // do stuff
   }
 
-
-
   render() {
     return (
       <React.Fragment>
-        <div className="col-md-7 pr-0 pl-0 ">
+        <Paper className="m-2">
+          <h5 className="m-3">Form</h5>
+          <Divider />
+          <div className="col-md-12 p-3">
           <FormAddArticulo
             titulo="INGRESO NUEVO ARTÍCULO"
             categorias={this.state.categorias}
@@ -103,10 +105,8 @@ class ArticulosPage extends Component {
             handleSubmit={this.handleSubmit}
             onRef={ref => (this.child = ref)}
           />
-        </div>
-        <div className="col-md-5">
-          <FormInventario />
-        </div>
+          </div>
+        </Paper>
       </React.Fragment>
     );
   }
