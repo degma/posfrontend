@@ -9,10 +9,10 @@ const customStyles = {
   input: styles => {
     return {
       ...styles,
-      height: '2.8em'
+      height: "2.8em"
     };
   }
-}
+};
 
 class FormAddArticulo extends Component {
   constructor(props) {
@@ -34,28 +34,30 @@ class FormAddArticulo extends Component {
 
   componentDidMount() {
     this.setState({
-      nombre: this.props.nombreUpdate || '',
-      descripcion: this.props.descripcionUpdate || '',
-      fabricanteId: this.props.fabricanteIdUpdate || '',
-      categoriaId: this.props.categoriaIdUpdate || '',
-      generoId: this.props.generoIdUpdate || '',
-      listaprecioId: this.props.listaprecioIdUpdate || '',
-      precio: this.props.precioUpdate || ''
-    })
+      nombre: this.props.nombreUpdate || "",
+      descripcion: this.props.descripcionUpdate || "",
+      fabricanteId: this.props.fabricanteIdUpdate || "",
+      categoriaId: this.props.categoriaIdUpdate || "",
+      generoId: this.props.generoIdUpdate || "",
+      listaprecioId: this.props.listaprecioIdUpdate || "",
+      precio: this.props.precioUpdate || ""
+    });
   }
 
   handleSubmit = () => {
     // console.log(this.state)
-    return (this.setState({
-      listaprecioId: this.props.listaprecioactual.id,
-      categoriaId: this.state.categoriaId.id,
-      fabricanteId: this.state.fabricanteId.id,
-      generoId: this.state.generoId.map(i => i.id)
-    }, () => {
-      this.props.handleSubmit(this.state)
-    }));
+    return this.setState(
+      {
+        listaprecioId: this.props.listaprecioactual.id,
+        categoriaId: this.state.categoriaId.id,
+        fabricanteId: this.state.fabricanteId.id,
+        generoId: this.state.generoId.map(i => i.id)
+      },
+      () => {
+        this.props.handleSubmit(this.state);
+      }
+    );
   };
-
 
   handleChange = event => {
     console.log(this.state);
@@ -74,12 +76,11 @@ class FormAddArticulo extends Component {
       listaprecioId: "",
       precio: ""
     };
-
-  }
+  };
 
   handleDropDowns = (selectedOptions, event) => {
-    this.setState({ [event.name]: selectedOptions })
-  }
+    this.setState({ [event.name]: selectedOptions });
+  };
 
   render() {
     return (
@@ -122,11 +123,15 @@ class FormAddArticulo extends Component {
               <TextField
                 id="listaprecioId"
                 label="Lista de Precios"
-                value={this.state.listaprecioId}
+                value={this.props.listaprecioactual.nombre}
                 onChange={this.handleChange}
+                disabled
                 style={{
                   margin: 8,
                   paddingRight: 8
+                }}
+                InputProps={{
+                  readOnly: true
                 }}
                 margin="normal"
                 variant="outlined"
@@ -213,7 +218,7 @@ class FormAddArticulo extends Component {
               onClick={this.handleSubmit}
             >
               GUARDAR
-          </Button>
+            </Button>
           </div>
         </form>
       </React.Fragment>

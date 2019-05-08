@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import FormAddArticulo from "../components/articulos/FormAddArticulo";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import eventService from '../api/eventService'
-import Paper from '@material-ui/core/Paper'
-import Divider from '@material-ui/core/Divider'
+import eventService from "../api/eventService";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
 
 class ArticulosPage extends Component {
   constructor(props) {
@@ -24,7 +24,8 @@ class ArticulosPage extends Component {
   componentDidMount() {
     toast.configure();
 
-    eventService.listaprecio.getCurrent()
+    eventService.listaprecio
+      .getCurrent()
       .then(listaprecioactual => {
         console.log(listaprecioactual.data.nombre);
         this.setState({
@@ -39,7 +40,8 @@ class ArticulosPage extends Component {
       });
     console.log(this.state.listaprecioActual);
     // traer categorias
-    eventService.categoria.getCategorias()
+    eventService.categoria
+      .getCategorias()
       .then(categorias => {
         console.log(categorias.data);
         this.setState({
@@ -50,7 +52,8 @@ class ArticulosPage extends Component {
         console.log(`Error cargando categorias [$]`, error.name);
       });
     //traer generos
-    eventService.genero.getGeneros()
+    eventService.genero
+      .getGeneros()
       .then(generos => {
         console.log(generos.data);
         this.setState({
@@ -61,7 +64,8 @@ class ArticulosPage extends Component {
         console.log(`Error cargando generos [$]`, error.name);
       });
     //traer fabricantes
-    eventService.fabricante.getFabricantes()
+    eventService.fabricante
+      .getFabricantes()
       .then(fabricantes => {
         console.log(fabricantes.data);
         this.setState({
@@ -74,39 +78,42 @@ class ArticulosPage extends Component {
   }
 
   handleSubmit = args => {
-    eventService.articulo.crearArticulo(args)
+    eventService.articulo
+      .crearArticulo(args)
       .then(() => {
-        toast.success("Articulo agregado correctamente!")
-        this.resetFormulario()
+        toast.success("Articulo agregado correctamente!");
+        this.props.cerrarDialog()        
       })
       .catch(error => {
-        console.log(error)
-        toast.warn(error)
-      })
+        console.log(error);
+        toast.warn(error);
+      });
+      
   };
 
   resetFormulario = () => {
-    this.child.resetFormulario() // do stuff
-  }
+    this.child.resetFormulario(); // do stuff
+  };
 
   render() {
     return (
       <React.Fragment>
-        <Paper className="m-2">
-          <h5 className="m-3">Form</h5>
-          <Divider />
-          <div className="col-md-12 p-3">
-          <FormAddArticulo
-            titulo="INGRESO NUEVO ARTÍCULO"
-            categorias={this.state.categorias}
-            fabricantes={this.state.fabricantes}
-            generos={this.state.generos}
-            listaprecioactual={this.state.listaprecioActual}
-            handleSubmit={this.handleSubmit}
-            onRef={ref => (this.child = ref)}
-          />
-          </div>
-        </Paper>
+        <Grid container justify="center" className="mt-2">
+          <Grid item>
+            
+            <Paper className="p-3">
+              <FormAddArticulo
+                titulo="INGRESO NUEVO ARTÍCULO"
+                categorias={this.state.categorias}
+                fabricantes={this.state.fabricantes}
+                generos={this.state.generos}
+                listaprecioactual={this.state.listaprecioActual}
+                handleSubmit={this.handleSubmit}            
+                onRef={ref => (this.child = ref)}
+              />
+            </Paper>
+          </Grid>
+        </Grid>
       </React.Fragment>
     );
   }

@@ -4,7 +4,7 @@ import NavigationBar from "./components/navigationbar/NavigationBar";
 import ArticulosPage from "./pages/ArticulosPageMain"
 import ListaPreciosPage from "./pages/ListaPreciosPage"
 import ConfiguracionPage from './pages/ConfiguracionPage'
-
+import Grid from '@material-ui/core/Grid'
 class App extends Component {
   state = {
     token: null,
@@ -24,16 +24,16 @@ class App extends Component {
         <React.Fragment>
           <NavigationBar />
           <main className="main-content bg-light">
-            <div className="container-fluid">
-              <div className="row">
+            <Grid container>
+              <Grid item xs={12}>
                   <Switch>
                     <Redirect from="/" to="/home" exact />
                     <Route path="/listaprecios" component={ListaPreciosPage} />
                     <Route path="/articulos" component={ArticulosPage} />
                     <Route path="/configuracion" component={ConfiguracionPage} />                
                   </Switch>
-              </div>
-            </div>
+              </Grid>
+            </Grid>            
           </main>
         </React.Fragment>
       </BrowserRouter>

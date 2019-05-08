@@ -29,80 +29,34 @@ function Transition(props) {
   return <Slide direction="up" {...props} />;
 }
 
-class ArticulosPageLista extends Component {
+class DialogArticulo extends Component {
   constructor(props) {
     super(props);
     this.state = {
       lista: [],
       openNewDialog: false
-    };
-    this.handleEliminar = this.handleEliminar.bind(this);
+    };    
     this.handleClickOpen = this.handleClickOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
 
   handleClickOpen = () => {
-    console.log("cickkck");
     this.setState({ openNewDialog: true });
   };
 
   handleClose = () => {
-    console.log("se llamo para cerrarlo!");
     this.setState({ openNewDialog: false });
   };
 
   componentDidMount() {
-    toast.configure();
-    eventService.articulo
-      .getArticulo()
-      .then(articulos => {
-        this.setState({ lista: articulos.data.articulos });
-      })
-      .catch(error => console.log(error));
+    
   }
 
-  handleEliminar(args) {
-    console.log(args);
-    eventService.articulo
-      .desactivarArticulo(args.id)
-      .then(() => {
-        let updatedLista = this.state.lista.filter(function(obj) {
-          return obj.id !== args.id;
-        });
-        this.setState({ lista: updatedLista });
-        toast.info("Articulo eliminado!");
-      })
-      .catch(error => {
-        console.log(error);
-        toast.error(error.name);
-      });
-  }
 
   render() {
     const { classes } = this.props;
     return (
-      <React.Fragment>
-        <Paper className="m-2">
-          <Grid container justify="center">
-            <Grid item xs={10} className="p-2">
-              <h4>Artículos</h4>
-            </Grid>
-            <Grid item xs={2} className="p-2">
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={this.handleClickOpen}
-              >
-                Nuevo
-              </Button>
-            </Grid>
-          </Grid>
-          <Divider />
-          <ArticuloList
-            lista={this.state.lista}
-            handleEliminar={this.handleEliminar}
-          />
-        </Paper>
+      <React.Fragment>        
         <Dialog
           fullScreen
           open={this.state.openNewDialog}
@@ -130,8 +84,8 @@ class ArticulosPageLista extends Component {
   }
 }
 
-ArticulosPageLista.propTypes = {
+DialogArticulo.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(ArticulosPageLista);
+export default withStyles(styles)(DialogArticulo);
