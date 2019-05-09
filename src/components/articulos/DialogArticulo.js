@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import ArticuloList from "../components/articulos/ArticuloList";
-import eventService from "../api/eventService";
+import ArticuloPageNew from "../../pages/ArticulosPageNew"
+import ArticuloPageUpdate from "../../pages/ArticulosPageUpdate"
+import eventService from "../../api/eventService";
 import Paper from "@material-ui/core/Paper";
 import { Divider, Grid } from "@material-ui/core";
 import { toast } from "react-toastify";
@@ -14,7 +15,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
-import ArticuloPageNew from "./ArticulosPageNew";
+
 
 const styles = {
   appBar: {
@@ -29,37 +30,33 @@ function Transition(props) {
   return <Slide direction="up" {...props} />;
 }
 
+
 class DialogArticulo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      lista: [],
-      openNewDialog: false
-    };    
+      lista: []
+    };
     this.handleClickOpen = this.handleClickOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
 
   handleClickOpen = () => {
-    this.setState({ openNewDialog: true });
+
+    this.props.opendialog()
   };
 
   handleClose = () => {
-    this.setState({ openNewDialog: false });
+    this.props.closedialog()
   };
-
-  componentDidMount() {
-    
-  }
-
 
   render() {
     const { classes } = this.props;
     return (
-      <React.Fragment>        
+      <React.Fragment>
         <Dialog
           fullScreen
-          open={this.state.openNewDialog}
+          open={this.props.open}
           onClose={this.handleClose}
           TransitionComponent={Transition}
         >
@@ -73,11 +70,19 @@ class DialogArticulo extends Component {
                 <CloseIcon />
               </IconButton>
               <Typography variant="h6" color="inherit" className={classes.flex}>
-                Nuevo Artículo
+                {this.props.dialogTitle}
               </Typography>
             </Toolbar>
           </AppBar>
-          <ArticuloPageNew cerrarDialog={this.handleClose} />
+          {this.props.tipo === "new" ?
+            <ArticuloPageNew
+              cerrarDialog={this.handleClose}
+            /> :
+          <ArticuloPageUpdate
+            articulo={this.props.articuloUpdate}
+            cerrarDialog={this.handleClose} />            
+          }
+
         </Dialog>
       </React.Fragment>
     );

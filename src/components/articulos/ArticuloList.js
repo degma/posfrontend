@@ -9,9 +9,8 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
-import Dialog from "@material-ui/core/Dialog";
 import Slide from "@material-ui/core/Slide";
-import FormAddArticulo from "./FormAddArticulo";
+
 
 const styles = theme => ({
   root: {
@@ -68,7 +67,7 @@ class ArticuloList extends Component {
                 secondary={listitem.descripcion}
               />
               <ListItemSecondaryAction>
-                <IconButton onClick={this.handleClickOpen}>
+                <IconButton onClick={()=>this.props.handleClickUpdate(listitem)}>
                   <EditIcon />
                 </IconButton>
                 <IconButton
@@ -81,15 +80,6 @@ class ArticuloList extends Component {
             </ListItem>
           ))}
         </List>
-        <Dialog
-          fullScreen
-          open={this.state.openEdit}
-          onClose={this.handleClose}
-          TransitionComponent={Transition}
-        >
-          <FormAddArticulo
-          />
-        </Dialog>
       </React.Fragment>
     );
   }

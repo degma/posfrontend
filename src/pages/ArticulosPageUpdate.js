@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import FormAddArticulo from "../components/articulos/FormAddArticulo";
+import FormUpdateArticulo from "../components/articulos/FormUpdateArticulo";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import eventService from "../api/eventService";
@@ -80,7 +80,7 @@ class ArticulosPage extends Component {
     eventService.articulo
       .crearArticulo(args)
       .then(() => {
-        toast.success("Articulo agregado correctamente!");
+        toast.success("Articulo actualizado correctamente!");
         this.props.cerrarDialog()        
       })
       .catch(error => {
@@ -99,13 +99,14 @@ class ArticulosPage extends Component {
           <Grid item>
             
             <Paper className="p-3">
-              <FormAddArticulo
-                titulo="INGRESO NUEVO ARTÍCULO"
+              <FormUpdateArticulo
+                titulo="Actualizar Articulo"
                 categorias={this.state.categorias}
                 fabricantes={this.state.fabricantes}
                 generos={this.state.generos}
                 listaprecioactual={this.state.listaprecioActual}
-                handleSubmit={this.handleSubmit}                
+                handleSubmit={this.handleSubmit}
+                articulo={this.props.articulo}   
                 onRef={ref => (this.child = ref)}
               />
             </Paper>

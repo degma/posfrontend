@@ -2,19 +2,12 @@ import React, { Component } from "react";
 import ArticuloList from "../components/articulos/ArticuloList";
 import eventService from "../api/eventService";
 import Paper from "@material-ui/core/Paper";
-import { Divider, Grid } from "@material-ui/core";
+import { Divider, Grid, Typography } from "@material-ui/core";
 import { toast } from "react-toastify";
 import Button from "@material-ui/core/Button";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import Dialog from "@material-ui/core/Dialog";
-import Slide from "@material-ui/core/Slide";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import CloseIcon from "@material-ui/icons/Close";
-import ArticuloPageNew from "./ArticulosPageNew";
+import DialogArticulo from "../components/articulos/DialogArticulo"
 
 const styles = {
   appBar: {
@@ -25,30 +18,39 @@ const styles = {
   }
 };
 
-function Transition(props) {
-  return <Slide direction="up" {...props} />;
-}
 
 class ArticulosPageLista extends Component {
   constructor(props) {
     super(props);
     this.state = {
       lista: [],
-      openNewDialog: false
+      openNewDialog: false,
+      openUpdateDialog:false,
+      dialogType: '',
+      selectedArt: ''
     };
     this.handleEliminar = this.handleEliminar.bind(this);
     this.handleClickOpen = this.handleClickOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
 
-  handleClickOpen = () => {
-    console.log("cickkck");
-    this.setState({ openNewDialog: true });
+  handleClickOpen = () => {    
+    this.setState({ openNewDialog: true    
+     });
   };
 
   handleClose = () => {
-    console.log("se llamo para cerrarlo!");
     this.setState({ openNewDialog: false });
+  };
+
+  handleClickOpenUpdate = (articulo) => {    
+    this.setState({ openUpdateDialog: true,
+      selectedArt: articulo
+     });
+  };
+
+  handleCloseUpdate = () => {
+    this.setState({ openUpdateDialog: false });
   };
 
   componentDidMount() {
@@ -62,11 +64,11 @@ class ArticulosPageLista extends Component {
   }
 
   handleEliminar(args) {
-    console.log(args);
+    
     eventService.articulo
       .desactivarArticulo(args.id)
       .then(() => {
-        let updatedLista = this.state.lista.filter(function(obj) {
+        let updatedLista = this.state.lista.filter(function (obj) {
           return obj.id !== args.id;
         });
         this.setState({ lista: updatedLista });
@@ -85,10 +87,11 @@ class ArticulosPageLista extends Component {
         <Paper className="m-2">
           <Grid container justify="center">
             <Grid item xs={10} className="p-2">
-              <h4>Artículos</h4>
+              <Typography variant="h5" color="inherit">Artículos</Typography>
             </Grid>
             <Grid item xs={2} className="p-2">
               <Button
+                name="new"
                 variant="contained"
                 color="primary"
                 onClick={this.handleClickOpen}
@@ -101,30 +104,25 @@ class ArticulosPageLista extends Component {
           <ArticuloList
             lista={this.state.lista}
             handleEliminar={this.handleEliminar}
+            handleClickUpdate= {this.handleClickOpenUpdate}
           />
         </Paper>
-        <Dialog
-          fullScreen
+        <DialogArticulo
+          dialogTitle="Nuevo Artículo"
+          tipo="new"
           open={this.state.openNewDialog}
-          onClose={this.handleClose}
-          TransitionComponent={Transition}
-        >
-          <AppBar className={classes.appBar}>
-            <Toolbar>
-              <IconButton
-                color="inherit"
-                onClick={this.handleClose}
-                aria-label="Close"
-              >
-                <CloseIcon />
-              </IconButton>
-              <Typography variant="h6" color="inherit" className={classes.flex}>
-                Nuevo Artículo
-              </Typography>
-            </Toolbar>
-          </AppBar>
-          <ArticuloPageNew cerrarDialog={this.handleClose} />
-        </Dialog>
+          opendialog={this.handleClickOpen}
+          closedialog={this.handleClose}
+        />
+        <DialogArticulo
+          dialogTitle="Actualizar Artículo"
+          tipo="update"
+          open={this.state.openUpdateDialog}
+          opendialog={this.handleClickOpenUpdate}
+          closedialog={this.handleCloseUpdate}
+          articuloUpdate={this.state.selectedArt}
+        />
+  
       </React.Fragment>
     );
   }
