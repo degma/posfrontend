@@ -5,6 +5,7 @@ import ArticulosPage from "./pages/ArticulosPageMain"
 import ListaPreciosPage from "./pages/ListaPreciosPage"
 import ConfiguracionPage from './pages/ConfiguracionPage'
 import Grid from '@material-ui/core/Grid'
+
 class App extends Component {
   state = {
     token: null,
