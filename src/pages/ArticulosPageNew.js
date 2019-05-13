@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import FormAddArticulo from "../components/articulos/FormAddArticulo";
+import InputForm from '../components/articulos/InputForm'
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import eventService from "../api/eventService";
@@ -96,10 +96,8 @@ class ArticulosPage extends Component {
     return (
       <React.Fragment>
         <Grid container justify="center" className="mt-2">
-          <Grid item>
-            
-            <Paper className="p-3">
-              <FormAddArticulo
+          <Grid item>                        
+              <InputForm
                 titulo="INGRESO NUEVO ARTÍCULO"
                 categorias={this.state.categorias}
                 fabricantes={this.state.fabricantes}
@@ -107,8 +105,7 @@ class ArticulosPage extends Component {
                 listaprecioactual={this.state.listaprecioActual}
                 handleSubmit={this.handleSubmit}                
                 onRef={ref => (this.child = ref)}
-              />
-            </Paper>
+              />            
           </Grid>
         </Grid>
       </React.Fragment>

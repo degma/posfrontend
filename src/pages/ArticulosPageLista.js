@@ -25,28 +25,33 @@ class ArticulosPageLista extends Component {
     this.state = {
       lista: [],
       openNewDialog: false,
-      openUpdateDialog:false,
+      openUpdateDialog: false,
       dialogType: '',
-      selectedArt: ''
+      selectedArt: '',
+      categorias: [],
+      generos: [],
+      fabricantes: []
     };
     this.handleEliminar = this.handleEliminar.bind(this);
     this.handleClickOpen = this.handleClickOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
 
-  handleClickOpen = () => {    
-    this.setState({ openNewDialog: true    
-     });
+  handleClickOpen = () => {
+    this.setState({
+      openNewDialog: true
+    });
   };
 
   handleClose = () => {
     this.setState({ openNewDialog: false });
   };
 
-  handleClickOpenUpdate = (articulo) => {    
-    this.setState({ openUpdateDialog: true,
+  handleClickOpenUpdate = (articulo) => {
+    this.setState({
+      openUpdateDialog: true,
       selectedArt: articulo
-     });
+    });
   };
 
   handleCloseUpdate = () => {
@@ -61,10 +66,31 @@ class ArticulosPageLista extends Component {
         this.setState({ lista: articulos.data.articulos });
       })
       .catch(error => console.log(error));
+
+    eventService.categoria
+      .getCategorias()
+      .then(categorias => {
+        this.setState({ categorias: categorias.data })
+      })
+      .catch(error => console.log(error))
+
+    eventService.fabricante
+      .getFabricantes()
+      .then(fabricantes => {
+        this.setState({ fabricantes: fabricantes.data })
+      })
+      .catch(error => console.log(error))
+
+    eventService.genero
+      .getGeneros()
+      .then(generos => {
+        this.setState({ generos: generos.data })
+      })
+      .catch(error => console.log(error))
   }
 
   handleEliminar(args) {
-    
+
     eventService.articulo
       .desactivarArticulo(args.id)
       .then(() => {
@@ -104,7 +130,7 @@ class ArticulosPageLista extends Component {
           <ArticuloList
             lista={this.state.lista}
             handleEliminar={this.handleEliminar}
-            handleClickUpdate= {this.handleClickOpenUpdate}
+            handleClickUpdate={this.handleClickOpenUpdate}
           />
         </Paper>
         <DialogArticulo
@@ -113,6 +139,9 @@ class ArticulosPageLista extends Component {
           open={this.state.openNewDialog}
           opendialog={this.handleClickOpen}
           closedialog={this.handleClose}
+          categorias={this.state.categorias}
+          generos={this.state.generos}
+          fabricantes={this.state.fabricantes}
         />
         <DialogArticulo
           dialogTitle="Actualizar Artículo"
@@ -122,7 +151,6 @@ class ArticulosPageLista extends Component {
           closedialog={this.handleCloseUpdate}
           articuloUpdate={this.state.selectedArt}
         />
-  
       </React.Fragment>
     );
   }

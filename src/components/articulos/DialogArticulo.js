@@ -15,6 +15,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
+import InputForm from "./InputForm";
 
 
 const styles = {
@@ -75,12 +76,15 @@ class DialogArticulo extends Component {
             </Toolbar>
           </AppBar>
           {this.props.tipo === "new" ?
-            <ArticuloPageNew
+            <InputForm
               cerrarDialog={this.handleClose}
+              categorias={this.props.categorias}
+              fabricantes={this.props.fabricantes}
+              generos={this.props.generos}
             /> :
-          <ArticuloPageUpdate
-            articulo={this.props.articuloUpdate}
-            cerrarDialog={this.handleClose} />            
+            <ArticuloPageUpdate
+              articulo={this.props.articuloUpdate}
+              cerrarDialog={this.handleClose} />
           }
 
         </Dialog>

@@ -42,7 +42,6 @@ class ListaPreciosPage extends Component {
     })
     
   }
-
   
   render() {
     return (

@@ -8,7 +8,7 @@ const apiClient = axios.create({
     baseURL: 'http://127.0.0.1:3001/api/v1',
     headers: {
         "Content-Type": "application/json",
-        "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1NzI2MDAwMiwiZXhwIjoxNTU3ODY0ODAyfQ.GeNbsbwjMEbwia04VfPUu5BORvdMX7oq9Nnoy-CKsSM"
+        "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1Nzc1NzgxNSwiZXhwIjoxNTU4MzYyNjE1fQ.vvAeGte9fVjg_IX7_jq8OXNnEwRL2VvckTk_GDOaTFQ"
     }
 })
 

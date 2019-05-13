@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { Formik } from "formik";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { Form } from "./form";
+import Grid from '@material-ui/core/Grid';
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
-
 import * as Yup from "yup"
 import PropTypes from 'prop-types';
 
@@ -29,10 +29,24 @@ const validationSchema = Yup.object({
 })
 
 const styles = theme => ({
+  demo: {
+    height: 240,
+    background: "#f00",
+    [theme.breakpoints.up("lg")]: {
+      width: 1170
+    }
+  },
+  titulo: {
+    paddingTop: 10
+  },
+  root: {
+    flexGrow: 1,
+  },
+  appBar: {
+    position: 'relative',
+  },
   layout: {
     width: 'auto',
-    display: 'flex',
-    justifyContent: 'flex-center',
     marginLeft: theme.spacing.unit * 2,
     marginRight: theme.spacing.unit * 2,
     [theme.breakpoints.up(600 + theme.spacing.unit * 2 * 2)]: {
@@ -51,16 +65,13 @@ const styles = theme => ({
       padding: theme.spacing.unit * 3,
     },
   },
-  stepper: {
-    padding: `${theme.spacing.unit * 3}px 0 ${theme.spacing.unit * 5}px`,
-  },
   buttons: {
     display: 'flex',
     justifyContent: 'flex-end',
   },
   button: {
-    marginTop: theme.spacing.unit * 3,
-    marginLeft: theme.spacing.unit,
+    marginTop: theme.spacing.unit * 5,
+    marginLeft: theme.spacing.unit
   },
 });
 
@@ -74,23 +85,19 @@ class InputForm extends Component {
 
   render() {
     const classes = this.props;
+    
     const values = { name: "", descripcion: "", precio: "", listadeprecio: "", categoria: "", genero: [], fabricante: "" };
 
     return (
-      <React.Fragment>    
-        <div className={classes.layout} >
-          <Paper className={classes.paper}>
-            <Typography component="h1" variant="h4" align="center">
-            </Typography>
-            <Formik
-              render={props => <Form {...props} />}
-              initialValues={values}
-              validationSchema={validationSchema}
-            />
-          </Paper>
-        </div >
+      <Paper>        
+        <Formik
+          render={props => <Form {...props} categorias={this.props.categorias} generos={this.props.generos} fabricantes={this.props.fabricantes}/>}
+          initialValues={values}
+          validationSchema={validationSchema}
+          hola="hola"
+        />
+      </Paper>
 
-      </React.Fragment>
     );
   }
 }
