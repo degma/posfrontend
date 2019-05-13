@@ -30,11 +30,6 @@ const useStyles = makeStyles({
 });
 
 
-const handleChange = event =>{
-  this.setState({ name: event.target.value });
-  console.log(event.target.value)
-};
-
 export const Form = props => {
 
   console.log(props.categorias, props.fabricantes, props.generos)
@@ -56,6 +51,10 @@ export const Form = props => {
     handleChange(e);
     setFieldTouched(name, true, false);
   };
+
+  const handleDropdown = event => {
+    console.log(event.target)
+  }
   return (
     <React.Fragment>
       <Grid item xs={12} className={classes.items}>
@@ -122,7 +121,7 @@ export const Form = props => {
           error={touched.categoria && Boolean(errors.categoria)}
           label="Categoria"
           fullWidth
-          onChange={handleChange()}
+          onChange={handleDropdown}
           value={categoria}
         >
           {props.categorias.map(name => (
@@ -144,7 +143,7 @@ export const Form = props => {
           error={touched.genero && Boolean(errors.genero)}
           label="genero"
           fullWidth
-          onChange={handleChange}
+          onChange={handleDropdown}
           renderValue={selected => (
             <div className={classes.chips}>
               {console.log(selected)}
@@ -171,7 +170,7 @@ export const Form = props => {
           error={touched.fabricante && Boolean(errors.fabricante)}
           label="fabricante"
           fullWidth
-          onChange={handleChange}
+          onChange={handleDropdown}
           value={fabricante}
         >
           {props.fabricantes.map(item => (
