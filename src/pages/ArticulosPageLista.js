@@ -15,6 +15,12 @@ const styles = {
   },
   flex: {
     flex: 1
+  },
+  encabezado: {
+    padding: 12
+  },
+  paper: {
+    margin: 12
   }
 };
 
@@ -24,6 +30,14 @@ class ArticulosPageLista extends Component {
     super(props);
     this.state = {
       lista: [],
+      listadeprecio: {
+        id: '',
+        nombre: '',
+        updatedAt: '',
+        createdAt: '',
+        validaFrom: '',
+        validaTo: ''
+      },
       openNewDialog: false,
       openUpdateDialog: false,
       dialogType: '',
@@ -35,11 +49,14 @@ class ArticulosPageLista extends Component {
     this.handleEliminar = this.handleEliminar.bind(this);
     this.handleClickOpen = this.handleClickOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handleAddArticulo = this.handleAddArticulo.bind(this);
   }
 
   handleClickOpen = () => {
     this.setState({
-      openNewDialog: true
+      openNewDialog: true,
+      selectedArt: '',
+      actionDialog: "new"
     });
   };
 
@@ -48,9 +65,11 @@ class ArticulosPageLista extends Component {
   };
 
   handleClickOpenUpdate = (articulo) => {
+    console.log("ARTICULO A UPDETEAR",articulo)
     this.setState({
-      openUpdateDialog: true,
-      selectedArt: articulo
+      openNewDialog: true,
+      selectedArt: articulo,
+      actionDialog: "update"
     });
   };
 
@@ -59,14 +78,29 @@ class ArticulosPageLista extends Component {
   };
 
   componentDidMount() {
+
     toast.configure();
+
+    /* Articulos */
     eventService.articulo
       .getArticulo()
-      .then(articulos => {
-        this.setState({ lista: articulos.data.articulos });
+      .then(articulos => {        
+        this.setState({
+          lista: articulos.data.articulos,
+          listadeprecio: {
+            id: articulos.data.id,
+            nombre: articulos.data.nombre,
+            updatedAt: articulos.data.updatedAt,
+            createdAt: articulos.data.createdAt,
+            validaFrom: articulos.data.validaFrom,
+            validaTo: articulos.data.validaTo
+          },
+          actionDialog: ''
+        });
       })
       .catch(error => console.log(error));
 
+    /* Categorias */
     eventService.categoria
       .getCategorias()
       .then(categorias => {
@@ -74,6 +108,7 @@ class ArticulosPageLista extends Component {
       })
       .catch(error => console.log(error))
 
+    /* Fabricantes */
     eventService.fabricante
       .getFabricantes()
       .then(fabricantes => {
@@ -81,12 +116,46 @@ class ArticulosPageLista extends Component {
       })
       .catch(error => console.log(error))
 
+    /* Generos */
     eventService.genero
       .getGeneros()
       .then(generos => {
         this.setState({ generos: generos.data })
       })
       .catch(error => console.log(error))
+  }
+
+  /* Agregar el articulo! */
+  handleAddArticulo(args) {
+
+    if (this.state.actionDialog === "new") {
+      eventService.articulo.crearArticulo(args)
+        .then(articulo => {
+          this.setState({
+            openNewDialog: false,
+            lista: [...this.state.lista, articulo.data]
+          });
+        })
+        .catch(error => console.log(error))
+    }
+
+    if (this.state.actionDialog === "update") {
+      console.log(args)
+      eventService.articulo.editar(args)
+        .then(articulo => {
+          let updatedLista = this.state.lista.filter( obj => {
+            return obj.id !== args.id;
+          })
+          updatedLista.push(articulo.data)
+          this.setState({
+            openNewDialog: false,
+            lista: updatedLista
+          });
+          console.log("AAAAAA", articulo)
+        })
+        .catch(error => console.log(error))
+    }
+
   }
 
   handleEliminar(args) {
@@ -108,49 +177,66 @@ class ArticulosPageLista extends Component {
 
   render() {
     const { classes } = this.props;
+    console.log("lista de articulos", this.state.lista)
     return (
       <React.Fragment>
-        <Paper className="m-2">
-          <Grid container justify="center">
-            <Grid item xs={10} className="p-2">
-              <Typography variant="h5" color="inherit">Artículos</Typography>
-            </Grid>
-            <Grid item xs={2} className="p-2">
-              <Button
-                name="new"
-                variant="contained"
-                color="primary"
-                onClick={this.handleClickOpen}
-              >
-                Nuevo
+        <Grid container justify="flex-start">
+          <Grid item xs={10}>
+            <Paper className={classes.paper}>
+              <Grid container justify="center">
+                <Grid item xs={10} className={classes.encabezado}>
+                  <Typography variant="h5" color="inherit">Artículos</Typography>
+                </Grid>
+                <Grid item xs={2} justify="flex-start" className={classes.encabezado}>
+                  <Button
+                    name="new"
+                    variant="contained"
+                    color="primary"
+                    onClick={this.handleClickOpen}
+                  >
+                    Nuevo
               </Button>
-            </Grid>
+                </Grid>
+              </Grid>
+              <Divider />
+              <Grid container justify="center">
+                <Grid item xs={12}>
+                  <ArticuloList
+                    lista={this.state.lista}
+                    handleEliminar={this.handleEliminar}
+                    handleClickUpdate={this.handleClickOpenUpdate}
+                  />
+                </Grid>
+              </Grid>
+            </Paper>
           </Grid>
-          <Divider />
-          <ArticuloList
-            lista={this.state.lista}
-            handleEliminar={this.handleEliminar}
-            handleClickUpdate={this.handleClickOpenUpdate}
-          />
-        </Paper>
+
+        </Grid>
+
         <DialogArticulo
           dialogTitle="Nuevo Artículo"
-          tipo="new"
           open={this.state.openNewDialog}
           opendialog={this.handleClickOpen}
           closedialog={this.handleClose}
+          listadeprecio={this.state.listadeprecio}
           categorias={this.state.categorias}
           generos={this.state.generos}
           fabricantes={this.state.fabricantes}
+          handleAddArticulo={this.handleAddArticulo}
+          articuloUpdate={this.state.selectedArt}
+          action={this.state.actionDialog}
         />
-        <DialogArticulo
+        {/* <DialogArticulo
           dialogTitle="Actualizar Artículo"
           tipo="update"
           open={this.state.openUpdateDialog}
           opendialog={this.handleClickOpenUpdate}
+          listadeprecio={this.state.listadeprecio}
           closedialog={this.handleCloseUpdate}
-          articuloUpdate={this.state.selectedArt}
-        />
+          categorias={this.state.categorias}
+          generos={this.state.generos}
+          fabricantes={this.state.fabricantes}
+        /> */}
       </React.Fragment>
     );
   }

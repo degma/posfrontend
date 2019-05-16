@@ -41,6 +41,9 @@ export default {
         },
         desactivarArticulo(id){
             return apiClient.delete('/articulo/'+ id)
+        },
+        editar(payload){
+            return apiClient.put('/articulo', payload)
         }
     },
     listaprecio: {

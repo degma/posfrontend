@@ -75,17 +75,18 @@ class DialogArticulo extends Component {
               </Typography>
             </Toolbar>
           </AppBar>
-          {this.props.tipo === "new" ?
-            <InputForm
-              cerrarDialog={this.handleClose}
-              categorias={this.props.categorias}
-              fabricantes={this.props.fabricantes}
-              generos={this.props.generos}
-            /> :
-            <ArticuloPageUpdate
-              articulo={this.props.articuloUpdate}
-              cerrarDialog={this.handleClose} />
-          }
+
+          <InputForm
+            cerrarDialog={this.handleClose}
+            listadeprecio={this.props.listadeprecio}
+            categorias={this.props.categorias}
+            fabricantes={this.props.fabricantes}
+            generos={this.props.generos}
+            handleAddArticulo={this.props.handleAddArticulo}
+            articulo={this.props.articuloUpdate}
+            action={this.props.action}
+          />
+
 
         </Dialog>
       </React.Fragment>

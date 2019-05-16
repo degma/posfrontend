@@ -54,7 +54,6 @@ class ArticuloList extends Component {
     return (
       <React.Fragment>
         <List dense={dense}>
-          {console.log(this.props.lista)}
           {this.props.lista.map(listitem => (
             <ListItem key={listitem.id}>
               <ListItemAvatar>
@@ -67,7 +66,7 @@ class ArticuloList extends Component {
                 secondary={listitem.descripcion}
               />
               <ListItemSecondaryAction>
-                <IconButton onClick={()=>this.props.handleClickUpdate(listitem)}>
+                <IconButton onClick={() => this.props.handleClickUpdate(listitem)}>
                   <EditIcon />
                 </IconButton>
                 <IconButton
