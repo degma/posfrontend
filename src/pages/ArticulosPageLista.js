@@ -67,9 +67,9 @@ class ArticulosPageLista extends Component {
   handleClickOpenUpdate = (articulo) => {
     console.log("ARTICULO A UPDETEAR",articulo)
     this.setState({
-      openNewDialog: true,
       selectedArt: articulo,
-      actionDialog: "update"
+      actionDialog: "update",
+      openNewDialog: true,
     });
   };
 

@@ -102,7 +102,7 @@ class InputForm extends Component {
           id: this.props.articulo.id,
           nombre: this.props.articulo.nombre,
           descripcion: this.props.articulo.descripcion,
-          precio: this.props.articulo.precio.precio,
+          precio: this.props.articulo.listaprecios[0].precio.precio,
           listaprecioId: this.props.listadeprecio.id,
           categoriaId: this.props.articulo.categoriaId,
           generoId: this.props.articulo.generos.map(item => item.id),
@@ -112,7 +112,7 @@ class InputForm extends Component {
       }
 
     }
-    console.log("HOLA",values())
+    console.log("HOLA", values())
 
 
 
