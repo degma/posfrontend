@@ -7,7 +7,7 @@ import ArticulosPage from "./pages/ArticulosPageMain"
 import ListaPreciosPage from "./pages/ListaPreciosPage"
 import ConfiguracionPage from './pages/ConfiguracionPage'
 import CssBaseline from '@material-ui/core/CssBaseline';
-
+import FabricantesPage from './pages/FabricantesPage'
 
 const drawerWidth = 240;
 
@@ -73,7 +73,7 @@ const styles = theme => ({
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    padding: theme.spacing.unit * 1,
+    padding: theme.spacing.unit * 0,
     height: '100vh',
     overflow: 'auto',
   },
@@ -116,6 +116,7 @@ class App extends Component {
                 <Route path="/listaprecios" component={ListaPreciosPage} />
                 <Route path="/articulos" component={ArticulosPage} />
                 <Route path="/configuracion" component={ConfiguracionPage} />
+                <Route path="/fabricantes" component={FabricantesPage} />
               </Switch>
             </main>
           </div>

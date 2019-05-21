@@ -135,7 +135,7 @@ class NavigationBar extends React.Component {
                             noWrap
                             className={classes.title}
                         >
-                            Dashboard
+                            PoS
                         </Typography>
                         <IconButton color="inherit">
                             <Badge badgeContent={4} color="secondary">

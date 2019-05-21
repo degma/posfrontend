@@ -41,8 +41,7 @@ class Fabricantes extends Component {
                         isLoading = {this.state.isLoading}                        
                     />
                 </div>
-                <div className="col-md-5">
-                    <ListaFabricantes />
+                <div className="col-md-5">        
 
                 </div>
                 </div>

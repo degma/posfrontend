@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
+import Divider from '@material-ui/core/Divider'
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
@@ -45,7 +46,7 @@ class ConfiguracionPage extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="static" color="default">
+        
           <Tabs
             value={value}
             onChange={this.handleChange}
@@ -59,7 +60,8 @@ class ConfiguracionPage extends React.Component {
             <Tab label="Lista de Precios" />
             
           </Tabs>
-        </AppBar>
+          <Divider />
+        
         {value === 0 && <Fabricantes />}
         {value === 1 && <TabContainer>Item Two</TabContainer>}
         {value === 2 && <TabContainer>Item Three</TabContainer>}

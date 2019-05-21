@@ -181,20 +181,18 @@ class ArticulosPageLista extends Component {
     return (
       <React.Fragment>
         <Grid container justify="flex-start">
-          <Grid item xs={10}>
-            <Paper className={classes.paper}>
+          <Grid item xs={12}>
+            
               <Grid container justify="center">
-                <Grid item xs={10} className={classes.encabezado}>
-                  <Typography variant="h5" color="inherit">Artículos</Typography>
-                </Grid>
-                <Grid item xs={2} justify="flex-start" className={classes.encabezado}>
+                <Grid item xs={12} className={classes.encabezado}>
+                  
                   <Button
                     name="new"
                     variant="contained"
                     color="primary"
                     onClick={this.handleClickOpen}
                   >
-                    Nuevo
+                    + Nuevo
               </Button>
                 </Grid>
               </Grid>
@@ -208,7 +206,7 @@ class ArticulosPageLista extends Component {
                   />
                 </Grid>
               </Grid>
-            </Paper>
+
           </Grid>
 
         </Grid>
@@ -225,18 +223,7 @@ class ArticulosPageLista extends Component {
           handleAddArticulo={this.handleAddArticulo}
           articuloUpdate={this.state.selectedArt}
           action={this.state.actionDialog}
-        />
-        {/* <DialogArticulo
-          dialogTitle="Actualizar Artículo"
-          tipo="update"
-          open={this.state.openUpdateDialog}
-          opendialog={this.handleClickOpenUpdate}
-          listadeprecio={this.state.listadeprecio}
-          closedialog={this.handleCloseUpdate}
-          categorias={this.state.categorias}
-          generos={this.state.generos}
-          fabricantes={this.state.fabricantes}
-        /> */}
+        />        
       </React.Fragment>
     );
   }
