@@ -7,7 +7,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
-import ArticuloDataGrid from "../components/articulos/ArticuloDataGrid";
+import FabricantesPage from "../pages/FabricantesPage"
 
 function TabContainer(props) {
   return (
@@ -61,7 +61,7 @@ class ArticulosPageMain extends Component {
           </Tabs>
         </AppBar>
         {value === 0 && <ArticulosPageLista />}
-        {value === 1 && <ArticuloDataGrid />}
+        {value === 1 && <FabricantesPage />}
         {value === 2 && <TabContainer>Item Three</TabContainer>}
         {value === 3 && <TabContainer>Item Four</TabContainer>}
         {value === 4 && <TabContainer>Item Five</TabContainer>}
