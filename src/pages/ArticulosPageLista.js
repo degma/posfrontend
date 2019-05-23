@@ -206,13 +206,10 @@ class ArticulosPageLista extends Component {
                   />
                 </Grid>
               </Grid>
-
           </Grid>
-
         </Grid>
-
         <DialogArticulo
-          dialogTitle="Nuevo Artículo"
+          dialogTitle="Nuevo Articulo"
           open={this.state.openNewDialog}
           opendialog={this.handleClickOpen}
           closedialog={this.handleClose}

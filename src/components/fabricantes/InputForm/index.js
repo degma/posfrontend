@@ -3,19 +3,15 @@ import { Formik } from "formik";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { Form } from "./form";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import * as Yup from "yup";
 import PropTypes from "prop-types";
-import eventService from "../../../api/eventService";
+
 
 const validationSchema = Yup.object({
   nombre: Yup.string("Nombre").required("*campo obligatorio"),
   descripcion: Yup.string("Enter your email").required("*campo obligatorio"),
-  precio: Yup.string("Precio").required("*campo obligatorio"),
-  generoId: Yup.string("Genero").required("*campo obligatorio"),
-  categoriaId: Yup.string("Categoria").required("*campo obligatorio"),
-  fabricanteId: Yup.string("Fabricante").required("*campo obligatorio")
+
 });
 
 const styles = theme => ({
@@ -77,53 +73,35 @@ class InputForm extends Component {
     const values = () => {
       if (this.props.action === "new") {
         let val = {
-          id: "",
-          nombre: "",
-          descripcion: "",
-          precio: "",
-          listaprecioId: this.props.listadeprecio.id,
-          categoriaId: "",
-          generoId: [],
-          fabricanteId: ""
+          // id: "",
+          // nombre: "",
+          // descripcion: ""
         };
         return val;
       } else {
         let val = {
-          id: this.props.articulo.id,
-          nombre: this.props.articulo.nombre,
-          descripcion: this.props.articulo.descripcion,
-          precio: this.props.articulo.listaprecios[0].precio.precio,
-          listaprecioId: this.props.listadeprecio.id,
-          categoriaId: this.props.articulo.categoriaId,
-          generoId: this.props.articulo.generos.map(item => item.id),
-          fabricanteId: this.props.articulo.fabricanteId
+          // id: this.props.articulo.id,
+          // nombre: this.props.articulo.nombre,
+          // descripcion: this.props.articulo.descripcion
         };
         return val;
       }
     };
-    console.log("HOLA", values());
 
     return (
       <Grid container justify="center">
-          <Typography variant="h1">Detalles</Typography>
-        <Grid item xs={3}>
-            Ingresar...
-            <Grid />
-        <Grid item xs={9}>
+  
+        <Grid item xs={12}>
           <Formik
             render={props => (
               <Form
                 {...props}
-                categorias={this.props.categorias}
-                generos={this.props.generos}
-                fabricantes={this.props.fabricantes}
-                listadeprecioactual={this.props.listadeprecio}
               />
             )}
             initialValues={values()}
             validationSchema={validationSchema}
             onSubmit={values => {
-              this.props.handleAddArticulo(values);
+              this.props.handleAddItem(values);
             }}
           />
         </Grid>

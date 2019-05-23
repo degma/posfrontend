@@ -86,8 +86,7 @@ class DialogArticulo extends Component {
             articulo={this.props.articuloUpdate}
             action={this.props.action}
           />
-
-
+          
         </Dialog>
       </React.Fragment>
     );

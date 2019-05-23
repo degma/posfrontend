@@ -1,51 +1,152 @@
 import React from "react";
 import Divider from "@material-ui/core/Divider";
 import PropTypes from "prop-types";
-import InputBase from "@material-ui/core/InputBase";
-import IconButton from "@material-ui/core/IconButton";
-import SearchIcon from "@material-ui/icons/Search";
+import { withStyles } from '@material-ui/styles';
 import Grid from "@material-ui/core/Grid";
 import eventService from "../api/eventService";
 import FabricantesDataGrid from "../components/fabricantes/FabricantesDataGrid";
+import { Button, Typography } from "@material-ui/core";
+import FullScreenDialog from "../components/dialogs/FullScreenDialog"
+import InputForm from "../components/fabricantes/InputForm/"
+import { toast } from "react-toastify";
+
+const styles = {
+  root: {
+    background: '#e0e0e0',
+    padding: '20px',
+  },
+  button: {
+
+  }
+};
 
 class FabricantesPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      fabricantes: []
+      fabricantes: [],
+      openNewDialog: false,
+      openUpdateDialog: false,
+      dialogType: '',
+      selectedItem: '',
     };
+    this.handleEliminar = this.handleEliminar.bind(this);
+    this.handleClickOpen = this.handleClickOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
+
   componentDidMount() {
     eventService.fabricante.getFabricantes().then(fabricantes => {
-      this.setState ({
+      this.setState({
         fabricantes: fabricantes.data
       });
     });
   }
 
+  handleAddItem(args) {
+    if (this.state.actionDialog === "new") {
+      eventService.articulo.crearArticulo(args)
+        .then(articulo => {
+          this.setState({
+            openNewDialog: false,
+            lista: [...this.state.lista, articulo.data]
+          });
+        })
+        .catch(error => console.log(error))
+    }
+
+    if (this.state.actionDialog === "update") {
+      console.log(args)
+      eventService.articulo.editar(args)
+        .then(articulo => {
+          let updatedLista = this.state.lista.filter(obj => {
+            return obj.id !== args.id;
+          })
+          updatedLista.push(articulo.data)
+          this.setState({
+            openNewDialog: false,
+            lista: updatedLista
+          });
+          console.log("AAAAAA", articulo)
+        })
+        .catch(error => console.log(error))
+    }
+
+  }
+
+  handleEliminar(args) {
+    eventService.articulo
+      .desactivarArticulo(args.id)
+      .then(() => {
+        let updatedLista = this.state.lista.filter(function (obj) {
+          return obj.id !== args.id;
+        });
+        this.setState({ lista: updatedLista });
+        toast.info("Articulo eliminado!");
+      })
+      .catch(error => {
+        console.log(error);
+        toast.error(error.name);
+      });
+  }
+
+
+
+  handleClickOpen = () => {
+    this.setState({
+      openNewDialog: true,
+      selectedItem: '',
+      actionDialog: "new"
+    });
+  };
+
+  handleClose = () => {
+    this.setState({ openNewDialog: false });
+  };
+
+
   render() {
+    const { classes } = this.props;
     return (
       <React.Fragment>
-        <div>
-          <Grid container justify="center">
-            <Grid item xs={8} />
-            <Grid item xs={4}>
-              <InputBase placeholder="Buscar Fabricante" />
-              <IconButton aria-label="Search">
-                <SearchIcon />
-              </IconButton>
-            </Grid>
+        <Grid container justify="center">
+          <Grid item xs={12}>
+            <Typography component="h2" variant="display3" gutterBottom>Fabricantes</Typography>
           </Grid>
-          <Divider />
-          <FabricantesDataGrid fabricantes={this.state.fabricantes} />
-        </div>
+          <Grid item xs={12} className={classes.root}>
+            <Button
+              name="new"
+              variant="contained"
+              color="primary"
+              onClick={this.handleClickOpen}
+            >
+              + Nuevo
+              </Button>
+
+          </Grid>
+          <Grid item xs={12}>
+            <Divider />
+            <FabricantesDataGrid fabricantes={this.state.fabricantes} />
+          </Grid>
+        </Grid>
+        <FullScreenDialog
+          dialogTitle="Agregar Fabricante"
+          open={this.state.openNewDialog}
+          opendialog={this.handleClickOpen}
+          closedialog={this.handleClose}
+          handleAddItem={this.handleAddItem}
+          articuloUpdate={this.state.selectedArt}
+          action={this.state.actionDialog}
+          content={<InputForm />}
+        />
       </React.Fragment>
     );
   }
 }
 
+
 FabricantesPage.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
-export default FabricantesPage;
+export default withStyles(styles)(FabricantesPage);
