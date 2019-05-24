@@ -7,11 +7,8 @@ import Typography from "@material-ui/core/Typography";
 import * as Yup from "yup";
 import PropTypes from "prop-types";
 
-
 const validationSchema = Yup.object({
-  nombre: Yup.string("Nombre").required("*campo obligatorio"),
-  descripcion: Yup.string("Enter your email").required("*campo obligatorio"),
-
+  nombre: Yup.string("Nombre").required("*campo obligatorio")
 });
 
 const styles = theme => ({
@@ -64,18 +61,31 @@ const styles = theme => ({
 class InputForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      
+    };
+    
   }
 
   render() {
-    const classes = this.props;
+    
 
     const values = () => {
       if (this.props.action === "new") {
         let val = {
-          // id: "",
-          // nombre: "",
-          // descripcion: ""
+          nombre:'',
+          descripcion:'',
+          markup:'',
+          nombre_contacto:'',
+          apellido:'',
+          email:'',
+          celular_contacto:'',
+          telefono:'',
+          website:'',
+          direccion:'',
+          localidad:'',
+          codigo_postal:'',
+          notas:''
         };
         return val;
       } else {
@@ -90,18 +100,13 @@ class InputForm extends Component {
 
     return (
       <Grid container justify="center">
-  
         <Grid item xs={12}>
           <Formik
-            render={props => (
-              <Form
-                {...props}
-              />
-            )}
+            render={props => <Form {...props} />}
             initialValues={values()}
             validationSchema={validationSchema}
-            onSubmit={values => {
-              this.props.handleAddItem(values);
+            onSubmit ={values => {
+              this.props.handleAdd(values)
             }}
           />
         </Grid>

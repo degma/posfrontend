@@ -7,7 +7,7 @@ import eventService from "../api/eventService";
 import FabricantesDataGrid from "../components/fabricantes/FabricantesDataGrid";
 import { Button, Typography } from "@material-ui/core";
 import FullScreenDialog from "../components/dialogs/FullScreenDialog"
-import InputForm from "../components/fabricantes/InputForm/"
+import InputForm from "../components/fabricantes/InputForm/index"
 import { toast } from "react-toastify";
 
 const styles = {
@@ -33,6 +33,7 @@ class FabricantesPage extends React.Component {
     this.handleEliminar = this.handleEliminar.bind(this);
     this.handleClickOpen = this.handleClickOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handleAddItem = this.handleAddItem.bind(this);
   }
 
   componentDidMount() {
@@ -44,12 +45,13 @@ class FabricantesPage extends React.Component {
   }
 
   handleAddItem(args) {
+    alert("por lo menos aca llego!")
     if (this.state.actionDialog === "new") {
-      eventService.articulo.crearArticulo(args)
-        .then(articulo => {
+      eventService.fabricante.crearFabricante(args)
+        .then(item => {
           this.setState({
             openNewDialog: false,
-            lista: [...this.state.lista, articulo.data]
+            fabricantes: [...this.state.fabricantes, item.data]
           });
         })
         .catch(error => console.log(error))
@@ -134,7 +136,7 @@ class FabricantesPage extends React.Component {
           open={this.state.openNewDialog}
           opendialog={this.handleClickOpen}
           closedialog={this.handleClose}
-          handleAddItem={this.handleAddItem}
+          handleAdd={this.handleAddItem}
           articuloUpdate={this.state.selectedArt}
           action={this.state.actionDialog}
           content={<InputForm />}
