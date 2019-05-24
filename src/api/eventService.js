@@ -8,7 +8,7 @@ const apiClient = axios.create({
     baseURL: 'http://127.0.0.1:3001/api/v1',
     headers: {
         "Content-Type": "application/json",
-        "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1ODY2NDg5OCwiZXhwIjoxNTU5MjY5Njk4fQ.BVzleQq8ty_1cUBGEDj5cacb8kQdHrJTMgfvc5RjOls"
+        "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1ODcyMTk3MywiZXhwIjoxNTU5MzI2NzczfQ.uHPhcbgCIyJSQSQCE-_jOc7bY5qT92egDoMkwt9eXgM"
     }
 })
 
@@ -33,40 +33,46 @@ export default {
         }
     },
     articulo: {
-        crearArticulo(payload){
-            return apiClient.post('/articulo',payload)
+        crearArticulo(payload) {
+            return apiClient.post('/articulo', payload)
         },
-        getArticulo(){
+        getArticulo() {
             return apiClient.get('/articulo/')
         },
-        desactivarArticulo(id){
-            return apiClient.delete('/articulo/'+ id)
+        desactivarArticulo(id) {
+            return apiClient.delete('/articulo/' + id)
         },
-        editar(payload){
+        editar(payload) {
             return apiClient.put('/articulo', payload)
         }
     },
     listaprecio: {
-        getCurrent(){
+        getCurrent() {
             return apiClient.get('/listaprecio/current')
         }
     },
     categoria: {
-        getCategorias(){
+        getCategorias() {
             return apiClient.get('/categoria')
         }
     },
     genero: {
-        getGeneros(){
+        getGeneros() {
             return apiClient.get('/genero')
         }
     },
     fabricante: {
-        getFabricantes(){
+        getFabricantes() {
             return apiClient.get('/fabricante')
         },
-        crearFabricante(payload){
+        crearFabricante(payload) {
             return apiClient.post('/fabricante', payload)
+        },
+        editar(payload) {
+            return apiClient.put('/fabricante/' + payload.id, payload)
+        },
+        desactivarFabricante(id) {
+            return apiClient.delete('/articulo/' + id)
         }
     }
 }

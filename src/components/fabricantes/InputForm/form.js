@@ -97,14 +97,14 @@ export const Form = props => {
           </Grid>
           <Grid item xs={12} className={classes.items}>
             <Grid container>
-              <Grid item xs={3} className={classes.detalleForm}>
+              <Grid item lg={3} className={classes.detalleForm}>
                 <Typography variant="h5" gutterBottom>
                   Detalles
                 </Typography>
               </Grid>
-              <Grid item xs={9} className={classes.detalleForm}>
+              <Grid item lg={9} className={classes.detalleForm}>
                 <Grid container>
-                  <Grid item xs={6} className={classes.items}>
+                  <Grid item md={6} className={classes.items}>
                     <TextField
                       id="nombre"
                       name="nombre"
@@ -116,7 +116,7 @@ export const Form = props => {
                       fullWidth
                     />
                   </Grid>
-                  <Grid item xs={6} className={classes.items}>
+                  <Grid item md={6} className={classes.items}>
                     <TextField
                       id="markup"
                       name="markup"

@@ -59,17 +59,15 @@ class FabricantesPage extends React.Component {
 
     if (this.state.actionDialog === "update") {
       console.log(args)
-      eventService.articulo.editar(args)
-        .then(articulo => {
-          let updatedLista = this.state.lista.filter(obj => {
+      eventService.fabricante.editar(args)
+        .then(item => {
+          let updatedLista = this.state.fabricantes.filter(obj => {
             return obj.id !== args.id;
-          })
-          updatedLista.push(articulo.data)
+          })          
           this.setState({
             openNewDialog: false,
-            lista: updatedLista
+            fabricantes: updatedLista
           });
-          console.log("AAAAAA", articulo)
         })
         .catch(error => console.log(error))
     }
@@ -102,6 +100,14 @@ class FabricantesPage extends React.Component {
     });
   };
 
+  handleClickOpenUpdate = (item) => {    
+    this.setState({
+      selectedItem: item,
+      actionDialog: "update",
+      openNewDialog: true,
+    });
+  };
+
   handleClose = () => {
     this.setState({ openNewDialog: false });
   };
@@ -124,11 +130,13 @@ class FabricantesPage extends React.Component {
             >
               + Nuevo
               </Button>
-
           </Grid>
           <Grid item xs={12}>
             <Divider />
-            <FabricantesDataGrid fabricantes={this.state.fabricantes} />
+            <FabricantesDataGrid
+              fabricantes={this.state.fabricantes}
+              handleUpdateItem={this.handleClickOpenUpdate}
+            />
           </Grid>
         </Grid>
         <FullScreenDialog
@@ -136,11 +144,13 @@ class FabricantesPage extends React.Component {
           open={this.state.openNewDialog}
           opendialog={this.handleClickOpen}
           closedialog={this.handleClose}
-          handleAdd={this.handleAddItem}
-          articuloUpdate={this.state.selectedArt}
           action={this.state.actionDialog}
-          content={<InputForm />}
-        />
+        >
+          <InputForm
+            itemUpdate={this.state.selectedItem}
+            handleAddItem={this.handleAddItem}
+          />
+        </FullScreenDialog>
       </React.Fragment>
     );
   }

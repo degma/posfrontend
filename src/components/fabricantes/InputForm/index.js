@@ -89,11 +89,24 @@ class InputForm extends Component {
         };
         return val;
       } else {
-        let val = {
-          // id: this.props.articulo.id,
-          // nombre: this.props.articulo.nombre,
-          // descripcion: this.props.articulo.descripcion
-        };
+        let val = this.props.itemUpdate
+        // {
+        //   id: this.props.itemUpdate.id,          
+        //   nombre: this.props.itemUpdate.nombre,          
+        //   descripcion: this.props.itemUpdate.descripcion,
+        //   markup: this.props.itemUpdate.markup,
+        //   nombre_contacto:this.props.itemUpdate.nombre_contacto,
+        //   apellido:this.props.itemUpdate.apellido,
+        //   email:this.props.itemUpdate.email,
+        //   celular_contacto:this.props.itemUpdate.celular_contacto,
+        //   telefono:this.props.itemUpdate.telefono,
+        //   website:this.props.itemUpdate.website,
+        //   direccion:this.props.itemUpdate.direccion,
+        //   localidad:this.props.itemUpdate.localidad,
+        //   codigo_postal:this.props.itemUpdate.codigo_postal,
+        //   notas:this.props.itemUpdate.notas          
+        // };
+        console.log(val)
         return val;
       }
     };
@@ -106,7 +119,7 @@ class InputForm extends Component {
             initialValues={values()}
             validationSchema={validationSchema}
             onSubmit ={values => {
-              this.props.handleAdd(values)
+              this.props.handleAddItem(values)
             }}
           />
         </Grid>

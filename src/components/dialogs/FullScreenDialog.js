@@ -33,11 +33,15 @@ class DialogArticulo extends Component {
         };
         this.handleClickOpen = this.handleClickOpen.bind(this);
         this.handleClose = this.handleClose.bind(this);
+        this.handleAdd = this.handleAdd.bind(this);
+    }
+
+    handleAdd = (args) => {
+        this.props.handleAdd(args)
     }
 
     handleClickOpen = () => {
-
-        this.props.opendialog()
+        this.props.opendialog() 
     };
 
     handleClose = () => {
@@ -68,9 +72,9 @@ class DialogArticulo extends Component {
                             </Typography>
                         </Toolbar>
                     </AppBar>
-
-                    {this.props.content}
-
+                    <div>
+                        {this.props.children}
+                    </div>
                 </Dialog>
             </React.Fragment>
         );

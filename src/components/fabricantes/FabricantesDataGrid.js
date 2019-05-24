@@ -12,7 +12,7 @@ class FabricantesDataGrid extends Component {
     super(props);
     this.state = {
       lista: []
-    };
+    };    
   }
 
   render() {
@@ -22,32 +22,44 @@ class FabricantesDataGrid extends Component {
         accessor: "nombre"
       },
       {
+        Header: "Id",
+        accessor: "id",
+        show:false
+      },
+      {
         Header: "Telefono",
         accessor: "telefono"
       },
       {
         Header: "Contacto",
-        accessor: "nombre_contacto"
+        accessor: "nombre_contacto"        
       },
       {
         Header: "Notas",
         accessor: "notas",
+        sortable: false,
+        show: false,
         filterable: false
       },
       {
         Header: "",
-        Cell: () => (
-          
-              <IconButton style={{ verticalAlign: "top" }}>
-                <EditIcon />
-              </IconButton>
-          
+        sortable: false,
+        Cell: row => (
+          <div>
+            <IconButton style={{ padding: 5 }} onClick={() => this.props.handleUpdateItem(row.original)}>
+              <EditIcon />
+            </IconButton>
+            <IconButton style={{ padding: 5 }} onClick={() => console.log(row.original)}>
+              <DeleteIcon />
+            </IconButton>
+          </div>
+
         ),
-        filterable: false
+        filterable: false      
       }
     ];
-    console.log(this.state.lista);
-    console.log("FABRICANTES", this.props.fabricantes);
+
+
     return (
       <Grid container justify="center">
         <Grid item xs={12}>
