@@ -4,10 +4,10 @@ import PropTypes from "prop-types";
 import { withStyles } from '@material-ui/styles';
 import Grid from "@material-ui/core/Grid";
 import eventService from "../api/eventService";
-import FabricantesDataGrid from "../components/fabricantes/FabricantesDataGrid";
+import CategoriasDataGrid from "../components/categorias/CategoriasDataGrid";
 import { Button, Typography } from "@material-ui/core";
 import FullScreenDialog from "../components/dialogs/FullScreenDialog"
-import InputForm from "../components/fabricantes/InputForm/index"
+import InputForm from "../components/categorias/InputForm/index"
 import { toast } from "react-toastify";
 
 const styles = {
@@ -20,11 +20,11 @@ const styles = {
   }
 };
 
-class FabricantesPage extends React.Component {
+class CategoriasPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      fabricantes: [],
+      categorias: [],
       openNewDialog: false,
       openUpdateDialog: false,
       dialogType: '',
@@ -37,20 +37,21 @@ class FabricantesPage extends React.Component {
   }
 
   componentDidMount() {
-    eventService.fabricante.getFabricantes().then(fabricantes => {
+    eventService.categoria.getCategorias().then(categorias => {
       this.setState({
-        fabricantes: fabricantes.data
+        categorias: categorias.data
       });
     });
   }
 
   handleAddItem(args) {    
+    console.log("ARGSSS",args)
     if (this.state.actionDialog === "new") {
-      eventService.fabricante.crearFabricante(args)
+      eventService.categoria.crearCategoria(args)
         .then(item => {
           this.setState({
             openNewDialog: false,
-            fabricantes: [...this.state.fabricantes, item.data]
+            categorias: [...this.state.categorias, item.data]
           });
         })
         .catch(error => console.log(error))
@@ -58,16 +59,16 @@ class FabricantesPage extends React.Component {
 
     if (this.state.actionDialog === "update") {
       console.log(args)
-      eventService.fabricante.editar(args)
+      eventService.categoria.editar(args)
         .then(item => {
           console.log(item.data)
-          let updatedLista = this.state.fabricantes.filter(obj => {
+          let updatedLista = this.state.categorias.filter(obj => {
             return obj.id !== args.id;
           })
           updatedLista.push(item.data);
           this.setState({
             openNewDialog: false,
-            fabricantes: updatedLista
+            categorias: updatedLista
           });
         })
         .catch(error => console.log(error))
@@ -121,7 +122,7 @@ class FabricantesPage extends React.Component {
       <React.Fragment>
         <Grid container justify="center">
           <Grid item xs={12}>
-            <Typography component="h2" variant="display3" gutterBottom>Fabricantes</Typography>
+            <Typography component="h2" variant="display3" gutterBottom>Categorias</Typography>
           </Grid>
           <Grid item xs={12} className={classes.root}>
             <Button
@@ -135,14 +136,14 @@ class FabricantesPage extends React.Component {
           </Grid>
           <Grid item xs={12}>
             <Divider />
-            <FabricantesDataGrid
-              fabricantes={this.state.fabricantes}
+            <CategoriasDataGrid
+              categorias={this.state.categorias}
               handleUpdateItem={this.handleClickOpenUpdate}
             />
           </Grid>
         </Grid>
         <FullScreenDialog
-          dialogTitle="Agregar Fabricante"
+          dialogTitle="Agregar Categoria"
           open={this.state.openNewDialog}
           opendialog={this.handleClickOpen}
           closedialog={this.handleClose}
@@ -159,8 +160,8 @@ class FabricantesPage extends React.Component {
 }
 
 
-FabricantesPage.propTypes = {
+CategoriasPage.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(FabricantesPage);
+export default withStyles(styles)(CategoriasPage);

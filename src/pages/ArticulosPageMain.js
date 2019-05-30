@@ -8,6 +8,9 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import FabricantesPage from "../pages/FabricantesPage"
+import CategoriasPage from "./CategoriasPage";
+import GenerosPage from "./GenerosPage";
+import ListaPrecioPage from "./ListaPrecioPage";
 
 function TabContainer(props) {
   return (
@@ -58,13 +61,14 @@ class ArticulosPageMain extends Component {
             <Tab label="Fabricantes" />
             <Tab label="Categorias" />
             <Tab label="Generos" />            
+            <Tab label="Lista de Precios" />            
           </Tabs>
         </AppBar>
         {value === 0 && <ArticulosPageLista />}
         {value === 1 && <FabricantesPage />}
-        {value === 2 && <TabContainer>Item Three</TabContainer>}
-        {value === 3 && <TabContainer>Item Four</TabContainer>}
-        {value === 4 && <TabContainer>Item Five</TabContainer>}
+        {value === 2 && <CategoriasPage />}
+        {value === 3 && <GenerosPage />}
+        {value === 4 && <ListaPrecioPage />}
         {value === 5 && <TabContainer>Item Six</TabContainer>}
         {value === 6 && <TabContainer>Item Seven</TabContainer>}
       </div>

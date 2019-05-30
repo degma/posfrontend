@@ -1,34 +1,32 @@
 import React from "react";
 import Divider from "@material-ui/core/Divider";
 import PropTypes from "prop-types";
-import { withStyles } from '@material-ui/styles';
+import { withStyles } from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
 import eventService from "../api/eventService";
-import FabricantesDataGrid from "../components/fabricantes/FabricantesDataGrid";
 import { Button, Typography } from "@material-ui/core";
-import FullScreenDialog from "../components/dialogs/FullScreenDialog"
-import InputForm from "../components/fabricantes/InputForm/index"
+import FullScreenDialog from "../components/dialogs/FullScreenDialog";
+import InputForm from "../components/categorias/InputForm/index";
 import { toast } from "react-toastify";
+import ListaPrecioList from "../components/listadeprecio/ListaPrecioList";
 
 const styles = {
   root: {
-    background: '#e0e0e0',
-    padding: '20px',
+    background: "#e0e0e0",
+    padding: "20px"
   },
-  button: {
-
-  }
+  button: {}
 };
 
-class FabricantesPage extends React.Component {
+class ListaPrecioPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      fabricantes: [],
+      listaprecio: [],
       openNewDialog: false,
       openUpdateDialog: false,
-      dialogType: '',
-      selectedItem: '',
+      dialogType: "",
+      selectedItem: ""
     };
     this.handleEliminar = this.handleEliminar.bind(this);
     this.handleClickOpen = this.handleClickOpen.bind(this);
@@ -37,50 +35,52 @@ class FabricantesPage extends React.Component {
   }
 
   componentDidMount() {
-    eventService.fabricante.getFabricantes().then(fabricantes => {
+    eventService.listaprecio.getAll().then(listaprecio => {
       this.setState({
-        fabricantes: fabricantes.data
+        listaprecio: listaprecio.data
       });
     });
   }
 
-  handleAddItem(args) {    
+  handleAddItem(args) {
+    console.log("ARGSSS", args);
     if (this.state.actionDialog === "new") {
-      eventService.fabricante.crearFabricante(args)
+      eventService.listaprecio
+        .crearListaPrecio(args)
         .then(item => {
           this.setState({
             openNewDialog: false,
-            fabricantes: [...this.state.fabricantes, item.data]
+            listaprecio: [...this.state.listaprecio, item.data]
           });
         })
-        .catch(error => console.log(error))
+        .catch(error => console.log(error));
     }
 
     if (this.state.actionDialog === "update") {
-      console.log(args)
-      eventService.fabricante.editar(args)
+      console.log(args);
+      eventService.listaprecio
+        .editar(args)
         .then(item => {
-          console.log(item.data)
-          let updatedLista = this.state.fabricantes.filter(obj => {
+          console.log(item.data);
+          let updatedLista = this.state.listaprecio.filter(obj => {            
             return obj.id !== args.id;
-          })
+          });
           updatedLista.push(item.data);
           this.setState({
             openNewDialog: false,
-            fabricantes: updatedLista
+            listaprecio: updatedLista
           });
         })
-        .catch(error => console.log(error))
+        .catch(error => console.log(error));
     }
-    console.log(this.state.fabricantes)
-
+    console.log(this.state.fabricantes);
   }
 
   handleEliminar(args) {
     eventService.articulo
       .desactivarArticulo(args.id)
       .then(() => {
-        let updatedLista = this.state.lista.filter(function (obj) {
+        let updatedLista = this.state.lista.filter(function(obj) {
           return obj.id !== args.id;
         });
         this.setState({ lista: updatedLista });
@@ -92,21 +92,19 @@ class FabricantesPage extends React.Component {
       });
   }
 
-
-
   handleClickOpen = () => {
     this.setState({
       openNewDialog: true,
-      selectedItem: '',
+      selectedItem: "",
       actionDialog: "new"
     });
   };
 
-  handleClickOpenUpdate = (item) => {    
+  handleClickOpenUpdate = item => {
     this.setState({
       selectedItem: item,
       actionDialog: "update",
-      openNewDialog: true,
+      openNewDialog: true
     });
   };
 
@@ -114,14 +112,15 @@ class FabricantesPage extends React.Component {
     this.setState({ openNewDialog: false });
   };
 
-
   render() {
     const { classes } = this.props;
     return (
       <React.Fragment>
         <Grid container justify="center">
           <Grid item xs={12}>
-            <Typography component="h2" variant="display3" gutterBottom>Fabricantes</Typography>
+            <Typography component="h2" variant="display3" gutterBottom>
+              Lista de Precios
+            </Typography>
           </Grid>
           <Grid item xs={12} className={classes.root}>
             <Button
@@ -131,18 +130,18 @@ class FabricantesPage extends React.Component {
               onClick={this.handleClickOpen}
             >
               + Nuevo
-              </Button>
+            </Button>
           </Grid>
           <Grid item xs={12}>
             <Divider />
-            <FabricantesDataGrid
-              fabricantes={this.state.fabricantes}
+            <ListaPrecioList
+              listaprecio={this.state.listaprecio}
               handleUpdateItem={this.handleClickOpenUpdate}
             />
           </Grid>
         </Grid>
         <FullScreenDialog
-          dialogTitle="Agregar Fabricante"
+          dialogTitle="Agregar Categoria"
           open={this.state.openNewDialog}
           opendialog={this.handleClickOpen}
           closedialog={this.handleClose}
@@ -158,9 +157,8 @@ class FabricantesPage extends React.Component {
   }
 }
 
-
-FabricantesPage.propTypes = {
-  classes: PropTypes.object.isRequired,
+ListaPrecioPage.propTypes = {
+  classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(FabricantesPage);
+export default withStyles(styles)(ListaPrecioPage);

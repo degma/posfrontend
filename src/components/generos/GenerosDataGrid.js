@@ -7,7 +7,7 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 
-class FabricantesDataGrid extends Component {
+class GenerosDataGrid extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,26 +20,6 @@ class FabricantesDataGrid extends Component {
       {
         Header: "Nombre",
         accessor: "nombre"
-      },
-      {
-        Header: "Id",
-        accessor: "id",
-        show:false
-      },
-      {
-        Header: "Telefono",
-        accessor: "telefono_contacto"
-      },
-      {
-        Header: "Contacto",
-        accessor: "nombre_contacto"        
-      },
-      {
-        Header: "Notas",
-        accessor: "notas",
-        sortable: false,
-        show: false,
-        filterable: false
       },
       {
         Header: "",
@@ -64,7 +44,7 @@ class FabricantesDataGrid extends Component {
       <Grid container justify="center">
         <Grid item xs={12}>
           <ReactTable
-            data={this.props.fabricantes}
+            data={this.props.generos}
             columns={columns}
             filterable={true}
             defaultPageSize={10}
@@ -75,4 +55,4 @@ class FabricantesDataGrid extends Component {
   }
 }
 
-export default FabricantesDataGrid;
+export default GenerosDataGrid;

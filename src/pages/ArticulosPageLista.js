@@ -81,20 +81,30 @@ class ArticulosPageLista extends Component {
 
     toast.configure();
 
+    eventService.listaprecio
+    .getCurrent()
+    .then(listaprecio => {
+      this.setState({
+        listadeprecio: {
+          id: listaprecio.data.id,
+          nombre: listaprecio.data.nombre,
+          updatedAt: listaprecio.data.updatedAt,
+          createdAt: listaprecio.data.createdAt,
+          validaFrom: listaprecio.data.validaFrom,
+          validaTo: listaprecio.data.validaTo
+        }
+      })
+    })
+    .catch(error => {
+      toast.warn(error.name)
+    })
+
     /* Articulos */
     eventService.articulo
       .getArticulo()
       .then(articulos => {        
         this.setState({
-          lista: articulos.data.articulos,
-          listadeprecio: {
-            id: articulos.data.id,
-            nombre: articulos.data.nombre,
-            updatedAt: articulos.data.updatedAt,
-            createdAt: articulos.data.createdAt,
-            validaFrom: articulos.data.validaFrom,
-            validaTo: articulos.data.validaTo
-          },
+          lista: articulos.data.articulos,          
           actionDialog: ''
         });
       })

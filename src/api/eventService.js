@@ -8,7 +8,7 @@ const apiClient = axios.create({
     baseURL: 'http://127.0.0.1:3001/api/v1',
     headers: {
         "Content-Type": "application/json",
-        "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1ODcyMTk3MywiZXhwIjoxNTU5MzI2NzczfQ.uHPhcbgCIyJSQSQCE-_jOc7bY5qT92egDoMkwt9eXgM"
+        "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1ODk5MzAzOCwiZXhwIjoxNTU5NTk3ODM4fQ.daBn-CnOQTmSNcbuqol8jurumX_1wsiGs60CwlH6dro"
     }
 })
 
@@ -49,16 +49,40 @@ export default {
     listaprecio: {
         getCurrent() {
             return apiClient.get('/listaprecio/current')
+        },
+        getAll() {
+            return apiClient.get('/listaprecio/')
+        },
+        crearListaPrecio(payload){
+            return apiClient.post('/listaprecio/',payload)
+        },
+        editar(payload){
+            return apiClient.put('/listaprecio/'+payload.id, payload)
+        },
+        eliminar(payload){
+            return apiClient.delete('/listaprecio/'+payload.id)
         }
     },
     categoria: {
         getCategorias() {
             return apiClient.get('/categoria')
+        },
+        crearCategoria(payload) {
+            return apiClient.post('/categoria',payload)
+        },
+        editar(payload){
+            return apiClient.put('/categoria/'+payload.id, payload)
         }
     },
     genero: {
         getGeneros() {
             return apiClient.get('/genero')
+        },
+        editar(payload) {
+            return apiClient.put('/genero/' + payload.id, payload)
+        },
+        crearGenero(payload) {
+            return apiClient.post('/genero/', payload)
         }
     },
     fabricante: {

@@ -73,19 +73,7 @@ class InputForm extends Component {
     const values = () => {
       if (this.props.action === "new") {
         let val = {
-          nombre:'',
-          descripcion:'',
-          markup:'',
-          nombre_contacto:'',
-          apellido:'',
-          email:'',
-          celular_contacto:'',
-          telefono_contacto:'',
-          website:'',
-          direccion:'',
-          localidad:'',
-          codigo_postal:'',
-          notas:''
+          nombre:''
         };
         return val;
       } else {
@@ -97,7 +85,7 @@ class InputForm extends Component {
 
     return (
       <Grid container justify="center">
-        <Grid item xs={12}>
+        <Grid item lg={12}>
           <Formik
             render={props => <Form {...props} />}
             initialValues={values()}

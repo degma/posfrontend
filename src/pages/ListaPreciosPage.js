@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ListaPrecios from "../components/listadeprecios/ListaPrecios";
+import Typography from "@material-ui/core/Typography"
 import BuscadorPrecio from "../components/listadeprecios/BuscadorPrecio";
 import axios from 'axios'
 
@@ -46,10 +47,10 @@ class ListaPreciosPage extends Component {
   render() {
     return (
       <div className="col-md-12 mb-5">
-        <BuscadorPrecio listaprecio = {this.state.listaPrecioActual}/>
+      <Typography component="h3" variant="display2" gutterBottom>{this.state.listaPrecioActual.nombre}</Typography>
+        {/* <BuscadorPrecio listaprecio = {this.state.listaPrecioActual}/> */}
         <div className="text-center"></div>
-        <ListaPrecios articulos={this.state.articulos} />
-        {console.log(this.state.articulos)}
+        <ListaPrecios articulos={this.state.articulos} />      
       </div>
     );
   }

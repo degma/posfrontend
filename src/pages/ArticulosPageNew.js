@@ -24,6 +24,7 @@ class ArticulosPage extends Component {
   componentDidMount() {
 
     toast.configure();
+    
     eventService.listaprecio
       .getCurrent()
       .then(listaprecioactual => {        
@@ -32,7 +33,7 @@ class ArticulosPage extends Component {
             id: listaprecioactual.data.id,
             nombre: listaprecioactual.data.nombre
           }
-        }, () => console.log("Listsa de Precio", this.state.listaprecioActual));
+        }, () => console.log("Lista de Precio", this.state.listaprecioActual));
       })
       .catch(error => {
         console.log(`Error cargando List Precio Actual [$]`, error.name);

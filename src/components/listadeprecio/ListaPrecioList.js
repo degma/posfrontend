@@ -7,12 +7,12 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 
-class FabricantesDataGrid extends Component {
+class ListaPrecioList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       lista: []
-    };    
+    };
   }
 
   render() {
@@ -22,49 +22,49 @@ class FabricantesDataGrid extends Component {
         accessor: "nombre"
       },
       {
-        Header: "Id",
-        accessor: "id",
-        show:false
+        Header: "Descripción",
+        accesor: "descripcion"
       },
       {
-        Header: "Telefono",
-        accessor: "telefono_contacto"
+        Header: "Valida desde",
+        accesor: "validaFrom"
       },
       {
-        Header: "Contacto",
-        accessor: "nombre_contacto"        
+        Header: "Valida Hasta",
+        accesor: "validaTO"
       },
       {
-        Header: "Notas",
-        accessor: "notas",
-        sortable: false,
-        show: false,
-        filterable: false
+        Header: "Activa",
+        accesor: "activo"
       },
       {
         Header: "",
         sortable: false,
         Cell: row => (
           <div>
-            <IconButton style={{ padding: 5 }} onClick={() => this.props.handleUpdateItem(row.original)}>
+            <IconButton
+              style={{ padding: 5 }}
+              onClick={() => this.props.handleUpdateItem(row.original)}
+            >
               <EditIcon />
             </IconButton>
-            <IconButton style={{ padding: 5 }} onClick={() => console.log(row.original)}>
+            <IconButton
+              style={{ padding: 5 }}
+              onClick={() => console.log(row.original)}
+            >
               <DeleteIcon />
             </IconButton>
           </div>
-
         ),
-        filterable: false      
+        filterable: false
       }
     ];
-
 
     return (
       <Grid container justify="center">
         <Grid item xs={12}>
           <ReactTable
-            data={this.props.fabricantes}
+            data={this.props.listaprecio}
             columns={columns}
             filterable={true}
             defaultPageSize={10}
@@ -75,4 +75,4 @@ class FabricantesDataGrid extends Component {
   }
 }
 
-export default FabricantesDataGrid;
+export default ListaPrecioList;

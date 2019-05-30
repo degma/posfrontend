@@ -52,7 +52,7 @@ export const Form = props => {
       apellido,
       email,
       celular_contacto,
-      telefono,
+      telefono_contacto,
       website,
       direccion,
       localidad,
@@ -77,7 +77,7 @@ export const Form = props => {
     <React.Fragment>
       <form onSubmit={handleSubmit}>
         <Grid container justify="center">
-          <Grid item xs={12} className={classes.savediv}>
+          <Grid item lg={12} className={classes.savediv}>
             <Grid container justify="center" alignItems="center">
               <Grid item xs={8} className={classes.detalleForm}>
                 Crear un nuevo Fabricante.
@@ -95,7 +95,7 @@ export const Form = props => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={12} className={classes.items}>
+          <Grid item lg={12} className={classes.items}>
             <Grid container>
               <Grid item lg={3} className={classes.detalleForm}>
                 <Typography variant="h5" gutterBottom>
@@ -104,7 +104,7 @@ export const Form = props => {
               </Grid>
               <Grid item lg={9} className={classes.detalleForm}>
                 <Grid container>
-                  <Grid item md={6} className={classes.items}>
+                  <Grid item lg={6} className={classes.items}>
                     <TextField
                       id="nombre"
                       name="nombre"
@@ -116,7 +116,7 @@ export const Form = props => {
                       fullWidth
                     />
                   </Grid>
-                  <Grid item md={6} className={classes.items}>
+                  <Grid item lg={6} className={classes.items}>
                     <TextField
                       id="markup"
                       name="markup"
@@ -128,7 +128,7 @@ export const Form = props => {
                       fullWidth
                     />
                   </Grid>
-                  <Grid item xs={12} className={classes.items}>
+                  <Grid item lg={12} className={classes.items}>
                     <TextField
                       id="descripcion"
                       name="descripcion"
@@ -147,16 +147,16 @@ export const Form = props => {
             </Grid>
               <Divider />
           </Grid>
-          <Grid item xs={12} className={classes.items}>
+          <Grid item lg={12} className={classes.items}>
             <Grid container>
-              <Grid item xs={3} className={classes.detalleForm}>
+              <Grid item lg={3} className={classes.detalleForm}>
                 <Typography variant="h5" gutterBottom>
                   Información de Contacto
                 </Typography>
               </Grid>
-              <Grid item xs={9} className={classes.detalleForm}>
+              <Grid item lg={9} className={classes.detalleForm}>
                 <Grid container>
-                  <Grid item xs={6} className={classes.items}>
+                  <Grid item lg={6} className={classes.items}>
                     <TextField
                       id="nombre_contacto"
                       name="nombre_contacto"
@@ -173,7 +173,7 @@ export const Form = props => {
                       fullWidth
                     />
                   </Grid>
-                  <Grid item xs={6} className={classes.items}>
+                  <Grid item lg={6} className={classes.items}>
                     <TextField
                       id="apellido"
                       name="apellido"
@@ -185,7 +185,7 @@ export const Form = props => {
                       fullWidth
                     />
                   </Grid>
-                  <Grid item xs={6} className={classes.items}>
+                  <Grid item lg={6} className={classes.items}>
                     <TextField
                       id="email"
                       name="email"
@@ -198,7 +198,7 @@ export const Form = props => {
                       onChange={change.bind(null, "email")}
                     />
                   </Grid>
-                  <Grid item xs={6} className={classes.items}>
+                  <Grid item lg={6} className={classes.items}>
                     <TextField
                       id="celular_contacto"
                       name="celular_contacto"
@@ -216,20 +216,20 @@ export const Form = props => {
                       onChange={change.bind(null, "celular_contacto")}
                     />
                   </Grid>
-                  <Grid item xs={6} className={classes.items}>
+                  <Grid item lg={6} className={classes.items}>
                     <TextField
-                      id="telefono"
-                      name="telefono"
-                      helperText={touched.telefono ? errors.telefono : ""}
-                      error={touched.telefono && Boolean(errors.telefono)}
+                      id="telefono_contacto"
+                      name="telefono_contacto"
+                      helperText={touched.telefono_contacto ? errors.telefono_contacto : ""}
+                      error={touched.telefono_contacto && Boolean(errors.telefono_contacto)}
                       label="Teléfono"
                       fullWidth
                       multiline
-                      value={telefono}
-                      onChange={change.bind(null, "telefono")}
+                      value={telefono_contacto}
+                      onChange={change.bind(null, "telefono_contacto")}
                     />
                   </Grid>
-                  <Grid item xs={6} className={classes.items}>
+                  <Grid item lg={6} className={classes.items}>
                     <TextField
                       id="website"
                       name="website"
@@ -248,16 +248,16 @@ export const Form = props => {
             </Grid>
               <Divider />
           </Grid>
-          <Grid item xs={12} className={classes.items}>
+          <Grid item lg={12} className={classes.items}>
             <Grid container>
-              <Grid item xs={3} className={classes.detalleForm}>
+              <Grid item lg={3} className={classes.detalleForm}>
                 <Typography variant="h5" gutterBottom>
                   Dirección
                 </Typography>
               </Grid>
-              <Grid item xs={9} className={classes.detalleForm}>
+              <Grid item lg={9} className={classes.detalleForm}>
                 <Grid container>
-                  <Grid item xs={12} className={classes.items}>
+                  <Grid item lg={12} className={classes.items}>
                     <TextField
                       id="direccion"
                       name="direccion"
@@ -269,7 +269,7 @@ export const Form = props => {
                       fullWidth
                     />
                   </Grid>
-                  <Grid item xs={6} className={classes.items}>
+                  <Grid item lg={6} className={classes.items}>
                     <TextField
                       id="localidad"
                       name="m"
@@ -281,7 +281,7 @@ export const Form = props => {
                       fullWidth
                     />
                   </Grid>
-                  <Grid item xs={6} className={classes.items}>
+                  <Grid item lg={6} className={classes.items}>
                     <TextField
                       id="codigo_postal"
                       name="codigo_postal"
@@ -294,7 +294,7 @@ export const Form = props => {
                       onChange={change.bind(null, "codigo_postal")}
                     />
                   </Grid>
-                  <Grid item xs={12} className={classes.items}>
+                  <Grid item lg={12} className={classes.items}>
                     <TextField
                       id="notas"
                       name="notas"
