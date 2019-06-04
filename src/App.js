@@ -7,7 +7,9 @@ import ArticulosPage from "./pages/ArticulosPageMain";
 import ListaPreciosPage from "./pages/ListaPreciosPage";
 import ConfiguracionPage from "./pages/ConfiguracionPage";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import FabricantesPage from "./pages/FabricantesPage";
+import AuthPage from "./pages/Auth";
+import eventService from "./api/eventService";
+import AuthContext from "./context/auth-context";
 
 const drawerWidth = 240;
 
@@ -93,9 +95,11 @@ class App extends Component {
     token: null,
     usuarioId: null
   };
-  login = (token, userId, tokenExpiration) => {
+
+  login = (token, userId, tokenExpiration) => { 
     this.setState({ token: token, userId: userId });
   };
+  
   logout = () => {
     this.setState({ token: null, userId: null });
   };
@@ -105,19 +109,40 @@ class App extends Component {
     return (
       <BrowserRouter>
         <React.Fragment>
-          <div className={classes.root}>
-            <CssBaseline />
-            <NavigationBar />
-            <main className={classes.content}>
-              <div className={classes.appBarSpacer} />
-              <Switch>
-                <Redirect from="/" to="/home" exact />
-                <Route path="/listaprecios" component={ListaPreciosPage} />
-                <Route path="/articulos" component={ArticulosPage} />
-                <Route path="/configuracion" component={ConfiguracionPage} />
-              </Switch>
-            </main>
-          </div>
+          <AuthContext.Provider
+            value={{
+              token: this.state.token,
+              userId: this.state.userId,
+              login: this.login,
+              logout: this.logout
+            }}
+          >
+            <div className={classes.root}>
+              <CssBaseline />
+              {this.state.token && (
+                <div>
+                  <NavigationBar />
+                  <main className={classes.content}>
+                    <div className={classes.appBarSpacer} />
+                    <Switch>
+                      <Redirect from="/" to="/home" exact />
+                      <Route
+                        path="/listaprecios"
+                        component={ListaPreciosPage}
+                      />
+                      <Route path="/articulos" component={ArticulosPage} />
+                      <Route
+                        path="/configuracion"
+                        component={ConfiguracionPage}
+                      />
+                      <Route path="/login" component={AuthPage} />
+                    </Switch>
+                  </main>
+                </div>
+              )}
+              <AuthPage />
+            </div>
+          </AuthContext.Provider>
         </React.Fragment>
       </BrowserRouter>
     );

@@ -147,7 +147,7 @@ export const Form = props => {
           </Grid>
         </Grid>
       </form>
-      <DisplayFormikState {...props} />
+      {/* <DisplayFormikState {...props} /> */}
     </React.Fragment>
   );
 };

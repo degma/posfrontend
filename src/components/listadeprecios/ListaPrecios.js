@@ -1,15 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Chip from "@material-ui/core/Chip";
 import ReactTable from "react-table";
-import { Grid } from "@material-ui/core";
+import "react-table-material/Table.css";
+
+import matchSorter from "match-sorter";
 
 const styles = theme => ({
   root: {
@@ -25,36 +22,101 @@ const styles = theme => ({
 class ListaPrecios extends Component {
   render() {
     const { articulos } = this.props;
-
+    console.log("ARTICULOS", articulos);
     const columns = [
       {
         Header: "Nombre",
-        accessor: "nombre"
+        accessor: "nombre",
+        Cell: row => <div style={{ textAlign: "left" }}>{row.value}</div>,        
+        filterMethod: (filter, rows) =>
+          matchSorter(rows, filter.value, { keys: ["nombre"] }),
+        filterAll: true,
+        Filter: ({filter, onChange}) => (
+          <input
+            onChange={event => onChange(event.target.value)}
+            value={filter ? filter.value : ''}
+            style={{             
+              float: 'left'
+            }}
+          />)
       },
       {
         id: "fabricante",
-        Header: "Fabricante",
-        accessor: "fabricante.nombre"
+        Header: <div style={{ textAlign: "right" }}>Fabricante</div>,
+        accessor: "fabricante.nombre",
+        Cell: row => <div style={{ textAlign: "right" }}>{row.value}</div>,
+        filterMethod: (filter, rows) =>
+          matchSorter(rows, filter.value, { keys: ["fabricante"] }),
+        filterAll: true,
+        Filter: ({filter, onChange}) => (
+          <input
+            onChange={event => onChange(event.target.value)}
+            value={filter ? filter.value : ''}
+            style={{             
+              float: 'right'
+            }}
+          />)
       },
       {
         id: "categoria",
-        Header: "Categoria",
-        accessor: "categoria.nombre"
+        Header: <div style={{ textAlign: "right" }}>Categoría</div>,
+        accessor: "categoria.nombre",
+        Cell: row => <div style={{ textAlign: "right" }}>{row.value}</div>,
+        filterMethod: (filter, rows) =>
+          matchSorter(rows, filter.value, { keys: ["categoria"] }),
+        filterAll: true,
+        Filter: ({filter, onChange}) => (
+          <input
+            onChange={event => onChange(event.target.value)}
+            value={filter ? filter.value : ''}
+            style={{             
+              float: 'right'
+            }}
+          />)
       },
       {
         id: "genero",
-        Header: "Genero",
+        Header: <div style={{ textAlign: "right" }}>Genero</div>,
         accessor: "generos",
-        Cell: props => {
-          return props.value.map(genero =><Chip>{genero.nombre}</Chip>)          
-        }
+        Cell: row => (
+          <div style={{ textAlign: "right" }}>
+            {row.value.map(a => (
+              <Chip label={a.nombre} />
+            ))}
+          </div>          
+        ),
+        filterMethod: (filter, rows) =>
+          matchSorter(rows, filter.value, { keys: ["genero"] }),
+        filterAll: true,
+        Filter: ({filter, onChange}) => (
+          <input
+            onChange={event => onChange(event.target.value)}
+            value={filter ? filter.value : ''}
+            style={{             
+              float: 'right'
+            }}
+          />)
+
+      },
+      {
+        id: "precio",
+        Header: <div style={{ textAlign: "right" }}>Precio</div>,
+        accessor: d => d.precio,
+        filterMethod: (filter, rows) =>
+          matchSorter(rows, filter.value, { keys: ["precio.precio"] }),
+        filterAll: true,
+        Cell: row => (
+          <div style={{ textAlign: "right" }}>{row.value.precio}</div>
+        ),
+        Filter: ({filter, onChange}) => (
+          <input
+            onChange={event => onChange(event.target.value)}
+            value={filter ? filter.value : ''}
+            style={{             
+              float: 'right'
+            }}
+          />)
       }
-      // ,
-      // {
-      //   id: "precio",
-      //   Header: "Precio",
-      //   accessor: row => row.listaprecios[0].precio.precio
-      // }
     ];
 
     return (
@@ -63,42 +125,10 @@ class ListaPrecios extends Component {
           data={articulos}
           columns={columns}
           filterable={true}
+          resizable={true}
           defaultPageSize={10}
         />
-        {/* <Table className={classes.table}>
-  
-          <TableHead>
-            <TableRow>
-              <TableCell>Nombre del Articulo</TableCell>
-              <TableCell align="right">Fabricante</TableCell>
-              <TableCell align="right">Categoría</TableCell>
-              <TableCell align="right">Genero</TableCell>
-              <TableCell align="right">Precio</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {props.articulos.map(row => (
-              <TableRow key={row.id}>
-                <TableCell component="th" scope="row">
-                  {row.nombre}
-                </TableCell>
-  
-                <TableCell align="right">{row.categoria.nombre}</TableCell>
-                <TableCell align="right">{row.fabricante.nombre}</TableCell>
-                <TableCell align="right">{row.generos.map(row => {
-                  return (
-                      <Chip
-                        key={row.id}
-                        label={row.nombre}
-                        className={classes.chip}
-                      />)})}
-                    </TableCell>
-                <TableCell align="right">{row.precio.precio}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-         */}
+        }
       </Paper>
     );
   }
