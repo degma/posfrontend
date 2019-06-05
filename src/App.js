@@ -8,7 +8,6 @@ import ListaPreciosPage from "./pages/ListaPreciosPage";
 import ConfiguracionPage from "./pages/ConfiguracionPage";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import AuthPage from "./pages/Auth";
-import eventService from "./api/eventService";
 import AuthContext from "./context/auth-context";
 
 const drawerWidth = 240;
@@ -93,13 +92,13 @@ const styles = theme => ({
 class App extends Component {
   state = {
     token: null,
-    usuarioId: null
+    userId: null
   };
 
-  login = (token, userId, tokenExpiration) => { 
+  login = (token, userId) => {
     this.setState({ token: token, userId: userId });
   };
-  
+
   logout = () => {
     this.setState({ token: null, userId: null });
   };
@@ -117,11 +116,11 @@ class App extends Component {
               logout: this.logout
             }}
           >
-            <div className={classes.root}>
-              <CssBaseline />
-              {this.state.token && (
-                <div>
+            {this.state.token && (
+              <div className={classes.root}>
+                <CssBaseline />
                   <NavigationBar />
+                
                   <main className={classes.content}>
                     <div className={classes.appBarSpacer} />
                     <Switch>
@@ -136,12 +135,11 @@ class App extends Component {
                         component={ConfiguracionPage}
                       />
                       <Route path="/login" component={AuthPage} />
-                    </Switch>
+                    </Switch>                
                   </main>
-                </div>
-              )}
-              <AuthPage />
-            </div>
+              </div>
+            )}
+            {!this.state.token && <AuthPage loginHandler={this.login} />}
           </AuthContext.Provider>
         </React.Fragment>
       </BrowserRouter>

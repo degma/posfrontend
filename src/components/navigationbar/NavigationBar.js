@@ -135,7 +135,7 @@ class NavigationBar extends React.Component {
                             noWrap
                             className={classes.title}
                         >
-                            PoS
+                            Kinder
                         </Typography>
                         <IconButton color="inherit">
                             <Badge badgeContent={4} color="secondary">
@@ -159,7 +159,7 @@ class NavigationBar extends React.Component {
                     <Divider />
                     <List>{mainListItems}</List>
                     <Divider />
-                    <List>{secondaryListItems}</List>
+                    {/* <List>{secondaryListItems}</List> */}
                 </Drawer>
             </React.Fragment>
 

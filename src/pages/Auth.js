@@ -16,7 +16,7 @@ import eventService from "../api/eventService";
 const styles = {
   avatar: {
     margin: 12,
-    backgroundColor: "red"
+    backgroundColor: "grey"
   },
   paper: {
     marginTop: 12,
@@ -27,30 +27,27 @@ const styles = {
 };
 
 class AuthPage extends Component {
-  constructor(props) {    
+  constructor(props) {
     super(props);
     this.stet = {
-      email : '',
-      password: ''
-    }
-    this.emailEl = React.createRef();
-    this.passwordEl = React.createRef();
+      email: "",
+      password: ""
+    };
   }
   static contextType = AuthContext;
 
   handleChange = event => {
-    console.log(event)
-  }
-
-  submitHandler = event => {
-    // event.preventDefault();
-    const email = this.emailEl.current.value;
-    const password = this.passwordEl.current.value;
-    alert(console.log({ email, password }));
-
-    eventService.auth.userLogin({ email, password }).then(res => {
-      console.log(res.data);
+    this.setState({
+      [event.target.id]: event.target.value
     });
+  };
+
+  submitHandler = () => {
+    eventService.auth.userLogin(this.state).then(res => {
+      console.log(res.data.token);
+      this.props.loginHandler(res.data)
+    })
+    .catch(error => console.log(error));
   };
 
   render() {
@@ -66,45 +63,44 @@ class AuthPage extends Component {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form noValidate onSubmit={() => this.submitHandler()}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              onChange={()=> this.handleChange()}
-              
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"              
-            >
-              Sign In
-            </Button>
-          </form>
+
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email"
+            name="email"
+            
+            autoFocus
+            onChange={e => this.handleChange(e)}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            
+            onChange={e => this.handleChange(e)}
+          />
+          {/* <FormControlLabel
+            control={<Checkbox value="remember" color="primary" />}
+            label="Remember me"
+          /> */}
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            onClick={() => this.submitHandler()}
+          >
+            Acceder
+          </Button>
         </div>
       </Container>
     );

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ListaPrecios from "../components/listadeprecios/ListaPrecios";
 import Typography from "@material-ui/core/Typography"
-import BuscadorPrecio from "../components/listadeprecios/BuscadorPrecio";
+import AuthContext from '../context/auth-context'
 import axios from 'axios'
 
 
@@ -19,6 +19,8 @@ class ListaPreciosPage extends Component {
       },
     };
   }
+
+  static contextType = AuthContext;
 
   componentDidMount() {
     const header = {

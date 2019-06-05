@@ -17,7 +17,7 @@ const apiClient = axios.create({
 export default {
     auth: {
         userLogin(payload) {
-            return apiClient.post('/auth/login/', payload)
+            return apiClient.post('/usuario/login/', payload)
         },
         userAliveAndActive() {
             return apiClient.post('/auth/check/')
