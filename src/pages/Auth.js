@@ -43,11 +43,12 @@ class AuthPage extends Component {
   };
 
   submitHandler = () => {
-    eventService.auth.userLogin(this.state).then(res => {
-      console.log(res.data.token);
-      this.props.loginHandler(res.data)
-    })
-    .catch(error => console.log(error));
+    eventService.auth.userLogin(this.state)
+      .then(res => {
+        console.log(res.data.token);
+        this.props.loginHandler(res.data)
+      })
+      .catch(error => console.log(error));
   };
 
   render() {
@@ -72,7 +73,7 @@ class AuthPage extends Component {
             id="email"
             label="Email"
             name="email"
-            
+
             autoFocus
             onChange={e => this.handleChange(e)}
           />
@@ -85,7 +86,7 @@ class AuthPage extends Component {
             label="Password"
             type="password"
             id="password"
-            
+
             onChange={e => this.handleChange(e)}
           />
           {/* <FormControlLabel

@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import ArticuloList from "../components/articulos/ArticuloList";
+import InputForm from "../components/articulos/InputForm/index"
 import eventService from "../api/eventService";
-import Paper from "@material-ui/core/Paper";
-import { Divider, Grid, Typography } from "@material-ui/core";
+import { Divider, Grid } from "@material-ui/core";
 import { toast } from "react-toastify";
-import Button from "@material-ui/core/Button";
+import { Button, Typography } from "@material-ui/core";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import DialogArticulo from "../components/articulos/DialogArticulo"
+import FullScreenDialog from "../components/dialogs/FullScreenDialog"
+import ArticuloDataGrid from "../components/articulos/ArticuloDataGrid"
 
 const styles = {
   appBar: {
@@ -21,8 +21,13 @@ const styles = {
   },
   paper: {
     margin: 12
+  },
+  root: {
+    background: '#e0e0e0',
+    padding: '20px',
   }
 };
+
 
 
 class ArticulosPageLista extends Component {
@@ -30,6 +35,9 @@ class ArticulosPageLista extends Component {
     super(props);
     this.state = {
       lista: [],
+      categorias: [],
+      generos: [],
+      fabricantes:[],
       listadeprecio: {
         id: '',
         nombre: '',
@@ -41,21 +49,19 @@ class ArticulosPageLista extends Component {
       openNewDialog: false,
       openUpdateDialog: false,
       dialogType: '',
-      selectedArt: '',
-      categorias: [],
-      generos: [],
-      fabricantes: []
+      selectedItem: ''
     };
     this.handleEliminar = this.handleEliminar.bind(this);
     this.handleClickOpen = this.handleClickOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
-    this.handleAddArticulo = this.handleAddArticulo.bind(this);
+    this.handleAddItem = this.handleAddItem.bind(this);
+
   }
 
   handleClickOpen = () => {
     this.setState({
       openNewDialog: true,
-      selectedArt: '',
+      selectedItem: '',
       actionDialog: "new"
     });
   };
@@ -64,47 +70,48 @@ class ArticulosPageLista extends Component {
     this.setState({ openNewDialog: false });
   };
 
-  handleClickOpenUpdate = (articulo) => {
-    console.log("ARTICULO A UPDETEAR",articulo)
+  handleClickOpenUpdate = (item) => {
+    console.log(item)
     this.setState({
-      selectedArt: articulo,
+      selectedItem: item,
       actionDialog: "update",
       openNewDialog: true,
     });
   };
 
-  handleCloseUpdate = () => {
-    this.setState({ openUpdateDialog: false });
+ handleClose = () => {
+    this.setState({ openNewDialog: false });
   };
+
 
   componentDidMount() {
 
     toast.configure();
 
     eventService.listaprecio
-    .getCurrent()
-    .then(listaprecio => {
-      this.setState({
-        listadeprecio: {
-          id: listaprecio.data.id,
-          nombre: listaprecio.data.nombre,
-          updatedAt: listaprecio.data.updatedAt,
-          createdAt: listaprecio.data.createdAt,
-          validaFrom: listaprecio.data.validaFrom,
-          validaTo: listaprecio.data.validaTo
-        }
+      .getCurrent()
+      .then(listaprecio => {
+        this.setState({
+          listadeprecio: {
+            id: listaprecio.data.id,
+            nombre: listaprecio.data.nombre,
+            updatedAt: listaprecio.data.updatedAt,
+            createdAt: listaprecio.data.createdAt,
+            validaFrom: listaprecio.data.validaFrom,
+            validaTo: listaprecio.data.validaTo
+          }
+        })
       })
-    })
-    .catch(error => {
-      toast.warn(error.name)
-    })
+      .catch(error => {
+        toast.warn(error.name)
+      })
 
     /* Articulos */
     eventService.articulo
       .getArticulo()
-      .then(articulos => {        
+      .then(articulos => {
         this.setState({
-          lista: articulos.data.articulos,          
+          lista: articulos.data.articulos,
           actionDialog: ''
         });
       })
@@ -113,7 +120,7 @@ class ArticulosPageLista extends Component {
     /* Categorias */
     eventService.categoria
       .getCategorias()
-      .then(categorias => {
+      .then(categorias => {        
         this.setState({ categorias: categorias.data })
       })
       .catch(error => console.log(error))
@@ -136,7 +143,7 @@ class ArticulosPageLista extends Component {
   }
 
   /* Agregar el articulo! */
-  handleAddArticulo(args) {
+  handleAddItem(args) {
 
     if (this.state.actionDialog === "new") {
       eventService.articulo.crearArticulo(args)
@@ -153,7 +160,7 @@ class ArticulosPageLista extends Component {
       console.log(args)
       eventService.articulo.editar(args)
         .then(articulo => {
-          let updatedLista = this.state.lista.filter( obj => {
+          let updatedLista = this.state.lista.filter(obj => {
             return obj.id !== args.id;
           })
           updatedLista.push(articulo.data)
@@ -187,52 +194,49 @@ class ArticulosPageLista extends Component {
 
   render() {
     const { classes } = this.props;
-    console.log("lista de articulos", this.state.lista)
+
     return (
       <React.Fragment>
-        <Grid container justify="flex-start">
+        <Grid container justify="center">
           <Grid item xs={12}>
-            
-              <Grid container justify="center">
-                <Grid item xs={12} className={classes.encabezado}>
-                  
-                  <Button
-                    name="new"
-                    variant="contained"
-                    color="primary"
-                    onClick={this.handleClickOpen}
-                  >
-                    + Nuevo
+            <Typography component="h2" variant="h4" gutterBottom>Productos</Typography>
+          </Grid>
+          <Grid item xs={12} className={classes.root}>
+            <Button
+              name="new"
+              variant="contained"
+              color="primary"
+              onClick={this.handleClickOpen}
+            >
+              + Nuevo
               </Button>
-                </Grid>
-              </Grid>
-              <Divider />
-              <Grid container justify="center">
-                <Grid item xs={12}>
-                  <ArticuloList
-                    lista={this.state.lista}
-                    handleEliminar={this.handleEliminar}
-                    handleClickUpdate={this.handleClickOpenUpdate}
-                  />
-                </Grid>
-              </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Divider />
+            <ArticuloDataGrid
+              articulos={this.state.lista}
+              handleUpdateItem={this.handleClickOpenUpdate}
+            />
           </Grid>
         </Grid>
-        <DialogArticulo
-          dialogTitle="Nuevo Articulo"
+        <FullScreenDialog
+          dialogTitle= {this.state.actionDialog === 'new' ? "Agregar Artículo" : "Editar Artículo"} 
           open={this.state.openNewDialog}
           opendialog={this.handleClickOpen}
           closedialog={this.handleClose}
-          listadeprecio={this.state.listadeprecio}
-          categorias={this.state.categorias}
-          generos={this.state.generos}
-          fabricantes={this.state.fabricantes}
-          handleAddArticulo={this.handleAddArticulo}
-          articuloUpdate={this.state.selectedArt}
-          action={this.state.actionDialog}
-        />        
+        >
+          <InputForm
+            action={this.state.actionDialog}
+            itemUpdate={this.state.selectedItem}
+            listadeprecio={this.state.listadeprecio}
+            handleAddItem={this.handleAddItem}
+            categorias={this.state.categorias}
+            generos={this.state.generos}
+            fabricantes={this.state.fabricantes}
+          />
+        </FullScreenDialog>
       </React.Fragment>
-    );
+    )
   }
 }
 

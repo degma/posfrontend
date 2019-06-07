@@ -4,19 +4,31 @@ import axios from 'axios'
 //here is where we are defining our custom axios instance.
 //if all of your API routes come from the same location, or you are using a web proxy to hit the server, you can provide a base url
 //you can also attach axios interceptors to custom axios instances as well
-const apiClient = axios.create({
+
+
+const defaultOptions = {
     baseURL: 'http://127.0.0.1:3001/api/v1',
     headers: {
-        "Content-Type": "application/json",
-        "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU1ODk5MzAzOCwiZXhwIjoxNTU5NTk3ODM4fQ.daBn-CnOQTmSNcbuqol8jurumX_1wsiGs60CwlH6dro"
-    }
-})
+        'Content-Type': 'application/json',
+    },
+};
 
+
+
+const apiClient = axios.create(defaultOptions)
+
+const token = localStorage.getItem('token')
+
+apiClient.interceptors.request.use(function (config) {    
+    config.headers = { "x-access-token": token ? token : '' }
+    return config;
+});
 //Now set up the routes.  We are going to export a default object with keys that keep our API routes organized.  For example, all of the auth routes live in the Auth object
 
 export default {
     auth: {
         userLogin(payload) {
+
             return apiClient.post('/usuario/login/', payload)
         },
         userAliveAndActive() {
@@ -34,6 +46,7 @@ export default {
     },
     articulo: {
         crearArticulo(payload) {
+
             return apiClient.post('/articulo', payload)
         },
         getArticulo() {
@@ -53,14 +66,14 @@ export default {
         getAll() {
             return apiClient.get('/listaprecio/')
         },
-        crearListaPrecio(payload){
-            return apiClient.post('/listaprecio/',payload)
+        crearListaPrecio(payload) {
+            return apiClient.post('/listaprecio/', payload)
         },
-        editar(payload){
-            return apiClient.put('/listaprecio/'+payload.id, payload)
+        editar(payload) {
+            return apiClient.put('/listaprecio/' + payload.id, payload)
         },
-        eliminar(payload){
-            return apiClient.delete('/listaprecio/'+payload.id)
+        eliminar(payload) {
+            return apiClient.delete('/listaprecio/' + payload.id)
         }
     },
     categoria: {
@@ -68,10 +81,10 @@ export default {
             return apiClient.get('/categoria')
         },
         crearCategoria(payload) {
-            return apiClient.post('/categoria',payload)
+            return apiClient.post('/categoria', payload)
         },
-        editar(payload){
-            return apiClient.put('/categoria/'+payload.id, payload)
+        editar(payload) {
+            return apiClient.put('/categoria/' + payload.id, payload)
         }
     },
     genero: {

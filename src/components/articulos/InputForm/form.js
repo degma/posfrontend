@@ -52,6 +52,7 @@ export const Form = props => {
     setFieldTouched
   } = props;
 
+
   const change = (name, e) => {
     e.persist();
     handleChange(e);

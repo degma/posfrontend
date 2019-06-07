@@ -82,10 +82,9 @@ class InputForm extends Component {
   }
 
   render() {
-    const classes = this.props;
-
+    console.log("ACTION",this.props.action)
     const values = () => {
-      if (this.props.action === "new") {
+      if (this.props.action === "new") {        
         let val = {
           id: '',
           nombre: '',
@@ -97,24 +96,23 @@ class InputForm extends Component {
           fabricanteId: ''
         };
         return val
-      } else {
+      } else {        
         let val = {
-          id: this.props.articulo.id,
-          nombre: this.props.articulo.nombre,
-          descripcion: this.props.articulo.descripcion,
-          precio: this.props.articulo.listaprecios[0].precio.precio,
+          id: this.props.itemUpdate.id,
+          nombre: this.props.itemUpdate.nombre,
+          descripcion: this.props.itemUpdate.descripcion,
+          precio: this.props.itemUpdate.listaprecios[0].precio.precio || null,
           listaprecioId: this.props.listadeprecio.id,
-          categoriaId: this.props.articulo.categoriaId,
-          generoId: this.props.articulo.generos.map(item => item.id),
-          fabricanteId: this.props.articulo.fabricanteId
+          categoriaId: this.props.itemUpdate.categoriaId,
+          generoId: this.props.itemUpdate.generos.map(item => item.id),
+          fabricanteId: this.props.itemUpdate.fabricanteId
         };
+        console.log("TO UPDATE", val)
         return val
       }
 
     }
-    console.log("HOLA", values())
-
-
+    
 
     return (
       <Grid container justify="center" >
@@ -129,7 +127,7 @@ class InputForm extends Component {
             initialValues={values()}
             validationSchema={validationSchema}
             onSubmit={values => {
-              this.props.handleAddArticulo(values)
+              this.props.handleAddItem(values)
             }}
           />
         </Paper>

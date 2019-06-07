@@ -12,7 +12,7 @@ class FabricantesDataGrid extends Component {
     super(props);
     this.state = {
       lista: []
-    };    
+    };
   }
 
   render() {
@@ -22,9 +22,9 @@ class FabricantesDataGrid extends Component {
         accessor: "nombre"
       },
       {
-        Header: "Id",
-        accessor: "id",
-        show:false
+        Header: "Descripción",
+        accessor: "descripcion",
+        show: false
       },
       {
         Header: "Telefono",
@@ -32,7 +32,7 @@ class FabricantesDataGrid extends Component {
       },
       {
         Header: "Contacto",
-        accessor: "nombre_contacto"        
+        accessor: "nombre_contacto"
       },
       {
         Header: "Notas",
@@ -55,10 +55,9 @@ class FabricantesDataGrid extends Component {
           </div>
 
         ),
-        filterable: false      
+        filterable: false
       }
     ];
-
 
     return (
       <Grid container justify="center">
