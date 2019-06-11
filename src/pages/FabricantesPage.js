@@ -8,7 +8,9 @@ import FabricantesDataGrid from "../components/fabricantes/FabricantesDataGrid";
 import { Button, Typography } from "@material-ui/core";
 import FullScreenDialog from "../components/dialogs/FullScreenDialog"
 import InputForm from "../components/fabricantes/InputForm/index"
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import ResponsiveDialog from "../components/dialogs/ResponsiveDialog";
+import 'react-toastify/dist/ReactToastify.css';
 
 const styles = {
   root: {
@@ -26,7 +28,7 @@ class FabricantesPage extends React.Component {
     this.state = {
       fabricantes: [],
       openNewDialog: false,
-      openUpdateDialog: false,
+      openConfirmDialog: false,      
       dialogType: '',
       selectedItem: '',
     };
@@ -34,6 +36,8 @@ class FabricantesPage extends React.Component {
     this.handleClickOpen = this.handleClickOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleAddItem = this.handleAddItem.bind(this);
+    this.handleConfirmEliminar = this.handleConfirmEliminar.bind(this);
+    this.handleCloseConfirm = this.handleCloseConfirm.bind(this);
   }
 
   componentDidMount() {
@@ -42,6 +46,7 @@ class FabricantesPage extends React.Component {
         fabricantes: fabricantes.data
       });
     });
+    toast.configure();
   }
 
   handleAddItem(args) {    
@@ -76,15 +81,16 @@ class FabricantesPage extends React.Component {
 
   }
 
-  handleEliminar(args) {
-    eventService.articulo
-      .desactivarArticulo(args.id)
+  handleEliminar() {
+    let item = this.state.selectedItem.id
+    eventService.fabricante
+      .desactivar(item)
       .then(() => {
-        let updatedLista = this.state.lista.filter(function (obj) {
-          return obj.id !== args.id;
+        let updatedLista = this.state.fabricantes.filter(function (obj) {
+          return obj.id !== item;
         });
-        this.setState({ lista: updatedLista });
-        toast.info("Articulo eliminado!");
+        toast.info("Fabricante desactivado!");        
+        this.setState({ fabricantes: updatedLista, openConfirmDialog: false });
       })
       .catch(error => {
         console.log(error);
@@ -114,14 +120,23 @@ class FabricantesPage extends React.Component {
     this.setState({ openNewDialog: false });
   };
 
+  handleConfirmEliminar(args) {
+    this.setState({ openConfirmDialog: true, selectedItem: args });
+  }
+
+  handleCloseConfirm() {
+    this.setState({openConfirmDialog: false})
+  }
+
 
   render() {
     const { classes } = this.props;
     return (
       <React.Fragment>
+        <ToastContainer />
         <Grid container justify="center">
           <Grid item xs={12}>
-            <Typography component="h2" variant="display3" gutterBottom>Fabricantes</Typography>
+            <Typography component="h2" variant="h4" gutterBottom>Fabricantes</Typography>
           </Grid>
           <Grid item xs={12} className={classes.root}>
             <Button
@@ -138,6 +153,7 @@ class FabricantesPage extends React.Component {
             <FabricantesDataGrid
               fabricantes={this.state.fabricantes}
               handleUpdateItem={this.handleClickOpenUpdate}
+              handleConfirmEliminar={this.handleConfirmEliminar}
             />
           </Grid>
         </Grid>
@@ -153,6 +169,14 @@ class FabricantesPage extends React.Component {
             handleAddItem={this.handleAddItem}
           />
         </FullScreenDialog>
+        <ResponsiveDialog
+          open={this.state.openConfirmDialog}
+          title="Eliminar Fabricante"
+          handleClose={this.handleCloseConfirm}
+          confirma={this.handleEliminar}
+        >
+        ¿Seguro que desea elimiminar el fabricante "{this.state.selectedItem.nombre}"?
+        </ResponsiveDialog>
       </React.Fragment>
     );
   }

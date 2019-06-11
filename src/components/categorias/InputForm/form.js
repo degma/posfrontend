@@ -98,12 +98,12 @@ export const Form = props => {
             <Grid container>
               <Grid item lg={3} className={classes.detalleForm}>
                 <Typography variant="h5" gutterBottom>
-                  Detalles
+                  Detalle
                 </Typography>
               </Grid>
               <Grid item lg={9} className={classes.detalleForm}>
                 <Grid container>
-                  <Grid item lg={6} className={classes.items}>
+                  <Grid item lg={12} className={classes.items}>
                     <TextField
                       id="nombre"
                       name="nombre"
@@ -114,19 +114,7 @@ export const Form = props => {
                       onChange={change.bind(null, "nombre")}
                       fullWidth
                     />
-                  </Grid>
-                  <Grid item lg={6} className={classes.items}>
-                    <TextField
-                      id="markup"
-                      name="markup"
-                      helperText={touched.markup ? errors.markup : ""}
-                      error={touched.markup && Boolean(errors.markup)}
-                      label="Markup"
-                      value={markup}
-                      onChange={change.bind(null, "markup")}
-                      fullWidth
-                    />
-                  </Grid>
+                  </Grid>                  
                   <Grid item lg={12} className={classes.items}>
                     <TextField
                       id="descripcion"

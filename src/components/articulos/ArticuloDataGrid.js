@@ -78,7 +78,7 @@ class ArticuloDataGrid extends React.Component {
         Cell: row => (
           <div style={{ textAlign: "right" }}>
             {row.value.map(a => (
-              <Chip label={a.nombre} />
+              <Chip key={a.id} label={a.nombre} />
             ))}
           </div>          
         ),
@@ -103,7 +103,7 @@ class ArticuloDataGrid extends React.Component {
             <IconButton style={{ padding: 5 }} onClick={() => this.props.handleUpdateItem(row.original)}>
               <EditIcon />
             </IconButton>
-            <IconButton style={{ padding: 5 }} onClick={() => console.log(row.original)}>
+            <IconButton style={{ padding: 5 }} onClick={() => this.props.handleConfirmEliminar(row.original)}>
               <DeleteIcon />
             </IconButton>
           </div>
@@ -124,6 +124,7 @@ class ArticuloDataGrid extends React.Component {
           />
         </Grid>
       </Grid>
+      
     );
   }
 }

@@ -7,7 +7,8 @@ import axios from 'axios'
 
 
 const defaultOptions = {
-    baseURL: 'http://127.0.0.1:3001/api/v1',
+    baseURL: process.env.BASE_URL_API, 
+    //baseURL: 'http://127.0.0.1:3001/api/v1',
     headers: {
         'Content-Type': 'application/json',
     },
@@ -108,8 +109,8 @@ export default {
         editar(payload) {
             return apiClient.put('/fabricante/' + payload.id, payload)
         },
-        desactivarFabricante(id) {
-            return apiClient.delete('/articulo/' + id)
+        desactivar(id) {
+            return apiClient.delete('/fabricante/' + id)
         }
     }
 }

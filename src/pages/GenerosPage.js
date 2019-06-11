@@ -124,7 +124,7 @@ class GenerosPage extends React.Component {
       <React.Fragment>
         <Grid container justify="center">
           <Grid item xs={12}>
-            <Typography component="h2" variant="display3" gutterBottom>Generos</Typography>
+            <Typography component="h2" variant="h4" gutterBottom>Generos</Typography>
           </Grid>
           <Grid item xs={12} className={classes.root}>
             <Button

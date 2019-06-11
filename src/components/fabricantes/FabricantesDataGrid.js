@@ -49,7 +49,7 @@ class FabricantesDataGrid extends Component {
             <IconButton style={{ padding: 5 }} onClick={() => this.props.handleUpdateItem(row.original)}>
               <EditIcon />
             </IconButton>
-            <IconButton style={{ padding: 5 }} onClick={() => console.log(row.original)}>
+            <IconButton style={{ padding: 5 }} onClick={() => this.props.handleConfirmEliminar(row.original)}>
               <DeleteIcon />
             </IconButton>
           </div>
