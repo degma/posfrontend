@@ -35,7 +35,7 @@ const useStyles = makeStyles({
 });
 
 export const Form = props => {
-  
+
   const classes = useStyles();
 
   const {
@@ -44,19 +44,19 @@ export const Form = props => {
       descripcion,
       markup,
       nombre_contacto,
-      apellido,
-      email,
+      apellido_contacto,
+      email_contacto,
       celular_contacto,
       telefono_contacto,
       website,
-      direccion,
+      calle,
       localidad,
       codigo_postal,
       notas
     },
     errors,
     touched,
-    handleChange,    
+    handleChange,
     handleSubmit,
     isValid,
     setFieldTouched
@@ -75,7 +75,7 @@ export const Form = props => {
           <Grid item lg={12} className={classes.savediv}>
             <Grid container justify="center" alignItems="center">
               <Grid item xs={8} className={classes.detalleForm}>
-                Crear un nuevo Fabricante.
+                Fabricante
               </Grid>
               <Grid item xs={4} className={classes.detalleForm}>
                 <Button
@@ -140,7 +140,7 @@ export const Form = props => {
               </Grid>
 
             </Grid>
-              <Divider />
+            <Divider />
           </Grid>
           <Grid item lg={12} className={classes.items}>
             <Grid container>
@@ -170,27 +170,27 @@ export const Form = props => {
                   </Grid>
                   <Grid item lg={6} className={classes.items}>
                     <TextField
-                      id="apellido"
-                      name="apellido"
-                      helperText={touched.apellido ? errors.apellido : ""}
-                      error={touched.apellido && Boolean(errors.apellido)}
+                      id="apellido_contacto"
+                      name="apellido_contacto"
+                      helperText={touched.apellido ? errors.apellido_contacto : ""}
+                      error={touched.apellido && Boolean(errors.apellido_contacto)}
                       label="Apellido"
-                      value={apellido}
-                      onChange={change.bind(null, "apellido")}
+                      value={apellido_contacto}
+                      onChange={change.bind(null, "apellido_contacto")}
                       fullWidth
                     />
                   </Grid>
                   <Grid item lg={6} className={classes.items}>
                     <TextField
-                      id="email"
-                      name="email"
-                      helperText={touched.email ? errors.email : ""}
-                      error={touched.email && Boolean(errors.email)}
+                      id="email_contacto"
+                      name="email_contacto"
+                      helperText={touched.email_contacto ? errors.email_contacto : ""}
+                      error={touched.email_contacto && Boolean(errors.email_contacto)}
                       label="Email"
                       fullWidth
                       multiline
-                      value={email}
-                      onChange={change.bind(null, "email")}
+                      value={email_contacto}
+                      onChange={change.bind(null, "email_contacto")}
                     />
                   </Grid>
                   <Grid item lg={6} className={classes.items}>
@@ -241,7 +241,7 @@ export const Form = props => {
               </Grid>
 
             </Grid>
-              <Divider />
+            <Divider />
           </Grid>
           <Grid item lg={12} className={classes.items}>
             <Grid container>
@@ -254,20 +254,20 @@ export const Form = props => {
                 <Grid container>
                   <Grid item lg={12} className={classes.items}>
                     <TextField
-                      id="direccion"
-                      name="direccion"
-                      helperText={touched.direccion ? errors.direccion : ""}
-                      error={touched.direccion && Boolean(errors.direccion)}
+                      id="calle"
+                      name="calle"
+                      helperText={touched.calle ? errors.calle : ""}
+                      error={touched.calle && Boolean(errors.calle)}
                       label="Dirección"
-                      value={direccion}
-                      onChange={change.bind(null, "direccion")}
+                      value={calle}
+                      onChange={change.bind(null, "calle")}
                       fullWidth
                     />
                   </Grid>
                   <Grid item lg={6} className={classes.items}>
                     <TextField
                       id="localidad"
-                      name="m"
+                      name="localidad"
                       helperText={touched.localidad ? errors.localidad : ""}
                       error={touched.localidad && Boolean(errors.localidad)}
                       label="Localidad"

@@ -3,7 +3,6 @@ import { Formik } from "formik";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { Form } from "./form";
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 import * as Yup from "yup";
 import PropTypes from "prop-types";
 
@@ -73,7 +72,8 @@ class InputForm extends Component {
     const values = () => {
       if (this.props.action === "new") {
         let val = {
-          nombre:''
+          nombre:'',
+          descripcion:''
         };
         return val;
       } else {
@@ -90,7 +90,7 @@ class InputForm extends Component {
             render={props => <Form {...props} />}
             initialValues={values()}
             validationSchema={validationSchema}
-            onSubmit ={values => {
+            onSubmit ={values => {              
               this.props.handleAddItem(values)
             }}
           />

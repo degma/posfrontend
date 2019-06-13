@@ -22,6 +22,10 @@ class GenerosDataGrid extends Component {
         accessor: "nombre"
       },
       {
+        Header: "Descripción",
+        accessor: "descripcion"
+      },
+      {
         Header: "",
         sortable: false,
         Cell: row => (

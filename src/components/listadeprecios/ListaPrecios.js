@@ -5,7 +5,7 @@ import Paper from "@material-ui/core/Paper";
 import Chip from "@material-ui/core/Chip";
 import ReactTable from "react-table";
 import "react-table-material/Table.css";
-
+import moment from 'moment';
 import matchSorter from "match-sorter";
 
 const styles = theme => ({
@@ -27,15 +27,15 @@ class ListaPrecios extends Component {
       {
         Header: "Nombre",
         accessor: "nombre",
-        Cell: row => <div style={{ textAlign: "left" }}>{row.value}</div>,        
+        Cell: row => <div style={{ textAlign: "left" }}>{row.value}</div>,
         filterMethod: (filter, rows) =>
           matchSorter(rows, filter.value, { keys: ["nombre"] }),
         filterAll: true,
-        Filter: ({filter, onChange}) => (
+        Filter: ({ filter, onChange }) => (
           <input
             onChange={event => onChange(event.target.value)}
             value={filter ? filter.value : ''}
-            style={{             
+            style={{
               float: 'left'
             }}
           />)
@@ -48,11 +48,11 @@ class ListaPrecios extends Component {
         filterMethod: (filter, rows) =>
           matchSorter(rows, filter.value, { keys: ["fabricante"] }),
         filterAll: true,
-        Filter: ({filter, onChange}) => (
+        Filter: ({ filter, onChange }) => (
           <input
             onChange={event => onChange(event.target.value)}
             value={filter ? filter.value : ''}
-            style={{             
+            style={{
               float: 'right'
             }}
           />)
@@ -65,11 +65,11 @@ class ListaPrecios extends Component {
         filterMethod: (filter, rows) =>
           matchSorter(rows, filter.value, { keys: ["categoria"] }),
         filterAll: true,
-        Filter: ({filter, onChange}) => (
+        Filter: ({ filter, onChange }) => (
           <input
             onChange={event => onChange(event.target.value)}
             value={filter ? filter.value : ''}
-            style={{             
+            style={{
               float: 'right'
             }}
           />)
@@ -83,16 +83,16 @@ class ListaPrecios extends Component {
             {row.value.map(a => (
               <Chip label={a.nombre} />
             ))}
-          </div>          
+          </div>
         ),
         filterMethod: (filter, rows) =>
           matchSorter(rows, filter.value, { keys: ["genero"] }),
         filterAll: true,
-        Filter: ({filter, onChange}) => (
+        Filter: ({ filter, onChange }) => (
           <input
             onChange={event => onChange(event.target.value)}
             value={filter ? filter.value : ''}
-            style={{             
+            style={{
               float: 'right'
             }}
           />)
@@ -100,22 +100,27 @@ class ListaPrecios extends Component {
       },
       {
         id: "precio",
-        Header: <div style={{ textAlign: "right" }}>Precio</div>,
+        Header: <div style={{ textAlign: "right" }}>Precio $</div>,
         accessor: d => d.precio,
         filterMethod: (filter, rows) =>
           matchSorter(rows, filter.value, { keys: ["precio.precio"] }),
         filterAll: true,
         Cell: row => (
-          <div style={{ textAlign: "right" }}>{row.value.precio}</div>
+          <div style={{ textAlign: "right" }}>$ {row.value.precio}</div>
         ),
-        Filter: ({filter, onChange}) => (
+        Filter: ({ filter, onChange }) => (
           <input
             onChange={event => onChange(event.target.value)}
             value={filter ? filter.value : ''}
-            style={{             
+            style={{
               float: 'right'
             }}
           />)
+      },
+      {
+        id: "actualizado",
+        filterable: false,
+        accessor: d => d.precio.updatedAt
       }
     ];
 

@@ -6,6 +6,8 @@ import "react-table-material/Table.css";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
+import Chip from "@material-ui/core/Chip";
+
 
 class ListaPrecioList extends Component {
   constructor(props) {
@@ -26,17 +28,20 @@ class ListaPrecioList extends Component {
         accesor: "descripcion"
       },
       {
-        Header: "Valida desde",
-        accesor: "validaFrom"
-      },
-      {
-        Header: "Valida Hasta",
-        accesor: "validaTO"
-      },
-      {
-        Header: "Activa",
-        accesor: "activo"
-      },
+        Header: "",
+        accessor: "activo",
+        filterable: false,
+        Cell: row => (
+          <div style={{ textAlign: "right" }}>
+            {!row.value.activo ?
+              <Chip color="primary" label={"Activa"} />
+              :
+              <Chip label={"Desactiva"} />
+            }
+          </div>
+        )
+      }
+      ,
       {
         Header: "",
         sortable: false,

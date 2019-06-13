@@ -46,17 +46,9 @@ export const Form = props => {
     values: {
       nombre,
       descripcion,
-      markup,
-      nombre_contacto,
-      apellido,
-      email,
-      celular_contacto,
-      telefono_contacto,
-      website,
-      direccion,
-      localidad,
-      codigo_postal,
-      notas
+      validaFrom,
+      validaTO,
+      activo
     },
     errors,
     touched,

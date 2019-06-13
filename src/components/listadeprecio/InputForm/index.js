@@ -73,7 +73,11 @@ class InputForm extends Component {
     const values = () => {
       if (this.props.action === "new") {
         let val = {
-          nombre:''
+          nombre:'',
+          descripcion:'',
+          validaFrom:'',
+          validaTo:'',
+          activo: false
         };
         return val;
       } else {
