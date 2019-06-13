@@ -7,7 +7,7 @@ import axios from 'axios'
 
 
 const defaultOptions = {
-    baseURL: process.env.BASE_URL_API, 
+    baseURL: process.env.REACT_APP_BASE_URL_API, 
     //baseURL: 'http://127.0.0.1:3001/api/v1',
     headers: {
         'Content-Type': 'application/json',
@@ -29,7 +29,6 @@ apiClient.interceptors.request.use(function (config) {
 export default {
     auth: {
         userLogin(payload) {
-
             return apiClient.post('/usuario/login/', payload)
         },
         userAliveAndActive() {
