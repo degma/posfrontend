@@ -9,6 +9,9 @@ import FullScreenDialog from "../components/dialogs/FullScreenDialog"
 import InputForm from "../components/categorias/InputForm/index"
 import { toast } from "react-toastify";
 import GenerosDataGrid from "../components/generos/GenerosDataGrid";
+import ResponsiveDialog from "../components/dialogs/ResponsiveDialog";
+
+
 
 const styles = {
   root: {
@@ -26,7 +29,7 @@ class GenerosPage extends React.Component {
     this.state = {
       generos: [],
       openNewDialog: false,
-      openUpdateDialog: false,
+      openConfirmDialog: false,
       dialogType: '',
       selectedItem: '',
     };
@@ -34,6 +37,8 @@ class GenerosPage extends React.Component {
     this.handleClickOpen = this.handleClickOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleAddItem = this.handleAddItem.bind(this);
+    this.handleConfirmEliminar = this.handleConfirmEliminar.bind(this);
+    this.handleCloseConfirm = this.handleCloseConfirm.bind(this);
   }
 
   componentDidMount() {
@@ -79,22 +84,22 @@ class GenerosPage extends React.Component {
 
   }
 
-  handleEliminar(args) {
-    eventService.articulo
-      .desactivarArticulo(args.id)
+  handleEliminar() {
+    let item = this.state.selectedItem.id
+    eventService.genero
+      .desactivar(item)
       .then(() => {
-        let updatedLista = this.state.lista.filter(function (obj) {
-          return obj.id !== args.id;
+        let updatedLista = this.state.generos.filter(function (obj) {
+          return obj.id !== item;
         });
-        this.setState({ lista: updatedLista });
-        toast.info("Articulo eliminado!");
+        toast.success("Genero eliminado!");        
+        this.setState({ generos: updatedLista, openConfirmDialog: false });
       })
       .catch(error => {
         console.log(error);
         toast.error(error.name);
       });
   }
-
 
 
   handleClickOpen = () => {
@@ -117,6 +122,12 @@ class GenerosPage extends React.Component {
     this.setState({ openNewDialog: false });
   };
 
+  handleConfirmEliminar(args) {
+    this.setState({ openConfirmDialog: true, selectedItem: args });
+  }
+  handleCloseConfirm() {
+    this.setState({openConfirmDialog: false})
+  }
 
   render() {
     const { classes } = this.props;
@@ -141,6 +152,7 @@ class GenerosPage extends React.Component {
             <GenerosDataGrid
               generos={this.state.generos}
               handleUpdateItem={this.handleClickOpenUpdate}
+              handleConfirmEliminar={this.handleConfirmEliminar}
             />
           </Grid>
         </Grid>
@@ -156,6 +168,14 @@ class GenerosPage extends React.Component {
             handleAddItem={this.handleAddItem}
           />
         </FullScreenDialog>
+        <ResponsiveDialog
+          open={this.state.openConfirmDialog}
+          title="Eliminar Genero"
+          handleClose={this.handleCloseConfirm}
+          confirma={this.handleEliminar}
+        >
+        ¿Seguro que desea elimiminar el genero "{this.state.selectedItem.nombre}"?
+        </ResponsiveDialog>
       </React.Fragment>
     );
   }

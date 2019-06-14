@@ -107,14 +107,26 @@ export const Form = props => {
                       fullWidth
                     />
                   </Grid>
-                  <Grid item lg={6} className={classes.items}>
+                  <Grid item lg={3} className={classes.items}>
                     <TextField
                       id="markup"
                       name="markup"
                       helperText={touched.markup ? errors.markup : ""}
                       error={touched.markup && Boolean(errors.markup)}
-                      label="Markup"
-                      value={markup}
+                      label="Valida Desde"
+                      value={validaFrom}
+                      onChange={change.bind(null, "markup")}
+                      fullWidth
+                    />
+                  </Grid>
+                  <Grid item lg={3} className={classes.items}>
+                    <TextField
+                      id="validaTO"
+                      name="validaTO"
+                      helperText={touched.markup ? errors.markup : ""}
+                      error={touched.markup && Boolean(errors.markup)}
+                      label="Valida Hasta"
+                      value={validaTO}
                       onChange={change.bind(null, "markup")}
                       fullWidth
                     />
@@ -126,7 +138,7 @@ export const Form = props => {
                       helperText={touched.descripcion ? errors.descripcion : ""}
                       error={touched.descripcion && Boolean(errors.descripcion)}
                       label="Descripción"
-                      fullWidth 
+                      fullWidth
                       multiline
                       value={descripcion}
                       onChange={change.bind(null, "descripcion")}

@@ -36,14 +36,14 @@ class ListaPrecioPage extends React.Component {
 
   componentDidMount() {
     eventService.listaprecio.getAll().then(listaprecio => {
-      this.setState({
+      console.log("LISTA DE PRECIOS",listaprecio)
+      return this.setState({
         listaprecio: listaprecio.data
       });
     });
   }
 
-  handleAddItem(args) {
-    console.log("ARGSSS", args);
+  handleAddItem(args) {    
     if (this.state.actionDialog === "new") {
       eventService.listaprecio
         .crearListaPrecio(args)
@@ -141,7 +141,7 @@ class ListaPrecioPage extends React.Component {
           </Grid>
         </Grid>
         <FullScreenDialog
-          dialogTitle="Agregar Categoria"
+          dialogTitle="Agregar Lista de Precios"
           open={this.state.openNewDialog}
           opendialog={this.handleClickOpen}
           closedialog={this.handleClose}

@@ -77,7 +77,7 @@ class InputForm extends Component {
           descripcion:'',
           validaFrom:'',
           validaTo:'',
-          activo: false
+          activo: true
         };
         return val;
       } else {

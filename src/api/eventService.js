@@ -7,7 +7,7 @@ import axios from 'axios'
 
 
 const defaultOptions = {
-    baseURL: process.env.REACT_APP_BASE_URL_API, 
+    baseURL: process.env.REACT_APP_BASE_URL_API,
     //baseURL: 'http://127.0.0.1:3001/api/v1',
     headers: {
         'Content-Type': 'application/json',
@@ -20,7 +20,7 @@ const apiClient = axios.create(defaultOptions)
 
 const token = localStorage.getItem('token')
 
-apiClient.interceptors.request.use(function (config) {    
+apiClient.interceptors.request.use(function (config) {
     config.headers = { "x-access-token": token ? token : '' }
     console.log("x-access-token", token)
     return config;
@@ -86,6 +86,9 @@ export default {
         },
         editar(payload) {
             return apiClient.put('/categoria/' + payload.id, payload)
+        },
+        desactivar(id) {
+            return apiClient.delete('/categoria/' + id)
         }
     },
     genero: {
@@ -97,6 +100,9 @@ export default {
         },
         crearGenero(payload) {
             return apiClient.post('/genero/', payload)
+        },
+        desactivar(id) {
+            return apiClient.delete('/genero/' + id)
         }
     },
     fabricante: {

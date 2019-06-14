@@ -6,6 +6,7 @@ import "react-table-material/Table.css";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
+import matchSorter from "match-sorter";
 
 class GenerosDataGrid extends Component {
   constructor(props) {
@@ -19,11 +20,33 @@ class GenerosDataGrid extends Component {
     const columns = [
       {
         Header: "Nombre",
-        accessor: "nombre"
+        accessor: "nombre",
+        filterMethod: (filter, rows) =>
+        matchSorter(rows, filter.value, { keys: ["nombre"] }),
+        filterAll: true,
+        Filter: ({ filter, onChange }) => (
+          <input
+            onChange={event => onChange(event.target.value)}
+            value={filter ? filter.value : ''}
+            style={{
+              float: 'left'
+            }}
+          />)
       },
       {
         Header: "Descripción",
-        accessor: "descripcion"
+        accessor: "descripcion",
+        filterMethod: (filter, rows) =>
+        matchSorter(rows, filter.value, { keys: ["descripcion"] }),
+        filterAll: true,
+        Filter: ({ filter, onChange }) => (
+          <input
+            onChange={event => onChange(event.target.value)}
+            value={filter ? filter.value : ''}
+            style={{
+              float: 'left'
+            }}
+          />)
       },
       {
         Header: "",
@@ -33,7 +56,7 @@ class GenerosDataGrid extends Component {
             <IconButton style={{ padding: 5 }} onClick={() => this.props.handleUpdateItem(row.original)}>
               <EditIcon />
             </IconButton>
-            <IconButton style={{ padding: 5 }} onClick={() => console.log(row.original)}>
+            <IconButton style={{ padding: 5 }} onClick={() => this.props.handleConfirmEliminar(row.original)}>
               <DeleteIcon />
             </IconButton>
           </div>

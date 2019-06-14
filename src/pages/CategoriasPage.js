@@ -9,6 +9,7 @@ import { Button, Typography } from "@material-ui/core";
 import FullScreenDialog from "../components/dialogs/FullScreenDialog"
 import InputForm from "../components/categorias/InputForm/index"
 import { toast } from "react-toastify";
+import ResponsiveDialog from "../components/dialogs/ResponsiveDialog";
 
 const styles = {
   root: {
@@ -25,8 +26,8 @@ class CategoriasPage extends React.Component {
     super(props);
     this.state = {
       categorias: [],
-      openNewDialog: false,
-      openUpdateDialog: false,
+      openNewDialog: false,      
+      openConfirmDialog: false,      
       dialogType: '',
       selectedItem: '',
     };
@@ -34,6 +35,8 @@ class CategoriasPage extends React.Component {
     this.handleClickOpen = this.handleClickOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleAddItem = this.handleAddItem.bind(this);
+    this.handleConfirmEliminar = this.handleConfirmEliminar.bind(this);
+    this.handleCloseConfirm = this.handleCloseConfirm.bind(this);
   }
 
   componentDidMount() {
@@ -77,15 +80,16 @@ class CategoriasPage extends React.Component {
 
   }
 
-  handleEliminar(args) {
-    eventService.articulo
-      .desactivarArticulo(args.id)
+  handleEliminar() {
+    let item = this.state.selectedItem.id
+    eventService.categoria
+      .desactivar(item)
       .then(() => {
-        let updatedLista = this.state.lista.filter(function (obj) {
-          return obj.id !== args.id;
+        let updatedLista = this.state.categorias.filter(function (obj) {
+          return obj.id !== item;
         });
-        this.setState({ lista: updatedLista });
-        toast.info("Articulo eliminado!");
+        toast.success("Categoría eliminada!");        
+        this.setState({ categorias: updatedLista, openConfirmDialog: false });
       })
       .catch(error => {
         console.log(error);
@@ -115,6 +119,12 @@ class CategoriasPage extends React.Component {
     this.setState({ openNewDialog: false });
   };
 
+  handleConfirmEliminar(args) {
+    this.setState({ openConfirmDialog: true, selectedItem: args });
+  }
+  handleCloseConfirm() {
+    this.setState({openConfirmDialog: false})
+  }
 
   render() {
     const { classes } = this.props;
@@ -139,6 +149,7 @@ class CategoriasPage extends React.Component {
             <CategoriasDataGrid
               categorias={this.state.categorias}
               handleUpdateItem={this.handleClickOpenUpdate}
+              handleConfirmEliminar={this.handleConfirmEliminar}
             />
           </Grid>
         </Grid>
@@ -154,6 +165,14 @@ class CategoriasPage extends React.Component {
             handleAddItem={this.handleAddItem}
           />
         </FullScreenDialog>
+        <ResponsiveDialog
+          open={this.state.openConfirmDialog}
+          title="Eliminar Categoría"
+          handleClose={this.handleCloseConfirm}
+          confirma={this.handleEliminar}
+        >
+        ¿Seguro que desea elimiminar la categoría "{this.state.selectedItem.nombre}"?
+        </ResponsiveDialog>
       </React.Fragment>
     );
   }

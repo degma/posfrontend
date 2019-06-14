@@ -7,7 +7,7 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import Chip from "@material-ui/core/Chip";
-
+import matchSorter from "match-sorter";
 
 class ListaPrecioList extends Component {
   constructor(props) {
@@ -21,19 +21,42 @@ class ListaPrecioList extends Component {
     const columns = [
       {
         Header: "Nombre",
-        accessor: "nombre"
+        accessor: "nombre",
+        filterMethod: (filter, rows) =>
+        matchSorter(rows, filter.value, { keys: ["nombre"] }),
+        filterAll: true,
+        Filter: ({ filter, onChange }) => (
+          <input
+            onChange={event => onChange(event.target.value)}
+            value={filter ? filter.value : ''}
+            style={{
+              float: 'left'
+            }}
+          />)
       },
       {
         Header: "Descripción",
-        accesor: "descripcion"
+        accesor: "descripcion",
+        filterMethod: (filter, rows) =>
+        matchSorter(rows, filter.value, { keys: ["descripcion"] }),
+        filterAll: true,
+        Filter: ({ filter, onChange }) => (
+          <input
+            onChange={event => onChange(event.target.value)}
+            value={filter ? filter.value : ''}
+            style={{
+              float: 'left'
+            }}
+          />)
       },
       {
         Header: "",
-        accessor: "activo",
+        accessor: "activo",        
         filterable: false,
         Cell: row => (
           <div style={{ textAlign: "right" }}>
-            {!row.value.activo ?
+            {row.value}
+            {row.value ?
               <Chip color="primary" label={"Activa"} />
               :
               <Chip label={"Desactiva"} />
@@ -52,12 +75,6 @@ class ListaPrecioList extends Component {
               onClick={() => this.props.handleUpdateItem(row.original)}
             >
               <EditIcon />
-            </IconButton>
-            <IconButton
-              style={{ padding: 5 }}
-              onClick={() => console.log(row.original)}
-            >
-              <DeleteIcon />
             </IconButton>
           </div>
         ),

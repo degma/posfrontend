@@ -118,9 +118,11 @@ class ListaPrecios extends Component {
           />)
       },
       {
+        Header: <div style={{ textAlign: "right" }}>Ultima actualización</div>,
         id: "actualizado",
         filterable: false,
-        accessor: d => d.precio.updatedAt
+        accessor: d => d.precio.updatedAt,
+        Cell: row => (<div style={{ textAlign: "right" }}>{moment(new Date()).diff(row.value, 'days')} dias</div>)
       }
     ];
 
