@@ -9,6 +9,7 @@ import { withStyles } from "@material-ui/core/styles";
 import FullScreenDialog from "../components/dialogs/FullScreenDialog";
 import ArticuloDataGrid from "../components/articulos/ArticuloDataGrid";
 import ResponsiveDialog from "../components/dialogs/ResponsiveDialog";
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 const styles = {
   appBar: {
@@ -33,6 +34,7 @@ class ArticulosPageLista extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: false,
       lista: [],
       categorias: [],
       generos: [],
@@ -81,7 +83,7 @@ class ArticulosPageLista extends Component {
 
   componentDidMount() {
     toast.configure();
-
+    this.setState({ loading: true });
     eventService.listaprecio
       .getCurrent()
       .then(listaprecio => {
@@ -99,17 +101,6 @@ class ArticulosPageLista extends Component {
       .catch(error => {
         toast.warn(error.name);
       });
-
-    /* Articulos */
-    eventService.articulo
-      .getArticulo()
-      .then(articulos => {
-        this.setState({
-          lista: articulos.data.articulos,
-          actionDialog: ""
-        });
-      })
-      .catch(error => console.log(error));
 
     /* Categorias */
     eventService.categoria
@@ -134,10 +125,23 @@ class ArticulosPageLista extends Component {
         this.setState({ generos: generos.data });
       })
       .catch(error => console.log(error));
+
+    /* Articulos */
+    eventService.articulo
+      .getArticulo()
+      .then(articulos => {
+        this.setState({
+          loading: false,
+          lista: articulos.data.articulos,
+          actionDialog: ""
+        });
+      })
+      .catch(error => console.log(error));
   }
 
   /* Agregar el articulo! */
   handleAddItem(args) {
+    args.usuarioId = localStorage.getItem("userId");
     if (this.state.actionDialog === "new") {
       eventService.articulo
         .crearArticulo(args)
@@ -218,11 +222,15 @@ class ArticulosPageLista extends Component {
           </Grid>
           <Grid item xs={12}>
             <Divider />
-            <ArticuloDataGrid
-              articulos={this.state.lista}
-              handleUpdateItem={this.handleClickOpenUpdate}
-              handleConfirmEliminar={this.handleConfirmEliminar}
-            />
+            {this.state.loading === true ? (
+              <CircularProgress className={classes.progress} />
+            ) : (
+              <ArticuloDataGrid
+                articulos={this.state.lista}
+                handleUpdateItem={this.handleClickOpenUpdate}
+                handleConfirmEliminar={this.handleConfirmEliminar}
+              />
+            )}
           </Grid>
         </Grid>
         <FullScreenDialog

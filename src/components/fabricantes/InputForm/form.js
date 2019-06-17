@@ -1,12 +1,10 @@
-import React from "react";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import { makeStyles } from "@material-ui/styles";
-import Grid from "@material-ui/core/Grid";
+import React from "react"
+import Button from "@material-ui/core/Button"
+import TextField from "@material-ui/core/TextField"
+import { makeStyles } from "@material-ui/styles"
+import Grid from "@material-ui/core/Grid"
+import { Typography, Divider } from "@material-ui/core"
 
-// import DisplayFormikState from "./DisplayFormikState";
-import { Typography, Divider } from "@material-ui/core";
-// import Select from 'react-select'
 
 const useStyles = makeStyles({
   buttons: {
@@ -75,7 +73,7 @@ export const Form = props => {
           <Grid item lg={12} className={classes.savediv}>
             <Grid container justify="center" alignItems="center">
               <Grid item xs={8} className={classes.detalleForm}>
-                Fabricante
+                Agregar o Editar un Fabricante
               </Grid>
               <Grid item xs={4} className={classes.detalleForm}>
                 <Button

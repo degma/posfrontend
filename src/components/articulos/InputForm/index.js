@@ -4,17 +4,13 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import { Form } from "./form";
 import Grid from '@material-ui/core/Grid';
 import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
 import * as Yup from "yup"
 import PropTypes from 'prop-types';
-import eventService from "../../../api/eventService";
 
 
 
 const validationSchema = Yup.object({
   nombre: Yup.string("Nombre")
-    .required("*campo obligatorio"),
-  descripcion: Yup.string("Enter your email")
     .required("*campo obligatorio"),
   precio: Yup.string("Precio")
     .required("*campo obligatorio"),

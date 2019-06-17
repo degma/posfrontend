@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import ArticulosPageLista from "./ArticulosPageLista";
-import InputForm from "../components/articulos/InputForm";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";

@@ -61,7 +61,7 @@ export const Form = props => {
           <Grid item lg={12} className={classes.savediv}>
             <Grid container justify="center" alignItems="center">
               <Grid item xs={8} className={classes.detalleForm}>
-                Crear un nuevo Fabricante.
+                Agregar o Editar una Categoría
               </Grid>
               <Grid item xs={4} className={classes.detalleForm}>
                 <Button

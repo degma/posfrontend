@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import FormAddFabricante from './FormAddFabricante';
-import ListaFabricantes from './ListaFabricantes'
+import FormAddFabricante from './FormAddFabricante'
 import eventService from '../../api/eventService'
-import { toast } from "react-toastify";
+import { toast } from "react-toastify"
 
 class Fabricantes extends Component {
     constructor(props){

@@ -1,11 +1,10 @@
-import React, { Component } from "react";
-import { Formik } from "formik";
-import withStyles from "@material-ui/core/styles/withStyles";
-import { Form } from "./form";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import * as Yup from "yup";
-import PropTypes from "prop-types";
+import React, { Component } from "react"
+import { Formik } from "formik"
+import withStyles from "@material-ui/core/styles/withStyles"
+import { Form } from "./form"
+import Grid from "@material-ui/core/Grid"
+import * as Yup from "yup"
+import PropTypes from "prop-types"
 
 const validationSchema = Yup.object({
   nombre: Yup.string("Nombre").required("*campo obligatorio")

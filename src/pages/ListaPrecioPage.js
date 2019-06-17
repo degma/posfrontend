@@ -6,7 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import eventService from "../api/eventService";
 import { Button, Typography } from "@material-ui/core";
 import FullScreenDialog from "../components/dialogs/FullScreenDialog";
-import InputForm from "../components/categorias/InputForm/index";
+import InputForm from "../components/listadeprecio/InputForm/index";
 import { toast } from "react-toastify";
 import ListaPrecioList from "../components/listadeprecio/ListaPrecioList";
 

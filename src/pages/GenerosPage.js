@@ -6,11 +6,11 @@ import Grid from "@material-ui/core/Grid";
 import eventService from "../api/eventService";
 import { Button, Typography } from "@material-ui/core";
 import FullScreenDialog from "../components/dialogs/FullScreenDialog"
-import InputForm from "../components/categorias/InputForm/index"
+import InputForm from "../components/generos/InputForm/index"
 import { toast } from "react-toastify";
 import GenerosDataGrid from "../components/generos/GenerosDataGrid";
 import ResponsiveDialog from "../components/dialogs/ResponsiveDialog";
-
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 
 const styles = {
@@ -28,6 +28,7 @@ class GenerosPage extends React.Component {
     super(props);
     this.state = {
       generos: [],
+      loading: false,
       openNewDialog: false,
       openConfirmDialog: false,
       dialogType: '',
@@ -42,11 +43,13 @@ class GenerosPage extends React.Component {
   }
 
   componentDidMount() {
+    this.setState({loading:true})
     eventService.genero.getGeneros()
     .then(generos => {
       console.log("GENEROS", generos.data)
       this.setState({
-        generos: generos.data
+        generos: generos.data,
+        loading: false
       });
     });
   }
@@ -149,15 +152,19 @@ class GenerosPage extends React.Component {
           </Grid>
           <Grid item xs={12}>
             <Divider />
+            {this.state.loading ? 
+              <CircularProgress className={classes.progress} />
+            :
             <GenerosDataGrid
               generos={this.state.generos}
               handleUpdateItem={this.handleClickOpenUpdate}
               handleConfirmEliminar={this.handleConfirmEliminar}
             />
+            }
           </Grid>
         </Grid>
         <FullScreenDialog
-          dialogTitle="Agregar Categoria"
+          dialogTitle={this.state.actionDialog==="new"? "Agregar Genero" : "Editar Genero"}
           open={this.state.openNewDialog}
           opendialog={this.handleClickOpen}
           closedialog={this.handleClose}

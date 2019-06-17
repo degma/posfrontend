@@ -1,13 +1,12 @@
-import React, { Component } from "react";
-import ReactTable from "react-table";
-import "react-table/react-table.css";
-import { Grid } from "@material-ui/core";
-import "react-table-material/Table.css";
-import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from "@material-ui/icons/Edit";
-import Chip from "@material-ui/core/Chip";
-import matchSorter from "match-sorter";
+import React, { Component } from "react"
+import ReactTable from "react-table"
+import "react-table/react-table.css"
+import { Grid } from "@material-ui/core"
+import "react-table-material/Table.css"
+import IconButton from "@material-ui/core/IconButton"
+import EditIcon from "@material-ui/icons/Edit"
+import Chip from "@material-ui/core/Chip"
+import matchSorter from "match-sorter"
 
 class ListaPrecioList extends Component {
   constructor(props) {
@@ -37,6 +36,7 @@ class ListaPrecioList extends Component {
       {
         Header: "Descripción",
         accesor: "descripcion",
+        show: false,
         filterMethod: (filter, rows) =>
         matchSorter(rows, filter.value, { keys: ["descripcion"] }),
         filterAll: true,
@@ -48,6 +48,15 @@ class ListaPrecioList extends Component {
               float: 'left'
             }}
           />)
+      },{
+        Header: "Valida Desde",
+        accesor: "validaFrom",
+        filterable: false
+      },{
+        Header: "Valida Hasta",
+        accesor: "validaTO",
+        filterable: false
+        
       },
       {
         Header: "",

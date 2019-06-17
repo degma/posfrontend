@@ -1,16 +1,10 @@
-import React from "react";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
-import Input from "@material-ui/core/Input";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import { makeStyles } from "@material-ui/styles";
-import Grid from "@material-ui/core/Grid";
-import Chip from "@material-ui/core/Chip";
-import InputLabel from "@material-ui/core/InputLabel";
-import DisplayFormikState from "./DisplayFormikState";
-import { Typography, Divider } from "@material-ui/core";
+import React from "react"
+import Button from "@material-ui/core/Button"
+import TextField from "@material-ui/core/TextField"
+import { makeStyles } from "@material-ui/styles"
+import Grid from "@material-ui/core/Grid"
+// import DisplayFormikState from "./DisplayFormikState";
+import { Typography, Divider } from "@material-ui/core"
 // import Select from 'react-select'
 
 const useStyles = makeStyles({
@@ -68,7 +62,7 @@ export const Form = props => {
           <Grid item lg={12} className={classes.savediv}>
             <Grid container justify="center" alignItems="center">
               <Grid item xs={8} className={classes.detalleForm}>
-                Crear un nuevo Fabricante.
+                Agregar o Editar un Genero.
               </Grid>
               <Grid item xs={4} className={classes.detalleForm}>
                 <Button
@@ -124,7 +118,7 @@ export const Form = props => {
           </Grid>
         </Grid>
       </form>
-      <DisplayFormikState {...props} />
+      {/* <DisplayFormikState {...props} /> */}
     </React.Fragment>
   );
 };

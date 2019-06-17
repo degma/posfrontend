@@ -21,8 +21,7 @@ const apiClient = axios.create(defaultOptions)
 const token = localStorage.getItem('token')
 
 apiClient.interceptors.request.use(function (config) {
-    config.headers = { "x-access-token": token ? token : '' }
-    console.log("x-access-token", token)
+    config.headers = { "x-access-token": token ? token : '' }    
     return config;
 });
 //Now set up the routes.  We are going to export a default object with keys that keep our API routes organized.  For example, all of the auth routes live in the Auth object
