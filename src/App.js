@@ -124,12 +124,12 @@ class App extends Component {
             {this.state.token && (
               <div className={classes.root}>
                 <CssBaseline />
-                  <NavigationBar />
+                  <NavigationBar logout={this.logout}/>
                 
                   <main className={classes.content}>
                     <div className={classes.appBarSpacer} />
                     <Switch>
-                      <Redirect from="/" to="/home" exact />
+                      <Redirect from="/" to="/listaprecios" exact />
                       <Route
                         path="/listaprecios"
                         component={ListaPreciosPage}
