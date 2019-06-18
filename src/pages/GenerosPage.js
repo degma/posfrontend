@@ -68,17 +68,17 @@ class GenerosPage extends React.Component {
     }
 
     if (this.state.actionDialog === "update") {
-      console.log(args)
+      console.log("UPDATE",args)
       eventService.genero.editar(args)
         .then(item => {
           console.log(item.data)
-          let updatedLista = this.state.categorias.filter(obj => {
+          let updatedLista = this.state.generos.filter(obj => {
             return obj.id !== args.id;
           })
           updatedLista.push(item.data);
           this.setState({
             openNewDialog: false,
-            categorias: updatedLista
+            generos: updatedLista
           });
         })
         .catch(error => console.log(error))
