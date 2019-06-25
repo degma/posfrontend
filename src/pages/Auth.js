@@ -42,8 +42,7 @@ class AuthPage extends Component {
 
   submitHandler = () => {
     eventService.auth.userLogin(this.state)
-      .then(res => {
-        console.log(res.data.token);
+      .then(res => {        
         this.props.loginHandler(res.data)
       })
       .catch(error => {

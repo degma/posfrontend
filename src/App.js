@@ -91,8 +91,8 @@ const styles = theme => ({
 
 class App extends Component {
   state = {
-    token: localStorage.getItem('token') || null,
-    userId:  localStorage.getItem('userId') || null
+    token:  null,
+    userId:   null
   };
 
   login = (values) => {    
@@ -107,6 +107,10 @@ class App extends Component {
     localStorage.setItem('userId', null)
     this.setState({ token: null, userId: null });
   };
+
+  componentDidMount(){
+    localStorage.clear()
+  }
 
   render() {
     const { classes } = this.props;

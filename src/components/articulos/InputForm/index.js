@@ -78,7 +78,7 @@ class InputForm extends Component {
   }
 
   render() {
-    console.log("ACTION",this.props.action)
+    
     const values = () => {
       if (this.props.action === "new") {        
         let val = {
@@ -103,7 +103,7 @@ class InputForm extends Component {
           generoId: this.props.itemUpdate.generos.map(item => item.id),
           fabricanteId: this.props.itemUpdate.fabricanteId
         };
-        console.log("TO UPDATE", val)
+        
         return val
       }
 

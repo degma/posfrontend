@@ -81,7 +81,7 @@ class InputForm extends Component {
         return val;
       } else {
         let val = this.props.itemUpdate        
-        console.log(val)
+        
         return val;
       }
     };
