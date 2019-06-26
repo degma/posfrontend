@@ -61,27 +61,28 @@ class InputForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      
+
     };
-    
+
   }
 
   render() {
-    
+
+    console.log("INDEX FORM",this.props.articulos)
 
     const values = () => {
       if (this.props.action === "new") {
         let val = {
-          nombre:'',
-          descripcion:'',
-          validaFrom:'',
-          validaTo:'',
+          nombre: '',
+          descripcion: '',
+          validaFrom: '',
+          validaTo: '',
           activo: true
         };
         return val;
       } else {
-        let val = this.props.itemUpdate        
-        
+        let val = this.props.itemUpdate
+
         return val;
       }
     };
@@ -90,10 +91,12 @@ class InputForm extends Component {
       <Grid container justify="center">
         <Grid item lg={12}>
           <Formik
-            render={props => <Form {...props} />}
+            render={props => <Form {...props}
+              articulos={this.props.articulos}
+            />}
             initialValues={values()}
             validationSchema={validationSchema}
-            onSubmit ={values => {
+            onSubmit={values => {
               this.props.handleAddItem(values)
             }}
           />

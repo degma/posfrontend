@@ -9,6 +9,7 @@ import FullScreenDialog from "../components/dialogs/FullScreenDialog";
 import InputForm from "../components/listadeprecio/InputForm/index";
 import { toast } from "react-toastify";
 import ListaPrecioList from "../components/listadeprecio/ListaPrecioList";
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 const styles = {
   root: {
@@ -23,6 +24,8 @@ class ListaPrecioPage extends React.Component {
     super(props);
     this.state = {
       listaprecio: [],
+      articulos: '',
+      loading: false,
       openNewDialog: false,
       openUpdateDialog: false,
       dialogType: "",
@@ -35,15 +38,33 @@ class ListaPrecioPage extends React.Component {
   }
 
   componentDidMount() {
-    eventService.listaprecio.getAll().then(listaprecio => {
-      console.log("LISTA DE PRECIOS",listaprecio)
-      return this.setState({
-        listaprecio: listaprecio.data
+
+    this.setState({ loading: true })
+
+    /* Lista de Precios */
+    eventService.listaprecio
+      .getAll()
+      .then(listaprecio => {
+        return this.setState({
+          listaprecio: listaprecio.data
+        });
       });
-    });
+
+    /* Articulos */
+    eventService.articulo
+      .getArticulo()
+      .then(articulos => {
+        this.setState({
+          articulos: articulos.data.articulos,
+          loading: false
+        });
+        console.log("Articulos", articulos.data.articulos)
+        console.log("Articulos", this.state.articulos)
+      })
+      .catch(error => console.log(error));
   }
 
-  handleAddItem(args) {    
+  handleAddItem(args) {
     if (this.state.actionDialog === "new") {
       eventService.listaprecio
         .crearListaPrecio(args)
@@ -62,7 +83,7 @@ class ListaPrecioPage extends React.Component {
         .editar(args)
         .then(item => {
           console.log(item.data);
-          let updatedLista = this.state.listaprecio.filter(obj => {            
+          let updatedLista = this.state.listaprecio.filter(obj => {
             return obj.id !== args.id;
           });
           updatedLista.push(item.data);
@@ -80,7 +101,7 @@ class ListaPrecioPage extends React.Component {
     eventService.articulo
       .desactivarArticulo(args.id)
       .then(() => {
-        let updatedLista = this.state.lista.filter(function(obj) {
+        let updatedLista = this.state.lista.filter(function (obj) {
           return obj.id !== args.id;
         });
         this.setState({ lista: updatedLista });
@@ -134,10 +155,15 @@ class ListaPrecioPage extends React.Component {
           </Grid>
           <Grid item xs={12}>
             <Divider />
-            <ListaPrecioList
-              listaprecio={this.state.listaprecio}
-              handleUpdateItem={this.handleClickOpenUpdate}
-            />
+            {this.state.loading ?
+              <CircularProgress className={classes.progress} />
+              :
+              <ListaPrecioList
+                listaprecio={this.state.listaprecio}
+                handleUpdateItem={this.handleClickOpenUpdate}
+              />
+            }
+
           </Grid>
         </Grid>
         <FullScreenDialog
@@ -146,6 +172,7 @@ class ListaPrecioPage extends React.Component {
           opendialog={this.handleClickOpen}
           closedialog={this.handleClose}
           action={this.state.actionDialog}
+          articulos={this.state.articulos}
         >
           <InputForm
             itemUpdate={this.state.selectedItem}

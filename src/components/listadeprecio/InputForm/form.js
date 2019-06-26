@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/styles"
 import Grid from "@material-ui/core/Grid"
 // import DisplayFormikState from "./DisplayFormikState"
 import { Typography, Divider } from "@material-ui/core"
+import IncrementPanel from "./IncrementPanel";
 
 
 const useStyles = makeStyles({
@@ -51,6 +52,7 @@ export const Form = props => {
     handleChange(e);
     setFieldTouched(name, true, false);
   };
+  console.log("FORM",this.props.articulos)
 
   return (
     <React.Fragment>
@@ -164,6 +166,18 @@ export const Form = props => {
               </Grid>
             </Grid>
             <Divider />
+            <Grid container>
+              <Grid item lg={3} className={classes.detalleForm}>
+                <Typography variant="h5" gutterBottom>
+                  Incrementar Precios
+                </Typography>
+              </Grid>
+              <Grid item lg={9} className={classes.detalleForm}>
+                <IncrementPanel
+                  articulos={this.props.articulos}
+                />
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </form>
