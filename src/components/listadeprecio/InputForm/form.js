@@ -52,7 +52,7 @@ export const Form = props => {
     handleChange(e);
     setFieldTouched(name, true, false);
   };
-  console.log("FORM",this.props.articulos)
+  console.log("FORM",props.arts)
 
   return (
     <React.Fragment>
@@ -174,7 +174,7 @@ export const Form = props => {
               </Grid>
               <Grid item lg={9} className={classes.detalleForm}>
                 <IncrementPanel
-                  articulos={this.props.articulos}
+                  articulos={props.arts}
                 />
               </Grid>
             </Grid>

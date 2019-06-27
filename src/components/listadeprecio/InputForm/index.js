@@ -92,7 +92,7 @@ class InputForm extends Component {
         <Grid item lg={12}>
           <Formik
             render={props => <Form {...props}
-              articulos={this.props.articulos}
+              arts={this.props.articulos}
             />}
             initialValues={values()}
             validationSchema={validationSchema}
