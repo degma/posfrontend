@@ -5,7 +5,7 @@ import Paper from "@material-ui/core/Paper";
 import Chip from "@material-ui/core/Chip";
 import ReactTable from "react-table";
 import "react-table-material/Table.css";
-import moment from 'moment';
+import moment from "moment";
 import matchSorter from "match-sorter";
 
 const styles = theme => ({
@@ -27,18 +27,24 @@ class ListaPrecios extends Component {
       {
         Header: "Nombre",
         accessor: "nombre",
-        Cell: row => <div style={{ textAlign: "left" }}>{row.value}</div>,
+        Cell: row => (
+          <div>
+            <div style={{ textAlign: "left" }}>{row.value}</div>
+            <div style={{ color: "grey"}}>{row.original.descripcion}</div>
+          </div>
+        ),
         filterMethod: (filter, rows) =>
           matchSorter(rows, filter.value, { keys: ["nombre"] }),
         filterAll: true,
         Filter: ({ filter, onChange }) => (
           <input
             onChange={event => onChange(event.target.value)}
-            value={filter ? filter.value : ''}
+            value={filter ? filter.value : ""}
             style={{
-              float: 'left'
+              float: "left"
             }}
-          />)
+          />
+        )
       },
       {
         id: "fabricante",
@@ -51,11 +57,12 @@ class ListaPrecios extends Component {
         Filter: ({ filter, onChange }) => (
           <input
             onChange={event => onChange(event.target.value)}
-            value={filter ? filter.value : ''}
+            value={filter ? filter.value : ""}
             style={{
-              float: 'right'
+              float: "right"
             }}
-          />)
+          />
+        )
       },
       {
         id: "categoria",
@@ -68,11 +75,12 @@ class ListaPrecios extends Component {
         Filter: ({ filter, onChange }) => (
           <input
             onChange={event => onChange(event.target.value)}
-            value={filter ? filter.value : ''}
+            value={filter ? filter.value : ""}
             style={{
-              float: 'right'
+              float: "right"
             }}
-          />)
+          />
+        )
       },
       {
         id: "genero",
@@ -91,12 +99,12 @@ class ListaPrecios extends Component {
         Filter: ({ filter, onChange }) => (
           <input
             onChange={event => onChange(event.target.value)}
-            value={filter ? filter.value : ''}
+            value={filter ? filter.value : ""}
             style={{
-              float: 'right'
+              float: "right"
             }}
-          />)
-
+          />
+        )
       },
       {
         id: "precio",
@@ -111,18 +119,23 @@ class ListaPrecios extends Component {
         Filter: ({ filter, onChange }) => (
           <input
             onChange={event => onChange(event.target.value)}
-            value={filter ? filter.value : ''}
+            value={filter ? filter.value : ""}
             style={{
-              float: 'right'
+              float: "right"
             }}
-          />)
+          />
+        )
       },
       {
         Header: <div style={{ textAlign: "right" }}>Ultima actualización</div>,
         id: "actualizado",
         filterable: false,
         accessor: d => d.precio.updatedAt,
-        Cell: row => (<div style={{ textAlign: "right" }}>{moment(new Date()).diff(row.value, 'days')} dias</div>)
+        Cell: row => (
+          <div style={{ textAlign: "right" }}>
+            {moment(new Date()).diff(row.value, "days")} dias
+          </div>
+        )
       }
     ];
 
@@ -134,8 +147,7 @@ class ListaPrecios extends Component {
           filterable={true}
           resizable={true}
           defaultPageSize={10}
-        />
-        }
+        />        
       </Paper>
     );
   }

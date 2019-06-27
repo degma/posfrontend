@@ -2,10 +2,12 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-
+import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import CategoriaPanel from "./CategoriaPanel";
+import { Grid } from "@material-ui/core";
+import { red } from "@material-ui/core/colors";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -14,6 +16,19 @@ const useStyles = makeStyles(theme => ({
   heading: {
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular
+  },
+  incremento: {
+    fontSize: theme.typography.pxToRem(15),
+    fontWeight: theme.typography.fontWeightRegular,
+    color: "green",
+    float: "right"
+  },
+  container: {
+    margin: 0
+  },
+  dense: {
+    marginTop: 0,
+    width: 70
   }
 }));
 
@@ -30,12 +45,17 @@ export default function FabricantePanel(props) {
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <Typography className={classes.heading}>
-                {e.nombre}
-              </Typography>
+              <span style={{ float: "left" }}>
+                <Typography align="left" className={classes.heading}>{e.nombre}</Typography>
+              </span>
+              <span style={{ float: "right" }}>
+                <Typography align="right">
+                  &nbsp;Incrementa 10%
+                </Typography>
+              </span>
             </ExpansionPanelSummary>
 
-            <CategoriaPanel articulos ={props.articulos} fabricante={e.id}/>
+            <CategoriaPanel articulos={props.articulos} fabricante={e.id} />
           </ExpansionPanel>
         );
       })}
