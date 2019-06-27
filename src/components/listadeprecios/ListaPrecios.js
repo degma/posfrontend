@@ -27,7 +27,12 @@ class ListaPrecios extends Component {
       {
         Header: "Nombre",
         accessor: "nombre",
-        Cell: row => <div style={{ textAlign: "left" }}>{row.value}</div>,
+        Cell: row => (
+          <div>
+            <div style={{ textAlign: "left" }}>{row.value}</div>
+            <div style={{ color: "grey"}}>{row.original.descripcion}</div>
+          </div>
+        ),
         filterMethod: (filter, rows) =>
           matchSorter(rows, filter.value, { keys: ["nombre"] }),
         filterAll: true,
