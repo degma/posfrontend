@@ -27,6 +27,7 @@ class ListaPrecios extends Component {
       {
         Header: "Nombre",
         accessor: "nombre",
+        width: 300,
         Cell: row => (
           <div>
             <div style={{ textAlign: "left" }}>{row.value}</div>
@@ -139,8 +140,7 @@ class ListaPrecios extends Component {
           filterable={true}
           resizable={true}
           defaultPageSize={10}
-        />
-        }
+        />        
       </Paper>
     );
   }
