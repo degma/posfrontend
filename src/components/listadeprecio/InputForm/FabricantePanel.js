@@ -45,14 +45,16 @@ export default function FabricantePanel(props) {
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <span style={{ float: "left" }}>
-                <Typography align="left" className={classes.heading}>{e.nombre}</Typography>
-              </span>
-              <span style={{ float: "right" }}>
-                <Typography align="right">
-                  &nbsp;Incrementa 10%
-                </Typography>
-              </span>
+              <Grid container justify="space-between">
+                <Grid item>
+                  <Typography className={classes.heading}>
+                    {e.nombre}
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography className={classes.incremento}>&nbsp;Incrementa: 10%</Typography>
+                </Grid>
+              </Grid>
             </ExpansionPanelSummary>
 
             <CategoriaPanel articulos={props.articulos} fabricante={e.id} />

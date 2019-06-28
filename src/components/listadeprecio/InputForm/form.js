@@ -1,12 +1,11 @@
-import React from "react"
-import Button from "@material-ui/core/Button"
-import TextField from "@material-ui/core/TextField"
-import { makeStyles } from "@material-ui/styles"
-import Grid from "@material-ui/core/Grid"
+import React from "react";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import { makeStyles } from "@material-ui/styles";
+import Grid from "@material-ui/core/Grid";
 // import DisplayFormikState from "./DisplayFormikState"
-import { Typography, Divider } from "@material-ui/core"
+import { Typography, Divider } from "@material-ui/core";
 import IncrementPanel from "./IncrementPanel";
-
 
 const useStyles = makeStyles({
   buttons: {
@@ -52,7 +51,7 @@ export const Form = props => {
     handleChange(e);
     setFieldTouched(name, true, false);
   };
-  console.log("FORM",props.arts)
+  console.log("FORM", props.arts);
 
   return (
     <React.Fragment>
@@ -112,16 +111,6 @@ export const Form = props => {
                         shrink: true
                       }}
                     />
-                    {/* <TextField
-                      id="validaFrom"
-                      name="validaFrom"
-                      helperText={touched.markup ? errors.markup : ""}
-                      error={touched.markup && Boolean(errors.markup)}
-                      label="Valida Desde"
-                      value={validaFrom}
-                      onChange={change.bind(null, "validaFrom")}
-                      fullWidth
-                    /> */}
                   </Grid>
                   <Grid item lg={3} className={classes.items}>
                     <TextField
@@ -138,16 +127,6 @@ export const Form = props => {
                         shrink: true
                       }}
                     />
-                    {/* <TextField
-                      id="validaTO"
-                      name="validaTO"
-                      helperText={touched.markup ? errors.markup : ""}
-                      error={touched.markup && Boolean(errors.markup)}
-                      label="Valida Hasta"
-                      value={validaTO}
-                      onChange={change.bind(null, "validaTO")}
-                      fullWidth
-                    /> */}
                   </Grid>
                   <Grid item lg={12} className={classes.items}>
                     <TextField
@@ -169,13 +148,11 @@ export const Form = props => {
             <Grid container>
               <Grid item lg={3} className={classes.detalleForm}>
                 <Typography variant="h5" gutterBottom>
-                  Incrementar Precios
+                  Actualizar Precios
                 </Typography>
               </Grid>
               <Grid item lg={9} className={classes.detalleForm}>
-                <IncrementPanel
-                  articulos={props.arts}
-                />
+                <IncrementPanel articulos={props.arts} />
               </Grid>
             </Grid>
           </Grid>
