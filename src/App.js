@@ -9,8 +9,11 @@ import ConfiguracionPage from "./pages/ConfiguracionPage";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import AuthPage from "./pages/Auth";
 import AuthContext from "./context/auth-context";
+import ComprasPage from "./pages/ComprasPage";
+
 
 const drawerWidth = 240;
+
 
 const styles = theme => ({
   root: {
@@ -91,15 +94,15 @@ const styles = theme => ({
 
 class App extends Component {
   state = {
-    token:  null,
-    userId:   null
+    token: null,
+    userId: null
   };
 
-  login = (values) => {    
+  login = (values) => {
     localStorage.setItem('token', values.token)
     localStorage.setItem('userId', values.userId)
     this.setState({ token: values.token, userId: values.userId });
-    
+
   };
 
   logout = () => {
@@ -108,28 +111,28 @@ class App extends Component {
     this.setState({ token: null, userId: null });
   };
 
-  componentDidMount(){
+  componentDidMount() {
     localStorage.clear()
   }
 
   render() {
     const { classes } = this.props;
-    return (
-      <BrowserRouter>
-        <React.Fragment>
-          <AuthContext.Provider
-            value={{
-              token: this.state.token,
-              userId: this.state.userId,
-              login: this.login,
-              logout: this.logout
-            }}
-          >
-            {this.state.token && (
-              <div className={classes.root}>
-                <CssBaseline />
-                  <NavigationBar logout={this.logout}/>
-                
+    return (      
+        <BrowserRouter>
+          <React.Fragment>
+            <AuthContext.Provider
+              value={{
+                token: this.state.token,
+                userId: this.state.userId,
+                login: this.login,
+                logout: this.logout
+              }}
+            >
+              {this.state.token && (
+                <div className={classes.root}>
+                  <CssBaseline />
+                  <NavigationBar logout={this.logout} />
+
                   <main className={classes.content}>
                     <div className={classes.appBarSpacer} />
                     <Switch>
@@ -143,15 +146,17 @@ class App extends Component {
                         path="/configuracion"
                         component={ConfiguracionPage}
                       />
+                      <Route path="/compras" component={ComprasPage} />
                       <Route path="/login" component={AuthPage} />
-                    </Switch>                
+                    </Switch>
                   </main>
-              </div>
-            )}
-            {!this.state.token && <AuthPage loginHandler={this.login} />}
-          </AuthContext.Provider>
-        </React.Fragment>
-      </BrowserRouter>
+                </div>
+              )}
+              {!this.state.token && <AuthPage loginHandler={this.login} />}
+            </AuthContext.Provider>
+          </React.Fragment>
+        </BrowserRouter>
+
     );
   }
 }

@@ -4,6 +4,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon"
 import ListItemText from "@material-ui/core/ListItemText"
 import ListSubheader from "@material-ui/core/ListSubheader"
 import DashboardIcon from "@material-ui/icons/Dashboard"
+import InputIcon from "@material-ui/icons/Input"
 import ListAlt from "@material-ui/icons/ListAlt"
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart"
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline"
@@ -41,23 +42,25 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Ventas" />
     </ListItem>
-    {/* <ListItem button>
+    <ListItem button>
       <ListItemIcon>
-        <LayersIcon />
+        <InputIcon />
       </ListItemIcon>
-      <ListItemText primary="Articulos" />
-    </ListItem> */}
+      <ListItemText primary="Ingresos" />
+    </ListItem>
   </div>
 );
 
 export const secondaryListItems = (
   <div>
-    <ListSubheader inset>Configuración</ListSubheader>
+    <ListSubheader inset>Administración</ListSubheader>
+    <Link to="/compras">
     <ListItem button>
       <ListItemIcon>
-        <AssignmentIcon />
+        <ShoppingCartIcon />
       </ListItemIcon>
-      <ListItemText primary="Current month" />
+      <ListItemText primary="Compras" />
     </ListItem>
+    </Link>
   </div>
 );
