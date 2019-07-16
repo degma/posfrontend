@@ -1,10 +1,18 @@
-import { ADD_ARTICLE} from './actiontypes'
+import { ADD_ARTICLE, SET_FABRICANTE_COMPRA} from './actiontypes'
 
 
 export const addArticle = payload => {
   console.log(payload)
   return {
     type: ADD_ARTICLE,
+    payload
+  }
+}
+
+export const setFabricanteCompra = payload => {
+  console.log(payload)
+  return {
+    type: SET_FABRICANTE_COMPRA,
     payload
   }
 }
