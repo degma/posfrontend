@@ -1,25 +1,8 @@
-//import { combineReducers } from 'redux'
+import { combineReducers } from 'redux'
+import compras from './compras'
 
-import { ADD_ARTICLE, SET_FABRICANTE_COMPRA } from "../actions/actiontypes";
-
-const initialState = {
-  articles: []
-};
-
-function rootReducer(state = initialState, action) {
-  // if (action.type === ADD_ARTICLE) {
-  //   return Object.assign({}, state, {
-  //     articles: state.articles.concat(action.payload)
-  //   });
-  // }
-  switch (action.type) {
-    case ADD_ARTICLE:
-      return Object.assign({}, state, {
-        articles: state.articles.concat(action.payload)
-      });    
-    default:
-      return state;
-  }
-}
+const rootReducer = combineReducers({
+  compras
+})
 
 export default rootReducer;
