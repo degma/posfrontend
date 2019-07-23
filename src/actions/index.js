@@ -1,4 +1,4 @@
-import { ADD_ARTICLE, SET_FABRICANTE_COMPRA} from './actiontypes'
+import { ADD_ARTICLE, SET_FABRICANTE_COMPRA, FETCH_CATEGORIAS_PENDING, FETCH_CATEGORIAS_ERROR, FETCH_CATEGORIAS_SUCCESS} from './actiontypes'
 
 
 export const addArticle = payload => {
@@ -17,25 +17,22 @@ export const setFabricanteCompra = payload => {
   }
 }
 
-export const setVisibilityFilter = filter => ({
-  type: 'SET_VISIBILITY_FILTER',
-  filter
-})
-
-export const toggleTodo = id => ({
-  type: 'TOGGLE_TODO',
-  id
-})
-
-export const VisibilityFilters = {
-  SHOW_ALL: 'SHOW_ALL',
-  SHOW_COMPLETED: 'SHOW_COMPLETED',
-  SHOW_ACTIVE: 'SHOW_ACTIVE'
+export const fetchCategoriasPending = () => {
+  return {
+    type: FETCH_CATEGORIAS_PENDING
+  }
 }
 
-let nextTodoId = 0
-export const addTodo = text => ({
-  type: 'ADD_TODO',
-  id: nextTodoId++,
-  text
-})
+export const fetchCategoriasError = (error) => {
+  return {
+    type: FETCH_CATEGORIAS_ERROR,
+    error: error
+  }
+}
+
+export const fetchCategoriasSuccess = payload => {
+  return {
+    type: FETCH_CATEGORIAS_SUCCESS,
+    categorias: payload
+  }
+}

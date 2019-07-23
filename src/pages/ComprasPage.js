@@ -7,7 +7,8 @@ import CardFabricante from "../components/compras/CardFabricante";
 import BuscarFabricante from "../components/compras/BuscarFabricante";
 import { setFabricanteCompra } from "../actions/";
 import { connect } from "react-redux";
-import FullScreenDialog from "../components/dialogs/FullScreenDialog"
+import FullScreenDialog from "../components/dialogs/FullScreenDialog";
+import Carrito from "../components/carrito";
 
 const styles = makeStyles(theme => ({
   root: {
@@ -79,11 +80,11 @@ const ComprasPage = (props) => {
           </Grid>
         </Paper>
         <FullScreenDialog
-          dialogTitle={props.compra.fabricante.nombre}
+          dialogTitle={"Comprando en " + props.compra.fabricante.nombre}
           open={openFSDialog}
           closedialog={handleClose}
         >
-
+          <Carrito />
         </FullScreenDialog>
 
       </div>
