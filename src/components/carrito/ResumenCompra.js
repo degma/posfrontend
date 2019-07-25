@@ -51,17 +51,17 @@ export default function ResumenCompra() {
 
   return (
     <div className={classes.root}>
-      <ExpansionPanel defaultExpanded>
+      <ExpansionPanel >
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1c-content"
           id="panel1c-header"
         >
           <div className={classes.column}>
-            <Typography className={classes.heading}>Location</Typography>
+            <Typography className={classes.heading}>Resumen de la Compra</Typography>
           </div>
           <div className={classes.column}>
-            <Typography className={classes.secondaryHeading}>Select trip destination</Typography>
+            <Typography className={classes.secondaryHeading}>10 artículos agregados</Typography>
           </div>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.details}>

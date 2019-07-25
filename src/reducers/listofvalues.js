@@ -1,24 +1,27 @@
-import { FETCH_CATEGORIES_PENDING, FETCH_CATEGORIES_ERROR, FETCH_CATEGORIES_SUCCESS } from "../actions/actiontypes";
+import { FETCH_CATEGORIAS_PENDING, FETCH_CATEGORIAS_ERROR, FETCH_CATEGORIAS_SUCCESS } from "../actions/actiontypes";
 
 const initialState = {
-  categorias: {}
+  categorias: [],
+  pending: false,
+  error: null
 };
 
 
-function lovReducer(state = initialState, action) {
+export function lovReducer(state = initialState, action) {
   switch (action.type) {
-    case FETCH_CATEGORIES_PENDING:
+    case FETCH_CATEGORIAS_PENDING:
       return {
         ...state,
         pending: true
       }
-    case FETCH_CATEGORIES_SUCCESS:
+    case FETCH_CATEGORIAS_SUCCESS:
+      console.log("SUCCESS", action)
       return {
         ...state,
         pending: false,
-        categorias: action.payload
+        categorias: action.categorias
       }
-    case FETCH_CATEGORIES_ERROR:
+    case FETCH_CATEGORIAS_ERROR:
       return {
         ...state,
         pending: false,
@@ -29,4 +32,6 @@ function lovReducer(state = initialState, action) {
   }
 }
 
-export default lovReducer;
+export const getCategorias = state => state.products;
+export const getCategoriasPending = state => state.pending;
+export const getCategoriasError = state => state.error;

@@ -6,17 +6,19 @@ import InputBase from "@material-ui/core/InputBase";
 const styles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
-        padding: 10
+        padding: 10,
+        alignItems: "center"
     },
     searchbox: {
         alignItems: "center"
     },
 }))
 
-const BuscarItem = ({searchedText, searchedItems}) => {
+const BuscarItem = ({searchedText, searchedItems, searchText}) => {
     const classes = styles()
     return (
         <Grid container className={classes.root} spacing={2}>
+            
             <Grid
                 item
                 justify="center"
@@ -26,9 +28,10 @@ const BuscarItem = ({searchedText, searchedItems}) => {
                 className={classes.searchbox}
             >
                 <InputBase
-                    placeholder={searchedItems}
-                    inputProps={{ "aria-label": {searchedItems} }}
+                    placeholder={searchText}
+                    inputProps={{ "aria-label": {searchText} }}
                     onChange={searchedText}
+                    fullWidth
                 />
             </Grid>
         </Grid>

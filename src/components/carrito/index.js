@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import ResumenCompra from './ResumenCompra';
@@ -14,19 +14,25 @@ const styles = makeStyles(theme => ({
         margin: 10
     },
     spacer: {
-        marginTop: 10
+        marginTop: 20
     }
 }))
 
 const Carrito = (props) => {
     const [categorias, setCategorias] = useState([]);
+    const [productos, setProductos] = useState([]);
+    const [currentProd, setCurrentProd] = useState({ producto: { articuloId: '', nombre: '', categoriaId: '', generos: [], cantidad: '', precioCompra: '', precioVenta: '' } });
     const clasess = styles()
 
-    useEffect(() => {
+    // useEffect(() => {
 
-    }, []);
+    // }, []);
 
     const handleSelectedItem = (item) => {
+        setCurrentProd(item)
+    }
+
+    const handleAddProduct = (producto) => {
 
     }
 
@@ -38,7 +44,7 @@ const Carrito = (props) => {
                 <div className={clasess.spacer} />
 
                 <Paper>
-                    <BuscadorItems handleSelection={handleSelectedItem} />
+                    <BuscadorItems handleSelection={handleSelectedItem} itemList={props.categoriass} textoBuscador="Buscar Categoría"/>
                 </Paper>
                 <Paper>
                     Step 2 -  Seleccionar Producto / crear Producto
@@ -53,15 +59,15 @@ const Carrito = (props) => {
 }
 
 const mapStateToProps = state => ({
-    error: state.error,
-    categorias: state.categorias,
-    pending: state.pending
+    error: state.lovReducer.error,
+    categoriass: state.lovReducer.categorias,
+    pending: state.lovReducer.pending
 })
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchCategorias: categoria => dispatch(setCategorias(categoria))
-    }    
+
+    };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Carrito)

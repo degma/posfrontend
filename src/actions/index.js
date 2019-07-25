@@ -31,6 +31,7 @@ export const fetchCategoriasError = (error) => {
 }
 
 export const fetchCategoriasSuccess = payload => {
+  console.log("ACTION", payload)
   return {
     type: FETCH_CATEGORIAS_SUCCESS,
     categorias: payload

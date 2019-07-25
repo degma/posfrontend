@@ -9,24 +9,30 @@ import { setFabricanteCompra } from "../actions/";
 import { connect } from "react-redux";
 import FullScreenDialog from "../components/dialogs/FullScreenDialog";
 import Carrito from "../components/carrito";
+import fetchCategorias from '../actions/fetchCategorias'
 
 const styles = makeStyles(theme => ({
   root: {
-    margin: 5
+    margin: 5,
+    backgroundColor: '#FFFFFF'
   }
 })
 );
 
 const mapStateToProps = state => {
-  console.log(state.compras)
-  return { compra: state.compras };
+  console.log(state)
+  return { compra: state.compras, lov: state , categorias: state.categorias};
 };
 
 function mapDispatchToProps(dispatch) {
   return {
-    setFabricanteCompra: fabricante => dispatch(setFabricanteCompra(fabricante))
+    setFabricanteCompra: fabricante => dispatch(setFabricanteCompra(fabricante)),  
+    fetchCategoriasAction: () => dispatch(fetchCategorias())
+    // bindActionCreators({ fetchCategorias }, dispatch)
   };
 }
+
+
 
 const ComprasPage = (props) => {
 
@@ -63,6 +69,10 @@ const ComprasPage = (props) => {
       })
       .catch(err => console.log(err));
   }, []);
+
+  useEffect(() =>{
+    props.fetchCategoriasAction()
+  }, [])
 
   return (
     <React.Fragment>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import PropTypes from 'prop-types'
@@ -16,8 +16,11 @@ const styles = makeStyles(theme => ({
 
 //selectedItem, 
 
-const BuscadorItems = ({ handleSelection, itemList, filteredItems, textoBuscador }) => {
+const BuscadorItems = ({ handleSelection, itemList, textoBuscador }) => {
     
+    const classes = styles()
+    const [items, setItems] = useState(itemList)
+
     const handleChange = event => {
         let updatedList = itemList;
         updatedList = updatedList.filter(item => {
@@ -25,17 +28,16 @@ const BuscadorItems = ({ handleSelection, itemList, filteredItems, textoBuscador
             item.nombre.toLowerCase().search(event.target.value.toLowerCase()) !== -1
           );
         });
-        filteredItems = updatedList
+        setItems(updatedList)
       };
-    const classes = styles()
 
     return (
-        <Paper>
+        <Paper>            
             <BuscarItem searchedText={handleChange} searchText={textoBuscador} />
             <Grid container className={classes.root} spacing={2}>
                 <Grid item xs={12}>
                     <Grid container justify="left" spacing={2}>
-                        {filteredItems.map(item => (
+                        {items.map(item => (
                             <CardItem singleItem={item} selectedItem={handleSelection} />
                         ))}
                     </Grid>

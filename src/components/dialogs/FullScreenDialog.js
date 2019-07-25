@@ -56,7 +56,7 @@ class DialogArticulo extends Component {
                     fullScreen
                     open={this.props.open}
                     onClose={this.handleClose}
-                    TransitionComponent={Transition}
+                    TransitionComponent={Transition}                        
                 >
                     <AppBar className={classes.appBar}>
                         <Toolbar>
