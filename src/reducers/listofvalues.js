@@ -1,9 +1,22 @@
-import { FETCH_CATEGORIAS_PENDING, FETCH_CATEGORIAS_ERROR, FETCH_CATEGORIAS_SUCCESS } from "../actions/actiontypes";
+import { 
+  FETCH_CATEGORIAS_PENDING, 
+  FETCH_CATEGORIAS_ERROR, 
+  FETCH_CATEGORIAS_SUCCESS,
+  FETCH_FABRICANTEPRODS_PENDING, 
+  FETCH_FABRICANTEPRODS_ERROR, 
+  FETCH_FABRICANTEPRODS_SUCCESS
+ } from "../actions/actiontypes";
 
 const initialState = {
-  categorias: [],
-  pending: false,
-  error: null
+  categorias: {
+    items: [],
+    pending: false
+  },
+  productos: {
+    items: [],
+    pending: false,
+    error: null
+  }
 };
 
 
@@ -12,20 +25,50 @@ export function lovReducer(state = initialState, action) {
     case FETCH_CATEGORIAS_PENDING:
       return {
         ...state,
-        pending: true
+        categorias:{
+          pending: true
+        }
       }
     case FETCH_CATEGORIAS_SUCCESS:
       console.log("SUCCESS", action)
       return {
         ...state,
-        pending: false,
-        categorias: action.categorias
+        categorias: {
+          pending: false,
+          items: action.categorias || []
+        }
       }
     case FETCH_CATEGORIAS_ERROR:
       return {
         ...state,
-        pending: false,
-        error: action.error
+        categorias: {
+          pending: false,
+          error: action.error
+        }
+      }
+      case FETCH_FABRICANTEPRODS_PENDING:
+      return {
+        ...state,
+        productos:{
+          pending: true
+        }
+      }
+    case FETCH_FABRICANTEPRODS_SUCCESS:
+      console.log("SUCCESS PRODS", action)
+      return {
+        ...state,
+        productos: {
+          pending: false,
+          items: action.productos || []
+        }
+      }
+    case FETCH_FABRICANTEPRODS_ERROR:
+      return {
+        ...state,
+        productos: {
+          pending: false,
+          error: action.error
+        }
       }
     default:
       return state;

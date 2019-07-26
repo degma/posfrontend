@@ -18,20 +18,30 @@ const styles = makeStyles(theme => ({
     }
 }))
 
-const Carrito = (props) => {
-    const [categorias, setCategorias] = useState([]);
-    const [productos, setProductos] = useState([]);
-    const [currentProd, setCurrentProd] = useState({ producto: { articuloId: '', nombre: '', categoriaId: '', generos: [], cantidad: '', precioCompra: '', precioVenta: '' } });
+const Carrito = (props) => {    
+    const [currentProd, setCurrentProd] = useState({ articuloId: '', nombre: '', categoriaId: '', generos: [], cantidad: '', precioCompra: '', precioVenta: '' } );
+    const [step, setStep] = useState(0);
+    const [catProds, setCatProds]= useState([]);
     const clasess = styles()
 
-    // useEffect(() => {
-
-    // }, []);
-
-    const handleSelectedItem = (item) => {
-        setCurrentProd(item)
+    const handleSelectedCategory = (item) => {        
+        let updatedList = props.productos
+        updatedList = updatedList.filter(e => e.categoria.id === item.id )
+        setCurrentProd(prevState => {
+            return { ...prevState, categoriaId : item.id}
+        })
+        setCatProds(updatedList)        
+        setStep(1)        
     }
 
+    const handleSelectedArticulo = (item) => {        
+        setCurrentProd(prevState => {
+            return { ...prevState, articuloId : item.id}
+        })
+        setStep(1)        
+    }
+
+    
     const handleAddProduct = (producto) => {
 
     }
@@ -44,13 +54,8 @@ const Carrito = (props) => {
                 <div className={clasess.spacer} />
 
                 <Paper>
-                    <BuscadorItems handleSelection={handleSelectedItem} itemList={props.categoriass} textoBuscador="Buscar Categoría"/>
-                </Paper>
-                <Paper>
-                    Step 2 -  Seleccionar Producto / crear Producto
-                </Paper>
-                <Paper>
-                    Step 3 - Ingresar cantidads
+                    {step === 0 && <BuscadorItems handleSelection={handleSelectedCategory} itemList={props.categorias} textoBuscador="Buscar Categoría"/>}
+                    {step === 1 && <BuscadorItems handleSelection={handleSelectedArticulo} itemList={catProds} textoBuscador="Buscar Artículo"/>}
                 </Paper>
             </div>
         </div>
@@ -59,9 +64,12 @@ const Carrito = (props) => {
 }
 
 const mapStateToProps = state => ({
-    error: state.lovReducer.error,
-    categoriass: state.lovReducer.categorias,
-    pending: state.lovReducer.pending
+    categorias: state.lovReducer.categorias.items,
+    caterror: state.lovReducer.categorias.error,
+    catpending: state.lovReducer.categorias.pending,
+    productos: state.lovReducer.productos.items,
+    prodegorias: state.lovReducer.productos.items,
+    proderror: state.lovReducer.productos.error,
 })
 
 const mapDispatchToProps = dispatch => {

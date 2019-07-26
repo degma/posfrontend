@@ -22,13 +22,13 @@ const BuscadorItems = ({ handleSelection, itemList, textoBuscador }) => {
     const [items, setItems] = useState(itemList)
 
     const handleChange = event => {
-        let updatedList = itemList;
+        let updatedList = itemList ;
         updatedList = updatedList.filter(item => {
           return (
             item.nombre.toLowerCase().search(event.target.value.toLowerCase()) !== -1
           );
         });
-        setItems(updatedList)
+        setItems(updatedList )
       };
 
     return (
@@ -36,7 +36,7 @@ const BuscadorItems = ({ handleSelection, itemList, textoBuscador }) => {
             <BuscarItem searchedText={handleChange} searchText={textoBuscador} />
             <Grid container className={classes.root} spacing={2}>
                 <Grid item xs={12}>
-                    <Grid container justify="left" spacing={2}>
+                    <Grid container justify="left" spacing={2} alignItems="center">
                         {items.map(item => (
                             <CardItem singleItem={item} selectedItem={handleSelection} />
                         ))}

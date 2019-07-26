@@ -116,6 +116,9 @@ export default {
         },
         desactivar(id) {
             return apiClient.delete('/fabricante/' + id)
+        },
+        getFabricante(id) {
+            return apiClient.get('/fabricante/' + id)
         }
     }
 }

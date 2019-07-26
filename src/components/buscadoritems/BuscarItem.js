@@ -7,7 +7,7 @@ const styles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
         padding: 10,
-        alignItems: "center"
+        
     },
     searchbox: {
         alignItems: "center"

@@ -16,11 +16,10 @@ const styles = makeStyles(theme => ({
 const BuscarFabricante = (props) => {
     const classes = styles()
     return (
-        <Grid container className={classes.root} spacing={2}>
+        <Grid container className={classes.root} spacing={2} alignItems="center">
             <Grid
                 item
                 justify="center"
-                alignItems="center"
                 spacing={2}
                 xs={9}
                 className={classes.searchbox}

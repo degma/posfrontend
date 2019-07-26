@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import FullScreenDialog from "../components/dialogs/FullScreenDialog";
 import Carrito from "../components/carrito";
 import fetchCategorias from '../actions/fetchCategorias'
+import fetchFabricanteProds from '../actions/fetchFabricanteProds'
 
 const styles = makeStyles(theme => ({
   root: {
@@ -24,11 +25,12 @@ const mapStateToProps = state => {
   return { compra: state.compras, lov: state , categorias: state.categorias};
 };
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch) {  
   return {
     setFabricanteCompra: fabricante => dispatch(setFabricanteCompra(fabricante)),  
-    fetchCategoriasAction: () => dispatch(fetchCategorias())
-    // bindActionCreators({ fetchCategorias }, dispatch)
+    fetchCategoriasAction: () => dispatch(fetchCategorias()),
+    fetchFabricanteProdsAction: fabricante => dispatch(fetchFabricanteProds(fabricante))
+  
   };
 }
 
@@ -43,7 +45,8 @@ const ComprasPage = (props) => {
   const classes = styles();
 
   const handleFabSelection = (fabricante) => {
-    props.setFabricanteCompra({ fabricante });
+    props.setFabricanteCompra({ fabricante });    
+    props.fetchFabricanteProdsAction(fabricante.id)
     setopenFSDialog(true)
   }
 
@@ -83,7 +86,7 @@ const ComprasPage = (props) => {
             <Grid item xs={12}>
               <Grid container justify="left" spacing={2}>
                 {filterFab.map(fab => (
-                  <CardFabricante fabricante={fab} selectedFab={handleFabSelection} />
+                  <CardFabricante key={fab.id} fabricante={fab} selectedFab={handleFabSelection} />
                 ))}
               </Grid>
             </Grid>
